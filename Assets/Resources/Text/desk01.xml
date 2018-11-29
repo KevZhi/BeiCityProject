@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>不知道是谁的书桌，但随便乱翻也是不道德的。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>ObserveOrNot</state>
+  </dialogue>
+</dialogues>

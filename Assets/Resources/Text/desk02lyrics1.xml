@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail>发现了一张草稿纸，有人在上面潦草地写下了歌词。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>+lyrics1</state>
+  </dialogue>
+</dialogues>

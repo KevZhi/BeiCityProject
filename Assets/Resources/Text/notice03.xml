@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>校门旁的墙壁上刻着龙飞凤舞的大字：“杯河市石棋中学”。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>右下角留有作者名字的印章，但根本无法分辨刻的是什么。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>也许这就是书法吧。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+</dialogues>

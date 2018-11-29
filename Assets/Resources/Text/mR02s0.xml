@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role>钟瑾</role>
+    <detail>易秋！这边！</detail>
+    <position>center</position>
+    <portrait>mR02</portrait>
+    <state>+center</state>
+  </dialogue>
+  <dialogue>
+    <role>易秋</role>
+    <detail>唉。。。。。。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>canotMove</state>
+  </dialogue>
+</dialogues>
