@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>自己的座位。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>SitOrNot</state>
+  </dialogue>
+</dialogues>

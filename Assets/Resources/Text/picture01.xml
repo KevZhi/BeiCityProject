@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>墙上挂着一幅装裱过的动漫风插画，看签名似乎是一名在校学生。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+</dialogues>

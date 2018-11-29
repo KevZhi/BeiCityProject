@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>墙上贴着似乎是班级学生表现的排行榜。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>可以明显看到高玉的名字后追加了一大长串小红花。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+</dialogues>

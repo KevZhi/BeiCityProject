@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role>钟瑾</role>
+    <detail>你要去哪啊？我在这呢！</detail>
+    <position>center</position>
+    <portrait>mR02</portrait>
+    <state>+center</state>
+  </dialogue>
+  <dialogue>
+    <role>易秋</role>
+    <detail>。。。。。。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+</dialogues>

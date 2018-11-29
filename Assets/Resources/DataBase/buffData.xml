@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<buffs>
+  <buff>
+    <enName></enName>
+    <name></name>
+    <detail></detail>
+  </buff>
+  <buff>
+    <enName>unfortunate</enName>
+    <name>不幸</name>
+    <detail>霉运缠身（如果世界上真的存在“运气”这种设定的话）</detail>
+  </buff>
+  <buff>
+    <enName>friend</enName>
+    <name>朋友</name>
+    <detail></detail>
+  </buff>
+  <buff>
+    <enName>alone</enName>
+    <name>孤独</name>
+    <detail>连续一周未主动与他人交流，获得各项经验值加倍</detail>
+  </buff>
+  <buff>
+    <enName>confident</enName>
+    <name>挚友</name>
+    <detail></detail>
+  </buff>
+</buffs>
