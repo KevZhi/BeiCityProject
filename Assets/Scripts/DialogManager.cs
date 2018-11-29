@@ -149,7 +149,7 @@ public class DialogManager : MonoBehaviour {
         detail.GetComponent<Text>().text = role_detail;//并加载当前的对话
 
         //图像
-        if (state=="+left1")
+        if (state == "+left1")
         {
             leftPos1.gameObject.SetActive(true);
         }
@@ -165,13 +165,21 @@ public class DialogManager : MonoBehaviour {
         {
             leftPos2.gameObject.SetActive(false);
         }
-        if (state=="+right1")
+        if (state == "+right1")
         {
             rightPos1.gameObject.SetActive(true);
+        }
+        if (state == "-right1")
+        {
+            rightPos1.gameObject.SetActive(false);
         }
         if (state == "+right2")
         {
             rightPos2.gameObject.SetActive(true);
+        }
+        if (state == "-right2")
+        {
+            rightPos2.gameObject.SetActive(false);
         }
         if (state == "+right3")
         {
@@ -189,6 +197,7 @@ public class DialogManager : MonoBehaviour {
         {
             centerPos.gameObject.SetActive(false);
         }
+
         if (state== "+right1+left2")
         {
             rightPos1.gameObject.SetActive(true);
@@ -219,7 +228,7 @@ public class DialogManager : MonoBehaviour {
             rightPos3.gameObject.SetActive(false);
             leftPos1.gameObject.SetActive(false);
         }
-        if (state=="+black")
+        if (state == "+black")
         {
             gm.black.SetActive(true);
         }
@@ -288,59 +297,55 @@ public class DialogManager : MonoBehaviour {
         {
             Globe.nextSceneName = "class15";
             SceneManager.LoadScene("loading");
-
         }
         if (state == "GoToSupportClass15")
         {
             Globe.nextSceneName = "supportClass15";
             SceneManager.LoadScene("loading");
-
         }
 
         //事件状态
-        if (state=="finish"&& curName== "event001X1X1")
+        if (state=="finish")
         {
-            gm.em.event001 = 2;
-            gm.em.event002 = 1;
-        }
-        if (state == "finish" && curName == "mR02s1")
-        {
-            gm.em.mR02s1actived = 1;
-        }
-        if (state == "finish" && curName == "wR03s1X1")
-        {
-            gm.em.wR03s1 = 0;
-            gm.em.wR03s1actived = 1;
-            Destroy(gm.roleRoot.transform.Find("wR03s1").gameObject);
-        }
-        if (state == "finish" && curName == "sR02s1X1")
-        {
-            gm.em.sR02s1 = 0;
-            gm.em.sR02s1actived = 1;
-            Destroy(gm.roleRoot.transform.Find("sR02s1").gameObject);
-        }
-        if (state == "finish" && curName == "event002A")
-        {
-            gm.em.event002 = 2;
-            gm.em.event002canSubmit = 1;
-        }
-        if (state == "finish" && curName == "event002B")
-        {
-            gm.em.event002 = 2;
-        }
-        if (state == "finish" && curName == "event002X1")
-        {
-            gm.em.event003 = 1;
-        }
-        if (state == "finish" && curName == "wR03s2X1")
-        {
-            gm.em.wR03s2 = 0;
-            gm.em.wR03s2actived = 1;
-            Destroy(gm.roleRoot.transform.Find("wR03s2").gameObject);
-        }
-        if (state == "finish" && curName == "sR05s1")
-        {
-            gm.em.sR05s1actived = 1;
+            gm.em.destroyed = true;
+            if (curName == "event001X1X1")
+            {
+                gm.em.event001 = 2;
+                gm.em.event002 = 1;
+            }
+            if (curName == "mR02s1")
+            {
+                gm.em.mR02s1actived = 1;
+            }
+            if (curName == "wR03s1X1")
+            {
+                gm.em.wR03s1actived = 1;
+            }
+            if (curName == "sR02s1X1")
+            {
+                gm.em.sR02s1actived = 1;
+            }
+            if (curName == "event002A")
+            {
+                gm.em.event002 = 2;
+                gm.em.event002canSubmit = 1;
+            }
+            if (curName == "event002B")
+            {
+                gm.em.event002 = 2;
+            }
+            if (curName == "event002X1")
+            {
+                gm.em.event003 = 1;
+            }
+            if (curName == "wR03s2X1")
+            {
+                gm.em.wR03s2actived = 1;
+            }
+            if (curName == "sR05s1")
+            {
+                gm.em.sR05s1actived = 1;
+            }
         }
         
         //权限
@@ -364,17 +369,13 @@ public class DialogManager : MonoBehaviour {
         this.GetComponent<InteractionManager>().active = false;
 
         XmlDocument xmlDocument = new XmlDocument();//新建一个XML“编辑器” 
-        //xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();//初始化存放dialogues的list
-        //载入资源文件
         string data = Resources.Load("Text\\" + curName).ToString();
-        //string data = Resources.Load("dialogues").ToString();
         //注意这里没有后缀名xml。你可以看看编辑器中，也是不带后缀的。因此不要有个同名的其它格式文件注意！
         //如果Resources下又有目录那就：Resources.Load("xx\\xx\\dialogues").ToString()
 
         xmlDocument.LoadXml(data);//载入这个xml  
-        XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("dialogues").ChildNodes;//选择<dialogues>为根结点并得到旗下所有子节点  
-        //xmlNodeList = xmlDocument.SelectSingleNode("dialogues").ChildNodes;
+        XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("dialogues").ChildNodes;//选择<dialogues>为根结点并得到旗下所有子节点 
         foreach (XmlNode xmlNode in xmlNodeList)//遍历<dialogues>下的所有节点<dialogue>压入List
         {
             XmlElement xmlElement = (XmlElement)xmlNode;//对于任何一个元素，其实就是每一个<dialogue>  
@@ -383,7 +384,6 @@ public class DialogManager : MonoBehaviour {
                 + xmlElement.ChildNodes.Item(2).InnerText + ","
                 + xmlElement.ChildNodes.Item(3).InnerText + ","
                 + xmlElement.ChildNodes.Item(4).InnerText);
-            //将角色名和对话内容存入这个list，中间存个逗号一会儿容易分割
         }
         dialogue_count = dialogues_list.Count;//获取到底有多少条对话
         dialogues_handle(0);//载入第一条对话的场景
@@ -478,7 +478,7 @@ public class DialogManager : MonoBehaviour {
             dialogue_index = 0;
             dialogue_count = 0;
 
-            this.GetComponent<PlayerState>().PassiveEXP++;
+            gm.ps.PassiveEXP++;
             curName = "event001B";
             StartDialog();
         }
@@ -517,7 +517,7 @@ public class DialogManager : MonoBehaviour {
             dialogue_index = 0;
             dialogue_count = 0;
 
-            this.GetComponent<PlayerState>().PassiveEXP++;
+            gm.ps.PassiveEXP++;
             curName = "event001X1B";
             StartDialog();
         }

@@ -2741,7 +2741,7 @@ Prefab:
     - target: {fileID: 114995583465517250, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
       propertyPath: event002
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114731958448874674, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
@@ -2786,22 +2786,27 @@ Prefab:
     - target: {fileID: 82539276457268180, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114995583465517250, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
       propertyPath: wR03s1actived
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114995583465517250, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
       propertyPath: sR02s1actived
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114995583465517250, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
         type: 2}
       propertyPath: mR02s1actived
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114995811071976108, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eebaa2a8dd22634197efeb9c9591f6c, type: 2}

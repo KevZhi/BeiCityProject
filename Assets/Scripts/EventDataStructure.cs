@@ -16,13 +16,9 @@ public class EventDataStructure
 
     public EventDataStructure(
         int event001,
-        int event002,
-        int desk01,
-        int desk02)
+        int event002)
     {
         this.Event001 = event001;
         this.Event002 = event002;
-        this.Desk01 = desk01;
-        this.Desk02 = desk02;
     }
 }

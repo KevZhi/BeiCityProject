@@ -1,5 +1,0 @@
-0,test.png
-1,left,角色1名称,说了第一句话,test.png
-1,right,角色2名称,说了第二句话,test.png
-1,left,角色1名称,说了第三句话,test.png
-1,right,角色2名称,说了第四句话,test.png

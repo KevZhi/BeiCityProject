@@ -122,9 +122,9 @@ public class GameManager : MonoBehaviour {
 
         eventData = new EventDataStructure(
             em.event001,
-            em.event002,
-            em.desk01,
-            em.desk02
+            em.event002
+            //em.desk01,
+            //em.desk02
             );
 
         File.WriteAllText(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));

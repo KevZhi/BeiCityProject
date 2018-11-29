@@ -34,12 +34,12 @@ public class InteractionManager : MonoBehaviour {
                     gm.dm.curName = hit.collider.GetComponent<EventCasterManager>().eventName;
                     gm.dm.StartDialog();
                 }
-                if (hit.collider.tag == "Once" && hit.collider.GetComponent<EventCasterManager>().active == true)
-                {
-                    gm.dm.curName = hit.collider.GetComponent<EventCasterManager>().eventName;
-                    gm.dm.StartDialog();
-                    hit.collider.GetComponent<EventCasterManager>().active = false;
-                }
+                //if (hit.collider.tag == "Once" && hit.collider.GetComponent<EventCasterManager>().active == true)
+                //{
+                //    gm.dm.curName = hit.collider.GetComponent<EventCasterManager>().eventName;
+                //    gm.dm.StartDialog();
+                //    hit.collider.GetComponent<EventCasterManager>().active = false;
+                //}
             }
             //移动触发
             if (Input.GetMouseButtonDown(0) && canMove == true)
@@ -51,12 +51,15 @@ public class InteractionManager : MonoBehaviour {
                 }
             }
             //不可移动
-            if (Input.GetMouseButtonDown(0) && canMove == false && gm.em.mR02s1==1)
+            if (Input.GetMouseButtonDown(0) && canMove == false)
             {
                 if (hit.collider.tag == "MoveBtn")
                 {
-                    gm.dm.curName = "mR02s1canotMove";
-                    gm.dm.StartDialog();
+                    if (gm.em.mR02s1actived==0)
+                    {
+                        gm.dm.curName = "mR02s1canotMove";
+                        gm.dm.StartDialog();
+                    }
                 }
             }
         }

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail></detail>
+    <position>center</position>
+    <portrait>wR02</portrait>
+    <state>+center</state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>欧阳欣站在道边，似乎在等出租车。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>ChatOrNot</state>
+  </dialogue>
+</dialogues>
