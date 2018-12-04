@@ -29,16 +29,20 @@ public class AudioManager : MonoBehaviour {
                 audioName = null;
                 StopAudio();
             }
-            //Debug.Log(this.GetComponent<AudioSource>().time);
         }
         if ((this.GetComponent<AudioSource>().clip == null || this.GetComponent<AudioSource>().clip.name != "Firelink Shrine") && gm.em.event001==2 && (SceneManager.GetActiveScene().name == "class15" || SceneManager.GetActiveScene().name == "floor2" || SceneManager.GetActiveScene().name == "supportClass15"))
         {
             audioName = "Firelink Shrine";
             LoadAudio();
         }
-        if ((this.GetComponent<AudioSource>().clip == null || this.GetComponent<AudioSource>().clip.name != "苦しみの曲") && SceneManager.GetActiveScene().name == "gate")
+        if ((this.GetComponent<AudioSource>().clip == null || this.GetComponent<AudioSource>().clip.name != "苦しみの曲") && (SceneManager.GetActiveScene().name == "gate" || SceneManager.GetActiveScene().name == "dongming" || SceneManager.GetActiveScene().name == "street"))
         {
             audioName = "苦しみの曲";
+            LoadAudio();
+        }
+        if ((this.GetComponent<AudioSource>().clip == null || this.GetComponent<AudioSource>().clip.name != "遊園施設") && SceneManager.GetActiveScene().name == "1.welcome")
+        {
+            audioName = "遊園施設";
             LoadAudio();
         }
     }

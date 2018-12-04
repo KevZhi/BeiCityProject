@@ -7,13 +7,6 @@ using System.IO;
 
 public class PlayerState : MonoBehaviour {
 
-    //private PlayerDataStructure playerData;
-
-    //public int HP;
-    //public int MP;
-    //public int Level;
-    //public int EXP;
-
     public int SkillPoint;
 
     public int ShamLV;
@@ -40,20 +33,13 @@ public class PlayerState : MonoBehaviour {
     private void Awake()
     {
         warning = GameObject.Find("commonMenu").transform.Find("warning").gameObject;
-        //playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.dataPath + "\\playerData.json"));
     }
 
     void Start()
     {
 
-        //HP = GlobalControl.Instance.HP;
-        //MP = GlobalControl.Instance.MP;
-        //EXP = playerData.Exp;
-
-        //print(SceneManager.GetActiveScene().name);
     }
-	
-	// Update is called once per frame
+
 	void Update () {
 
         ShamText.text = ShamLV.ToString();
@@ -62,7 +48,23 @@ public class PlayerState : MonoBehaviour {
         SelfishText.text = SelfishLV.ToString();
         EvilText.text = EvilLV.ToString();
 
-        if (PassiveEXP == 2 && PassiveLV == 0)
+        if (ShamEXP == 2 && ShamLV == 0)
+        {
+
+            if (timer >= 1f)
+            {
+                ShamLV++;
+                warning.SetActive(false);
+                timer = 0;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                warning.SetActive(true);
+                warning.GetComponentInChildren<Text>().text = "虚伪的等级提升了";
+            }
+        }
+        if ( (PassiveEXP == 2 && PassiveLV == 0) || (PassiveEXP == 4 && PassiveLV == 1) )
         {
             
             if (timer>=1f)
@@ -76,6 +78,38 @@ public class PlayerState : MonoBehaviour {
                 timer += Time.deltaTime;
                 warning.SetActive(true);
                 warning.GetComponentInChildren<Text>().text = "冷漠的等级提升了";
+            }
+        }
+        if (RebelEXP == 2 && RebelLV == 0)
+        {
+
+            if (timer >= 1f)
+            {
+                RebelLV++;
+                warning.SetActive(false);
+                timer = 0;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                warning.SetActive(true);
+                warning.GetComponentInChildren<Text>().text = "叛逆的等级提升了";
+            }
+        }
+        if (SelfishEXP == 2 && SelfishLV == 0)
+        {
+
+            if (timer >= 1f)
+            {
+                SelfishLV++;
+                warning.SetActive(false);
+                timer = 0;
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                warning.SetActive(true);
+                warning.GetComponentInChildren<Text>().text = "自私的等级提升了";
             }
         }
         if (EvilEXP == 2 && EvilLV == 0)
@@ -94,6 +128,7 @@ public class PlayerState : MonoBehaviour {
                 warning.GetComponentInChildren<Text>().text = "邪恶的等级提升了";
             }
         }
+
     }
 
  

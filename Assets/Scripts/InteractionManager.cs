@@ -7,7 +7,7 @@ public class InteractionManager : MonoBehaviour {
 
     public bool active;
     public bool canMove;
-    public GameManager gm;
+    private GameManager gm;
     private string nextStage;
 
     // Use this for initialization
@@ -34,12 +34,6 @@ public class InteractionManager : MonoBehaviour {
                     gm.dm.curName = hit.collider.GetComponent<EventCasterManager>().eventName;
                     gm.dm.StartDialog();
                 }
-                //if (hit.collider.tag == "Once" && hit.collider.GetComponent<EventCasterManager>().active == true)
-                //{
-                //    gm.dm.curName = hit.collider.GetComponent<EventCasterManager>().eventName;
-                //    gm.dm.StartDialog();
-                //    hit.collider.GetComponent<EventCasterManager>().active = false;
-                //}
             }
             //移动触发
             if (Input.GetMouseButtonDown(0) && canMove == true)

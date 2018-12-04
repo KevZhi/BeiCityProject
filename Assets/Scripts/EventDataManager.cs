@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class EventDataManager : MonoBehaviour {
 
-    [Header("=====默认0，开始1，完成2=====")]
-    public int event001 = 1;
+    [Header("=====默认0，已开始1，完成2=====")]
+    public int event001 = 0;
     public int event002;
     public int event003;
 
@@ -16,15 +16,19 @@ public class EventDataManager : MonoBehaviour {
     public int desk02observed;
     public int desk03observed;
 
+    public int mR02s0actived;
     public int mR02s1actived;
     public int wR03s1actived;
     public int sR02s1actived;
     public int wR03s2actived;
     public int sR05s1actived;
     public int wR02s1actived;
+    public int sR07s1actived;
 
     [Header("=====不可以完成0，可以完成1=====")]
     public int event002canSubmit;
+    [Header("=====未选择0，选择了1=====")]
+    public int sR07Helped;
 
     [Header("=====物体生成旗标=====")]
     public bool created;
@@ -54,14 +58,11 @@ public class EventDataManager : MonoBehaviour {
 
     }
 
-
-    // Use this for initialization
     void Start () {
         roleParent = gm.roleRoot.transform;
         posParent = gm.posRoot.transform;
     }
-	
-	// Update is called once per frame
+
 	void Update ()
     {
         if (!destroyed)
@@ -98,27 +99,31 @@ public class EventDataManager : MonoBehaviour {
 
                 CreatePosition("class15", position1Pos);
                 CreatePosition("supportClass15", position2Pos);
-
-                //事件
-                if (event001 == 0 ||event001==1)
-                {
-                    gm.dm.curName = "event001";
-                    gm.dm.StartDialog();
-                }
-
-                if (event002 == 1)
-                {
-                    if (mR02s1actived == 0)
-                    {
-                        CreateRole("mR02s1", role1Pos);
-                        gm.dm.curName = "mR02s0";
-                        gm.dm.StartDialog();
-                    }
-                }
                 if (event002 == 2)
                 {
                     CreatePosition("gate", position3Pos);
                 }
+
+                //事件
+                if (event001 == 0)
+                {
+                    event001 = 1;
+                    gm.dm.curName = "event001";
+                    gm.dm.StartDialog();
+                }
+                if (event002 == 1)
+                {
+                    if (mR02s0actived == 0)
+                    {
+                        mR02s0actived = 1;
+                        gm.dm.curName = "mR02s0";
+                        gm.dm.StartDialog();
+                    }
+                    if (mR02s1actived == 0)
+                    {
+                        CreateRole("mR02s1", role1Pos);
+                    }
+                }          
                 if (event003 == 1)
                 {
                     if (sR05s1actived == 0)
@@ -211,24 +216,41 @@ public class EventDataManager : MonoBehaviour {
             {
                 CreatePosition("gate", position1Pos);
                 CreatePosition("street", position2Pos);
+
+                CreateRole("shop01", notice1Pos);
+                if (event003 == 1)
+                {
+                    if (sR07s1actived==0)
+                    {
+                        gm.dm.curName = "sR07s1";
+                        gm.dm.StartDialog();
+                    }
+                }
             }
             //街道
             if (SceneManager.GetActiveScene().name == "street")
             {
                 CreatePosition("dongming", position1Pos);
                 CreatePosition("home", position2Pos);
+
+                if (event003 == 1)
+                {
+                    CreateRole("sR08s1", role1Pos);
+                }
             }
 
+            if (event002 == 1)
+            {
+                gm.targetPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = "回到自己的座位";
+            }
+            if (event003 == 1)
+            {
+                gm.targetPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = "回到自己的家";
+            }
         }
+       
 
-        if (event002 == 1)
-        {
-            gm.targetPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = "回到自己的座位";
-        }
-        if (event003 == 1)
-        {
-            gm.targetPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = "回到自己的家";
-        }
+
     }
 
     public GameObject CreateRole(string roleName,Vector3 pos)

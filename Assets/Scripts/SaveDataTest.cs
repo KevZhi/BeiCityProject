@@ -15,10 +15,10 @@ public class SaveDataTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        isExist = File.Exists(Application.dataPath + "\\" + this.name + ".json");
+        isExist = File.Exists(Application.persistentDataPath + "/" + this.name + ".json");
         if (isExist == true)
         {
-            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.dataPath + "\\" + this.name + ".json"));
+            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + this.name + ".json"));
             this.GetComponentInChildren<Text>().text = playerData.SavedText;
         }
         else

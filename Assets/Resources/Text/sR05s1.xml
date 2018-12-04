@@ -3,16 +3,16 @@
   <dialogue>
     <role></role>
     <detail></detail>
-    <position>left2</position>
+    <position>left3</position>
     <portrait>sR05</portrait>
-    <state>+left2</state>
+    <state>+left3</state>
   </dialogue>
   <dialogue>
     <role>陌生人甲</role>
     <detail>嘻嘻，你又来十五班看“那个人”啊~</detail>
-    <position>right2</position>
+    <position>right3</position>
     <portrait>sR06</portrait>
-    <state>+right2</state>
+    <state>+right3</state>
   </dialogue>
   <dialogue>
     <role>陌生人乙</role>
@@ -124,7 +124,7 @@
     <detail>陌生人乙飞快地跑走了。</detail>
     <position></position>
     <portrait></portrait>
-    <state>-left2</state>
+    <state>-left3</state>
   </dialogue>
   <dialogue>
     <role>陌生人甲</role>
