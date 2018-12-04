@@ -42,6 +42,16 @@ public class CommonMenu : MonoBehaviour {
                 this.transform.Find("titleMenu").gameObject.SetActive(true);
                 gm.menuUI.SetActive(false);
 
+                gm.showMenuBtn.SetActive(true);
+                gm.saveBtn.SetActive(false);
+                gm.loadBtn.SetActive(false);
+                gm.stateBtn.SetActive(false);
+                gm.optionBtn.SetActive(false);
+                gm.titleBtn.SetActive(false);
+                gm.closeMenuBtn.SetActive(false);
+
+                gm.dm.curName = null;
+
                 gm.ps.SkillPoint = 0;
                 gm.ps.ShamLV = 0;
                 gm.ps.ShamEXP = 0;
@@ -84,6 +94,7 @@ public class CommonMenu : MonoBehaviour {
                 check = false;
                 this.transform.Find("titleMenu").gameObject.SetActive(false);
                 gm.menuUI.SetActive(true);
+    
             }
         }
     }

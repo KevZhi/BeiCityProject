@@ -14,8 +14,8 @@ public class DialogManager : MonoBehaviour {
     public bool startDialog = false;
     public string curName;
 
-    //private LyricsStructure lyrics;
-    //private NoticeStructure notice;
+    private LyricsStructure lyrics;
+    private NoticeStructure notice;
 
     public GameObject portraitImage;
     public Image leftPos1;
@@ -55,8 +55,8 @@ public class DialogManager : MonoBehaviour {
     void Start()
     {
         allPortrait = portraitImage.transform;
-        //lyrics = JsonUtility.FromJson<LyricsStructure>(File.ReadAllText(Application.dataPath + "/Resources/DataBase/lyrics.json"));
-        //notice = JsonUtility.FromJson<NoticeStructure>(File.ReadAllText(Application.dataPath + "/Resources/DataBase/notice.json"));
+        lyrics = JsonUtility.FromJson<LyricsStructure>(Resources.Load("DataBase/lyrics").ToString());
+        notice = JsonUtility.FromJson<NoticeStructure>(Resources.Load("DataBase/notice").ToString());
     }
 
     void Update()
@@ -140,7 +140,7 @@ public class DialogManager : MonoBehaviour {
         
         XmlDocument xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();
-        string data = Resources.Load("Text\\" + curName).ToString();
+        string data = Resources.Load("Text/" + curName).ToString();
         xmlDocument.LoadXml(data); 
         XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("dialogues").ChildNodes;
         foreach (XmlNode xmlNode in xmlNodeList)
@@ -231,8 +231,8 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "Answer";
-        xmlPath = Application.dataPath + "/Resources/Text/" + curName + ".xml";
-        if (File.Exists(xmlPath))
+        //print(Resources.Load("Text/" + curName));
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -243,8 +243,7 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "NotAnswer";
-        xmlPath = Application.dataPath + "/Resources/Text/" + curName + ".xml";
-        if (File.Exists(xmlPath))
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -259,8 +258,8 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "Help";
-        xmlPath = Application.dataPath + "/Resources/Text/"+ curName + ".xml";
-        if (File.Exists(xmlPath))
+      
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -271,8 +270,8 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "NotHelp";
-        xmlPath = Application.dataPath + "/Resources/Text/" + curName + ".xml";
-        if (File.Exists(xmlPath))
+        //print(Resources.Load("Text/" + curName));
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -351,8 +350,8 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "NotObserve";
-        xmlPath = Application.dataPath + "/Resources/Text/" + curName + ".xml";
-        if (File.Exists(xmlPath))
+        
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -377,8 +376,8 @@ public class DialogManager : MonoBehaviour {
     {
         startDialog = true;
         curName = curName + "NotChat";
-        xmlPath = Application.dataPath + "/Resources/Text/" + curName + ".xml";
-        if (File.Exists(xmlPath))
+        //print(Resources.Load("Text/" + curName));
+        if (Resources.Load("Text/" + curName))
         {
             StartDialog();
         }
@@ -509,16 +508,16 @@ public class DialogManager : MonoBehaviour {
         }
 
         //文章
-        //if (stateDetail == "+lyrics1")
-        //{
-        //    gm.noticePanel.SetActive(true);
-        //    gm.noticePanel.GetComponentInChildren<Text>().text = lyrics.Lyrics1;
-        //}
-        //if (stateDetail == "+notice1")
-        //{
-        //    gm.noticePanel.SetActive(true);
-        //    gm.noticePanel.GetComponentInChildren<Text>().text = notice.Notice1;
-        //}
+        if (stateDetail == "+lyrics1")
+        {
+            gm.noticePanel.SetActive(true);
+            gm.noticePanel.GetComponentInChildren<Text>().text = lyrics.Lyrics1;
+        }
+        if (stateDetail == "+notice1")
+        {
+            gm.noticePanel.SetActive(true);
+            gm.noticePanel.GetComponentInChildren<Text>().text = notice.Notice1;
+        }
 
         //音频
         if (stateDetail == "+Firelink Shrine")

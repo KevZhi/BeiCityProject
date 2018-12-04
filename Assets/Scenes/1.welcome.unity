@@ -281,8 +281,8 @@ Camera:
   m_GameObject: {fileID: 644475470}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -296,7 +296,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -1398,6 +1398,27 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 748628418}
+    - target: {fileID: 114362487787977856, guid: 81c926c91867176438cdd45d9d9affdc,
+        type: 2}
+      propertyPath: m_Text
+      value: "=====\u58F0\u660E=====\n\u672C\u6545\u4E8B\u7EAF\u5C5E\u865A\u6784\n\u6240\u6D89\u53CA\u7684\u5730\u540D\u3001\u4EBA\u540D\u3001\u4E8B\u4EF6\u540D\u7B49\u5747\u4E0E\u73B0\u5B9E\u65E0\u5173\n\u6545\u4E8B\u4E2D\u4EBA\u7269\u5C55\u73B0\u7684\u60F3\u6CD5\u4EA6\u4E0D\u4EE3\u8868\u4F5C\u8005\u601D\u60F3\n\u672C\u8F6F\u4EF6\u53EA\u505A\u5B66\u4E60\u4EA4\u6D41\u4F7F\u7528\uFF0C\u6240\u5C55\u793A\u7684\u56FE\u7247\uFF0C\u97F3\u9891\uFF0C\u5F15\u7528\u6587\u5B57\u7B49\u975E\u7248\u6743\u6240\u6709\uFF0C\u4E0D\u5F97\u8FDB\u884C\u4EFB\u4F55\u5546\u4E1A\u6027\u884C\u4E3A\n\u5982\u4FB5\u72AF\u5230\u4F5C\u8005\u6743\u76CA\u8BF7\u8054\u7CFB\uFF0C\u672C\u4EBA\u5C06\u7ACB\u5373\u5220\u9664\n\n=====\u5F15\u7528\u56FE\u7247\u6765\u6E90=====\n\u300A\u4E09\u8272\u25B3\u7ED8\u604B\u300B\n\u300ALOVELY\xD7CATION\u300B\n\u300A\u7F8E\u5C11\u5973\u4E07\u534E\u955C-\u795E\u304C\u9020\u308A\u305F\u3082\u3046\u305F\u5C11\u5973\u305F\u3061-\u300B\n\u300A\u7F8E\u5C11\u5973\u4E07\u534E\u955C
+        -\u7F6A\u3068\u7F5A\u306E\u5C11\u5973\u300B\n\n=====\u5F15\u7528\u97F3\u4E50\u6765\u6E90======\nmomocashew
+        - \u904A\u5712\u65BD\u8A2D (Arranged by arai tasuku feat.momocashew from Mili)\n\u89C9\u9192\u4E4B\u5FC3\uFF08Awakening\_Conscience\uFF09
+        - \u672A\u77E5 - \u4E0A\u8BFE\u94C3\n\u685C\u5EAD\u7D71 - Firelink Shrine\n\u82E6\u3057\u307F\u306E\u66F2\n\n=====\u8054\u7CFB\u65B9\u5F0F=====\n\u7535\u5B50\u90AE\u7BB1\ni@confeather.com"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1490255265483282, guid: 81c926c91867176438cdd45d9d9affdc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1850191007286742, guid: 81c926c91867176438cdd45d9d9affdc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224311475896232630, guid: 81c926c91867176438cdd45d9d9affdc,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -487.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81c926c91867176438cdd45d9d9affdc, type: 2}
   m_IsPrefabAsset: 0

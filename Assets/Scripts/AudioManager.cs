@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour {
 
     public void LoadAudio()
     {
-        clip = Resources.Load("AudioClips\\" + audioName) as AudioClip;
+        clip = Resources.Load("AudioClips/" + audioName) as AudioClip;
         this.GetComponent<AudioSource>().clip = clip;
         this.GetComponent<AudioSource>().loop = true;
         this.GetComponent<AudioSource>().Play();
@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour {
 
     public void LoadAudioOnce()
     {
-        clip = Resources.Load("AudioClips\\" + audioName) as AudioClip;
+        clip = Resources.Load("AudioClips/" + audioName) as AudioClip;
         this.GetComponent<AudioSource>().clip = clip;
         this.GetComponent<AudioSource>().loop = false;
         this.GetComponent<AudioSource>().Play();

@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour {
     public GameObject saveComplete;
     public GameObject wantToLeave;
 
-    //public GameObject panelMask;
-
     private string nowSceneName;
     private string tempText;
 

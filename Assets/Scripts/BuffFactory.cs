@@ -40,7 +40,7 @@ public class BuffFactory
     {
         XmlDocument xmlDocument = new XmlDocument();//新建一个XML“编辑器” 
         buffs_list = new List<string>();
-        string data = Resources.Load("DataBase\\buffData").ToString();
+        string data = Resources.Load("DataBase/buffData").ToString();
         xmlDocument.LoadXml(data);//载入这个xml  
         XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("buffs").ChildNodes;
         foreach (XmlNode xmlNode in xmlNodeList)
