@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <dialogues>
   <dialogue>
-    <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
     <role>谢才哲</role>
     <detail>啊，哥们，你回来了。</detail>
     <position>center</position>

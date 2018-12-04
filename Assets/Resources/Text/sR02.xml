@@ -2,13 +2,6 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>谢才哲自我陶醉地哼着听不懂的韩语歌。</detail>
     <position>center</position>
     <portrait>sR02</portrait>

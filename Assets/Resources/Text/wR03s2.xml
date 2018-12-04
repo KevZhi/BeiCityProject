@@ -2,13 +2,6 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>高玉投来不善的目光。</detail>
     <position>center</position>
     <portrait>wR03</portrait>

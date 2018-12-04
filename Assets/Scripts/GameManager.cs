@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
     {
 
         objRoot = GameObject.Find("objRoot");
-        sceneMask = objRoot.transform.Find("sceneMask").gameObject;
+        //sceneMask = objRoot.transform.Find("sceneMask").gameObject;
         roleRoot = objRoot.transform.Find("roleRoot").gameObject;
         posRoot = objRoot.transform.Find("posRoot").gameObject;
 

@@ -14,8 +14,8 @@ public class DialogManager : MonoBehaviour {
     public bool startDialog = false;
     public string curName;
 
-    private LyricsStructure lyrics;
-    private NoticeStructure notice;
+    //private LyricsStructure lyrics;
+    //private NoticeStructure notice;
 
     public GameObject portraitImage;
     public Image leftPos1;
@@ -55,8 +55,8 @@ public class DialogManager : MonoBehaviour {
     void Start()
     {
         allPortrait = portraitImage.transform;
-        lyrics = JsonUtility.FromJson<LyricsStructure>(File.ReadAllText(Application.dataPath + "\\Resources\\DataBase\\lyrics.json"));
-        notice = JsonUtility.FromJson<NoticeStructure>(File.ReadAllText(Application.dataPath + "\\Resources\\DataBase\\notice.json"));
+        //lyrics = JsonUtility.FromJson<LyricsStructure>(File.ReadAllText(Application.dataPath + "/Resources/DataBase/lyrics.json"));
+        //notice = JsonUtility.FromJson<NoticeStructure>(File.ReadAllText(Application.dataPath + "/Resources/DataBase/notice.json"));
     }
 
     void Update()
@@ -100,6 +100,13 @@ public class DialogManager : MonoBehaviour {
                 }
             }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                gm.im.active = true;
+            }
+        }
     }
 
     private void Dialogues_handle(int dialogue_index)
@@ -121,7 +128,7 @@ public class DialogManager : MonoBehaviour {
 
     public void StartDialog()
     {
-        startDialog = true;
+
         dialogue_index = 0;
         dialogue_count = 0;
 
@@ -130,8 +137,7 @@ public class DialogManager : MonoBehaviour {
         gm.targetPanel.SetActive(false);
         dialogImage.SetActive(true);
         portraitImage.SetActive(true);
-        gm.im.active = false;
-
+        
         XmlDocument xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();
         string data = Resources.Load("Text\\" + curName).ToString();
@@ -147,12 +153,16 @@ public class DialogManager : MonoBehaviour {
                 + xmlElement.ChildNodes.Item(4).InnerText);
         }
         dialogue_count = dialogues_list.Count;
-    
+
+        startDialog = true;
+
         Dialogues_handle(0);
+
         gm.roleRoot.SetActive(false);
         gm.posRoot.SetActive(false);
         gm.sceneMask.SetActive(true);
-
+       
+        gm.im.active = false;
     }
 
     public void QuitDialog()
@@ -167,9 +177,11 @@ public class DialogManager : MonoBehaviour {
         gm.posRoot.SetActive(true);
         ResetRolePortrait();
         startDialog = false;
-        gm.im.active = true;
+   
         CheckEventName(curName);
+
         gm.em.destroyed = true;
+        //gm.im.active = true;
     }
 
     public void LoadRolePortrait(string rolePosition)
@@ -497,16 +509,16 @@ public class DialogManager : MonoBehaviour {
         }
 
         //文章
-        if (stateDetail == "+lyrics1")
-        {
-            gm.noticePanel.SetActive(true);
-            gm.noticePanel.GetComponentInChildren<Text>().text = lyrics.Lyrics1;
-        }
-        if (stateDetail == "+notice1")
-        {
-            gm.noticePanel.SetActive(true);
-            gm.noticePanel.GetComponentInChildren<Text>().text = notice.Notice1;
-        }
+        //if (stateDetail == "+lyrics1")
+        //{
+        //    gm.noticePanel.SetActive(true);
+        //    gm.noticePanel.GetComponentInChildren<Text>().text = lyrics.Lyrics1;
+        //}
+        //if (stateDetail == "+notice1")
+        //{
+        //    gm.noticePanel.SetActive(true);
+        //    gm.noticePanel.GetComponentInChildren<Text>().text = notice.Notice1;
+        //}
 
         //音频
         if (stateDetail == "+Firelink Shrine")
@@ -606,6 +618,7 @@ public class DialogManager : MonoBehaviour {
         //返回途中与钟对话
         if (eventName == "mR02s1")
         {
+            gm.im.canMove = true;
             gm.em.mR02s1actived = 1;
         }
         //教室内与高对话

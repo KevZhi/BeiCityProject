@@ -19,6 +19,7 @@ public class SaveDataTest : MonoBehaviour {
         if (isExist == true)
         {
             playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + this.name + ".json"));
+            //print(Application.persistentDataPath + "/" + this.name + ".json");
             this.GetComponentInChildren<Text>().text = playerData.SavedText;
         }
         else

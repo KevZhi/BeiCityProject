@@ -121,6 +121,7 @@ public class EventDataManager : MonoBehaviour {
                     }
                     if (mR02s1actived == 0)
                     {
+                        gm.im.canMove = false;
                         CreateRole("mR02s1", role1Pos);
                     }
                 }          

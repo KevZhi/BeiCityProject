@@ -49,10 +49,13 @@ public class InteractionManager : MonoBehaviour {
             {
                 if (hit.collider.tag == "MoveBtn")
                 {
-                    if (gm.em.mR02s1actived==0)
+                    if (gm.dm.curName!= "mR02s1canotMove")
                     {
-                        gm.dm.curName = "mR02s1canotMove";
-                        gm.dm.StartDialog();
+                        if (gm.em.mR02s1actived == 0)
+                        {
+                            gm.dm.curName = "mR02s1canotMove";
+                            gm.dm.StartDialog();
+                        }
                     }
                 }
             }

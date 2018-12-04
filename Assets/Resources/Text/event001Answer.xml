@@ -16,7 +16,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>我让出身子，将堆在脚边的书包展示给他看。</detail>
+    <detail>让出身子，将堆在脚边的书包展示给他看。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -72,7 +72,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>果然并不是“同类人”。</detail>
+    <detail>并不是“同类人”啊。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>

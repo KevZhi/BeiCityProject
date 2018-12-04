@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <dialogues>
   <dialogue>
-    <role></role>
-    <detail></detail>
-    <position>left3</position>
-    <portrait>sR05</portrait>
-    <state>+left3</state>
-  </dialogue>
-  <dialogue>
     <role>陌生人甲</role>
     <detail>嘻嘻，你又来十五班看“那个人”啊~</detail>
     <position>right3</position>
@@ -17,9 +10,9 @@
   <dialogue>
     <role>陌生人乙</role>
     <detail>才，才没有看！</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
+    <position>left3</position>
+    <portrait>sR05</portrait>
+    <state>+left3</state>
   </dialogue>
   <dialogue>
     <role>陌生人甲</role>
