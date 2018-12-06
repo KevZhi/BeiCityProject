@@ -936,9 +936,30 @@ Prefab:
       propertyPath: warning
       value: 
       objectReference: {fileID: 2133359134}
+    - target: {fileID: 82886248217996776, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eebaa2a8dd22634197efeb9c9591f6c, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1855249843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1106836950582692, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1855249842}
+--- !u!114 &1855249844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1855249843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fe6ed6f0bab3014ab2819c1193c3472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1966796351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114022853677453086, guid: 81c926c91867176438cdd45d9d9affdc,

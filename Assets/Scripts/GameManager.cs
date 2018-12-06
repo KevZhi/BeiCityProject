@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
     private PlayerDataStructure playerData;
     private EventDataStructure eventData;
 
+    public SQLiteEventManager SQLem;
+
     public GameObject wantToSave;
     public GameObject wantToLoad;
     public GameObject saveComplete;
@@ -74,6 +76,8 @@ public class GameManager : MonoBehaviour {
         em = this.GetComponent<EventDataManager>();
         dm = this.GetComponent<DialogManager>();
         im = this.GetComponent<InteractionManager>();
+
+        SQLem = this.GetComponent<SQLiteEventManager>();
     }
 
     private void Update()

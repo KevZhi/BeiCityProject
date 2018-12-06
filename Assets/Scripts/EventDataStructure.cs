@@ -23,6 +23,8 @@ public class EventDataStructure
 
     public int sR07Helped;
 
+
+
     public EventDataStructure(
         int event001,
         int event002,
@@ -67,3 +69,4 @@ public class EventDataStructure
         this.sR07Helped = sR07Helped;
     }
 }
+

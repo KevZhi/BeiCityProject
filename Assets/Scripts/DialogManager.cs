@@ -163,6 +163,10 @@ public class DialogManager : MonoBehaviour {
         gm.sceneMask.SetActive(true);
        
         gm.im.active = false;
+
+        //gm.SQLem.curName = curName;
+        gm.SQLem.CheckPlayerState(curName);
+
     }
 
     public void QuitDialog()
@@ -177,8 +181,14 @@ public class DialogManager : MonoBehaviour {
         gm.posRoot.SetActive(true);
         ResetRolePortrait();
         startDialog = false;
-   
-        CheckEventName(curName);
+
+        //print(curName);
+        gm.SQLem.CheckSetEventFinsh(curName);
+        gm.SQLem.CheckSetEventStart(curName);
+        //print(curName);
+        gm.SQLem.CheckNextEvent(curName);
+        //print(curName);
+
 
         gm.em.destroyed = true;
         //gm.im.active = true;
@@ -590,30 +600,30 @@ public class DialogManager : MonoBehaviour {
         /* event001 */
         
         //不回答荀
-        if (eventName == "event001NotAnswer")
-        {
-            gm.ps.PassiveEXP++;
-        }
-        if (eventName == "event001Answer" || eventName == "event001NotAnswer")
-        {
-            curName = "event001X";
-            StartDialog();
-        }
+        //if (eventName == "event001NotAnswer")
+        //{
+        //    gm.ps.PassiveEXP++;
+        //}
+        //if (eventName == "event001Answer" || eventName == "event001NotAnswer")
+        //{
+        //    curName = "event001X";
+        //    StartDialog();
+        //}
         //不回答谢
-        if (eventName == "event001XNotHelp")
-        {
-            gm.ps.PassiveEXP++;
-        }
-        if (eventName == "event001XHelp" || eventName == "event001XNotHelp")
-        {
-            curName = "event001XX";
-            StartDialog();
-        }
-        if (eventName == "event001XX")
-        {
-            gm.em.event001 = 2;
-            gm.em.event002 = 1;
-        }
+        //if (eventName == "event001XNotHelp")
+        //{
+        //    gm.ps.PassiveEXP++;
+        //}
+        //if (eventName == "event001XHelp" || eventName == "event001XNotHelp")
+        //{
+        //    curName = "event001XX";
+        //    StartDialog();
+        //}
+        //if (eventName == "event001XX")
+        //{
+        //    gm.em.event001 = 2;
+        //    gm.em.event002 = 1;
+        //}
         //返回途中与钟对话
         if (eventName == "mR02s1")
         {
@@ -621,55 +631,55 @@ public class DialogManager : MonoBehaviour {
             gm.em.mR02s1actived = 1;
         }
         //教室内与高对话
-        if (eventName == "wR03s1Chat")
-        {
-            gm.em.wR03s1actived = 1;
-        }
+        //if (eventName == "wR03s1Chat")
+        //{
+        //    gm.em.wR03s1actived = 1;
+        //}
         //教室内与谢对话
-        if (eventName == "sR02s1Chat")
-        {
-            gm.em.sR02s1actived = 1;
-        }
+        //if (eventName == "sR02s1Chat")
+        //{
+        //    gm.em.sR02s1actived = 1;
+        //}
        
         /* event002 */
         
         //答应高
-        if (eventName == "event002Answer")
-        {
-            gm.em.event002canSubmit = 1;
-            gm.ps.ShamEXP++;
-        }
+        //if (eventName == "event002Answer")
+        //{
+        //    gm.em.event002canSubmit = 1;
+        //    gm.ps.ShamEXP++;
+        //}
         //拒绝高
-        if (eventName == "event002NotAnswer")
-        {
-            gm.ps.RebelEXP++;
-        }
-        if (eventName == "event002Answer" || eventName == "event002NotAnswer")
-        {
+        //if (eventName == "event002NotAnswer")
+        //{
+        //    gm.ps.RebelEXP++;
+        //}
+        //if (eventName == "event002Answer" || eventName == "event002NotAnswer")
+        //{
 
-            curName = "event002X";
-            StartDialog();
-        }
-        if (eventName == "event002X")
-        {
-            gm.em.event002 = 2;
-            gm.em.event003 = 1;
-        }
+        //    curName = "event002X";
+        //    StartDialog();
+        //}
+        //if (eventName == "event002X")
+        //{
+        //    gm.em.event002 = 2;
+        //    gm.em.event003 = 1;
+        //}
         //对高提交
-        if (eventName == "wR03s2Chat")
-        {
-            gm.em.wR03s2actived = 1;
-        }
+        //if (eventName == "wR03s2Chat")
+        //{
+        //    gm.em.wR03s2actived = 1;
+        //}
         //杜、程对话
-        if (eventName == "sR05s1")
-        {
-            gm.em.sR05s1actived = 1;
-        }
+        //if (eventName == "sR05s1")
+        //{
+        //    gm.em.sR05s1actived = 1;
+        //}
         //与欧阳对话
-        if (eventName == "wR02s1Chat")
-        {
-            gm.em.wR02s1actived = 1;
-        }
+        //if (eventName == "wR02s1Chat")
+        //{
+        //    gm.em.wR02s1actived = 1;
+        //}
         //帮助乞丐
         if (eventName == "sR07s1Help")
         {
@@ -677,11 +687,11 @@ public class DialogManager : MonoBehaviour {
             gm.em.sR07Helped = 1;
         }
         //不帮助乞丐
-        if (eventName == "sR07s1NotHelp")
-        {
-            gm.em.sR07s1actived = 1;
-            gm.ps.PassiveEXP++;
-        }
+        //if (eventName == "sR07s1NotHelp")
+        //{
+        //    gm.em.sR07s1actived = 1;
+        //    gm.ps.PassiveEXP++;
+        //}
         
         /* event003 */
 
