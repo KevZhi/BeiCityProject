@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using Mono.Data.Sqlite;
 
 public class CommonMenu : MonoBehaviour {
 
@@ -29,6 +31,8 @@ public class CommonMenu : MonoBehaviour {
         gm = GameObject.Find("Player").GetComponent<GameManager>();
         gm.black.SetActive(true);
         gm.begin.SetActive(true);
+
+        LoadSQL();
     }
 
     private void Update()
@@ -51,39 +55,6 @@ public class CommonMenu : MonoBehaviour {
                 gm.closeMenuBtn.SetActive(false);
 
                 gm.dm.curName = null;
-
-                gm.ps.SkillPoint = 0;
-                gm.ps.ShamLV = 0;
-                gm.ps.ShamEXP = 0;
-                gm.ps.PassiveLV = 0;
-                gm.ps.PassiveEXP = 0;
-                gm.ps.RebelLV = 0;
-                gm.ps.RebelEXP = 0;
-                gm.ps.SelfishLV = 0;
-                gm.ps.SelfishEXP = 0;
-                gm.ps.EvilLV = 0;
-                gm.ps.EvilEXP = 0;
-
-                gm.em.event001 = 0;
-                gm.em.event002 = 0;
-                gm.em.event003 = 0;
-
-                gm.em.desk01observed = 0;
-                gm.em.desk02observed = 0;
-                gm.em.desk03observed = 0;
-
-                gm.em.mR02s0actived = 0;
-                gm.em.mR02s1actived = 0;
-                gm.em.wR03s1actived = 0;
-                gm.em.sR02s1actived = 0;
-                gm.em.wR03s2actived = 0;
-                gm.em.sR05s1actived = 0;
-                gm.em.wR02s1actived = 0;
-                gm.em.sR07s1actived = 0;
-
-                gm.em.event002canSubmit = 0;
-
-                gm.em.sR07Helped = 0;
             }
          
         }
@@ -94,8 +65,16 @@ public class CommonMenu : MonoBehaviour {
                 check = false;
                 this.transform.Find("titleMenu").gameObject.SetActive(false);
                 gm.menuUI.SetActive(true);
-    
             }
         }
+    }
+    public void LoadSQL()
+    {
+        string appDBPath = Application.persistentDataPath + "/location.db";
+
+        WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
+
+        File.WriteAllBytes(appDBPath, loadDB.bytes);
+
     }
 }

@@ -11,7 +11,6 @@ public class DialogManager : MonoBehaviour {
 
     private GameManager gm;
 
-    public bool startDialog = false;
     public string curName;
 
     private LyricsStructure lyrics;
@@ -31,15 +30,15 @@ public class DialogManager : MonoBehaviour {
     public GameObject detail;
 
     private List<string> dialogues_list;//存放dialogues的list
-    private int dialogue_index = 0;//对话索引
-    private int dialogue_count = 0;//对话数量
+    public int dialogue_index;//对话索引
+    public int dialogue_count;//对话数量
 
     private bool startTimer = false;
     private float timer;
 
     private Transform allPortrait;
 
-    private string xmlPath;
+    //private string xmlPath;
 
     private string role;
     private string role_detail;
@@ -82,34 +81,10 @@ public class DialogManager : MonoBehaviour {
                     gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
                 }
             }
-
-        }
-
-        if (startDialog)
-        {
-            if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Space))
-            {
-                dialogue_index++;
-                if (dialogue_index < dialogue_count)//如果对话还没有完
-                {
-                    Dialogues_handle(dialogue_index);//那就载入下一条对话
-                }
-                else
-                { 
-                    QuitDialog();
-                }
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                gm.im.active = true;
-            }
         }
     }
 
-    private void Dialogues_handle(int dialogue_index)
+    public void Dialogues_handle(int dialogue_index)
     {
         string[] role_detail_array = dialogues_list[dialogue_index].Split(',');
 
@@ -124,14 +99,13 @@ public class DialogManager : MonoBehaviour {
 
         LoadRolePortrait(rolePos);
         CheckState(state);
+
     }
 
     public void StartDialog()
     {
-
         dialogue_index = 0;
         dialogue_count = 0;
-
 
         gm.menuUI.SetActive(false);
         gm.targetPanel.SetActive(false);
@@ -154,19 +128,19 @@ public class DialogManager : MonoBehaviour {
         }
         dialogue_count = dialogues_list.Count;
 
-        startDialog = true;
-
         Dialogues_handle(0);
 
-        gm.roleRoot.SetActive(false);
-        gm.posRoot.SetActive(false);
+        gm.dc.next = true;
+
+        gm.objRoot.SetActive(false);
         gm.sceneMask.SetActive(true);
        
         gm.im.active = false;
-
-        //gm.SQLem.curName = curName;
-        gm.SQLem.CheckPlayerState(curName);
-
+        //print("start");
+        //print(curName);
+        gm.sm.destroyed = true;
+        gm.sm.checkInDialogStart = true;
+     
     }
 
     public void QuitDialog()
@@ -177,21 +151,17 @@ public class DialogManager : MonoBehaviour {
         gm.sceneMask.SetActive(false);
         gm.targetPanel.SetActive(true);
         gm.noticePanel.SetActive(false);
-        gm.roleRoot.SetActive(true);
-        gm.posRoot.SetActive(true);
+
+        gm.objRoot.SetActive(true);
         ResetRolePortrait();
-        startDialog = false;
 
-        //print(curName);
-        gm.SQLem.CheckSetEventFinsh(curName);
-        gm.SQLem.CheckSetEventStart(curName);
-        //print(curName);
-        gm.SQLem.CheckNextEvent(curName);
+        gm.dc.next = false;//姑且放在这吧，我要被搞死了
+
+        gm.sm.destroyed = true;
+        gm.sm.checkInDialogFinish = true;
+        //print("finish");
         //print(curName);
 
-
-        gm.em.destroyed = true;
-        //gm.im.active = true;
     }
 
     public void LoadRolePortrait(string rolePosition)
@@ -239,9 +209,8 @@ public class DialogManager : MonoBehaviour {
     //选项
     public void Answer()
     {
-        startDialog = true;
         curName = curName + "Answer";
-        //print(Resources.Load("Text/" + curName));
+        print(Resources.Load("Text/" + curName));
         if (Resources.Load("Text/" + curName))
         {
             StartDialog();
@@ -251,7 +220,7 @@ public class DialogManager : MonoBehaviour {
 
     public void NotAnswer()
     {
-        startDialog = true;
+     
         curName = curName + "NotAnswer";
         if (Resources.Load("Text/" + curName))
         {
@@ -266,7 +235,7 @@ public class DialogManager : MonoBehaviour {
 
     public void Help()
     {
-        startDialog = true;
+      
         curName = curName + "Help";
       
         if (Resources.Load("Text/" + curName))
@@ -278,7 +247,7 @@ public class DialogManager : MonoBehaviour {
 
     public void NotHelp()
     {
-        startDialog = true;
+      
         curName = curName + "NotHelp";
         //print(Resources.Load("Text/" + curName));
         if (Resources.Load("Text/" + curName))
@@ -294,7 +263,7 @@ public class DialogManager : MonoBehaviour {
 
     public void Observe()
     {
-        startDialog = true;
+  
         if (curName == "desk01")
         {
 
@@ -303,11 +272,11 @@ public class DialogManager : MonoBehaviour {
 
             curName = "desk01nothing";
             StartDialog();
-            if (gm.em.desk01observed==0)
-            {
-                gm.em.desk01observed = 1;
-                gm.ps.EvilEXP++;
-            }
+            //if (gm.em.desk01observed==0)
+            //{
+            //    gm.em.desk01observed = 1;
+            //    gm.ps.EvilEXP++;
+            //}
 
         }
         if (curName == "desk02")
@@ -318,11 +287,11 @@ public class DialogManager : MonoBehaviour {
 
             curName = "desk02lyrics1";
             StartDialog();
-            if (gm.em.desk02observed == 0)
-            {
-                gm.em.desk02observed = 1;
-                gm.ps.EvilEXP++;
-            }
+            //if (gm.em.desk02observed == 0)
+            //{
+            //    gm.em.desk02observed = 1;
+            //    gm.ps.EvilEXP++;
+            //}
         }
         if (curName == "desk03")
         {
@@ -358,7 +327,7 @@ public class DialogManager : MonoBehaviour {
 
     public void NotObserve()
     {
-        startDialog = true;
+   
         curName = curName + "NotObserve";
         
         if (Resources.Load("Text/" + curName))
@@ -374,7 +343,7 @@ public class DialogManager : MonoBehaviour {
 
     public void Chat()
     {
-        startDialog = true;
+
         dialogue_index = 0;
         dialogue_count = 0;
         curName = curName + "Chat";
@@ -384,7 +353,7 @@ public class DialogManager : MonoBehaviour {
 
     public void NotChat()
     {
-        startDialog = true;
+
         curName = curName + "NotChat";
         //print(Resources.Load("Text/" + curName));
         if (Resources.Load("Text/" + curName))
@@ -400,20 +369,19 @@ public class DialogManager : MonoBehaviour {
 
     public void Sit()
     {
-        startDialog = true;
-        if (gm.em.event002==1)
-        {
-            dialogue_index = 0;
-            dialogue_count = 0;
-            curName = "event002";
-            StartDialog();
-        }
+  
+        //if (gm.em.event002==1)
+        //{
+        //    dialogue_index = 0;
+        //    dialogue_count = 0;
+        //    curName = "event002";
+        //    StartDialog();
+        //}
         gm.SitOrNot.SetActive(false);
     }
 
     public void NotSit()
     {
-        startDialog = true;
         QuitDialog();
         gm.SitOrNot.SetActive(false);
     }
@@ -544,31 +512,32 @@ public class DialogManager : MonoBehaviour {
         //选项
         if (stateDetail == "AnswerOrNot")
         {
-            startDialog = false;
+            gm.dc.next = false;
             gm.AnswerOrNot.SetActive(true);
         }
         if (stateDetail == "HelpOrNot")
         {
-            startDialog = false;
+            gm.dc.next = false;
             gm.HelpOrNot.SetActive(true);
         }
         if (stateDetail == "ObserveOrNot")
         {
-            startDialog = false;
+            gm.dc.next = false;
             gm.ObserveOrNot.SetActive(true);
         }
         if (stateDetail == "ChatOrNot")
         {
-            startDialog = false;
+            gm.dc.next = false;
             gm.ChatOrNot.SetActive(true);
         }
         if (stateDetail == "SitOrNot")
         {
-            if (gm.em.event002 == 1)
-            {
-                startDialog = false;
-                gm.SitOrNot.SetActive(true);
-            }
+            gm.dc.next = false;
+            //if (gm.em.event002 == 1)
+            //{
+            //    startDialog = false;
+            //    gm.SitOrNot.SetActive(true);
+            //}
 
         }
 
@@ -593,107 +562,5 @@ public class DialogManager : MonoBehaviour {
         {
             gm.im.canMove = true;
         }
-    }
-
-    public void CheckEventName(string eventName)
-    {
-        /* event001 */
-        
-        //不回答荀
-        //if (eventName == "event001NotAnswer")
-        //{
-        //    gm.ps.PassiveEXP++;
-        //}
-        //if (eventName == "event001Answer" || eventName == "event001NotAnswer")
-        //{
-        //    curName = "event001X";
-        //    StartDialog();
-        //}
-        //不回答谢
-        //if (eventName == "event001XNotHelp")
-        //{
-        //    gm.ps.PassiveEXP++;
-        //}
-        //if (eventName == "event001XHelp" || eventName == "event001XNotHelp")
-        //{
-        //    curName = "event001XX";
-        //    StartDialog();
-        //}
-        //if (eventName == "event001XX")
-        //{
-        //    gm.em.event001 = 2;
-        //    gm.em.event002 = 1;
-        //}
-        //返回途中与钟对话
-        if (eventName == "mR02s1")
-        {
-            gm.im.canMove = true;
-            gm.em.mR02s1actived = 1;
-        }
-        //教室内与高对话
-        //if (eventName == "wR03s1Chat")
-        //{
-        //    gm.em.wR03s1actived = 1;
-        //}
-        //教室内与谢对话
-        //if (eventName == "sR02s1Chat")
-        //{
-        //    gm.em.sR02s1actived = 1;
-        //}
-       
-        /* event002 */
-        
-        //答应高
-        //if (eventName == "event002Answer")
-        //{
-        //    gm.em.event002canSubmit = 1;
-        //    gm.ps.ShamEXP++;
-        //}
-        //拒绝高
-        //if (eventName == "event002NotAnswer")
-        //{
-        //    gm.ps.RebelEXP++;
-        //}
-        //if (eventName == "event002Answer" || eventName == "event002NotAnswer")
-        //{
-
-        //    curName = "event002X";
-        //    StartDialog();
-        //}
-        //if (eventName == "event002X")
-        //{
-        //    gm.em.event002 = 2;
-        //    gm.em.event003 = 1;
-        //}
-        //对高提交
-        //if (eventName == "wR03s2Chat")
-        //{
-        //    gm.em.wR03s2actived = 1;
-        //}
-        //杜、程对话
-        //if (eventName == "sR05s1")
-        //{
-        //    gm.em.sR05s1actived = 1;
-        //}
-        //与欧阳对话
-        //if (eventName == "wR02s1Chat")
-        //{
-        //    gm.em.wR02s1actived = 1;
-        //}
-        //帮助乞丐
-        if (eventName == "sR07s1Help")
-        {
-            gm.em.sR07s1actived = 1;
-            gm.em.sR07Helped = 1;
-        }
-        //不帮助乞丐
-        //if (eventName == "sR07s1NotHelp")
-        //{
-        //    gm.em.sR07s1actived = 1;
-        //    gm.ps.PassiveEXP++;
-        //}
-        
-        /* event003 */
-
     }
 }

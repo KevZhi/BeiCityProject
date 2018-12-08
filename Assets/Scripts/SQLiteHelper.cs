@@ -91,6 +91,12 @@ public class SQLiteHelper
         return ExecuteQuery(queryString);
     }
 
+    public SqliteDataReader ReadColumn(string tableName , string volumnName)
+    {
+        string queryString = "SELECT " + "" + " FROM " + tableName;
+        return ExecuteQuery(queryString);
+    }
+
     /// <summary>
     /// 向指定数据表中插入数据
     /// </summary>
@@ -139,8 +145,30 @@ public class SQLiteHelper
             queryString += ", " + colNames[i] + "=" + colValues[i];
         }
         queryString += " WHERE " + key + operation + value;
+        //Debug.Log(queryString);
         return ExecuteQuery(queryString);
     }
+
+    /// <summary>
+    /// 更新符合条件的某一值
+    /// </summary>
+    /// <param name="tableName"></param>
+    /// <param name="colNames"></param>
+    /// <param name="colValues"></param>
+    /// <param name="key"></param>
+    /// <param name="operation"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public SqliteDataReader UpdateEventState(string tableName, string colNames, string colValues, string key, string operation, string value)
+    {
+        string queryString = "UPDATE " + tableName + " SET " + colNames + "=" + colValues;
+        queryString += " WHERE " + key + operation + value;
+        Debug.Log(queryString);
+        return ExecuteQuery(queryString);
+    }
+
+
+
 
     /// <summary>
     /// 删除指定数据表内的数据
@@ -227,6 +255,13 @@ public class SQLiteHelper
         {
             queryString += " AND " + colNames[i] + " " + operations[i] + " " + colValues[0] + " ";
         }
+        return ExecuteQuery(queryString);
+    }
+
+    public SqliteDataReader MyReadTable(string tableName, string items, string colNames, string operations, string colValues)
+    {
+        string queryString = "SELECT " + items;
+        queryString += " FROM " + tableName + " WHERE " + colNames + " " + operations + " " + colValues;
         return ExecuteQuery(queryString);
     }
 }

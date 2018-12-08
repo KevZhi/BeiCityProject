@@ -18,16 +18,16 @@ public class InteractionManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
         RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+
         if (hit.collider != null)
         {
             //事件触发
-            if (Input.GetMouseButtonDown(0) && active == true)
+            if (Input.GetMouseButtonUp(0) && active == true)
             {
                 if (hit.collider.tag == "Normal" && hit.collider.GetComponent<EventCasterManager>().active == true)
                 {
@@ -49,14 +49,14 @@ public class InteractionManager : MonoBehaviour {
             {
                 if (hit.collider.tag == "MoveBtn")
                 {
-                    if (gm.dm.curName!= "mR02s1canotMove")
-                    {
-                        if (gm.em.mR02s1actived == 0)
-                        {
-                            gm.dm.curName = "mR02s1canotMove";
-                            gm.dm.StartDialog();
-                        }
-                    }
+                    //if (gm.dm.curName!= "mR02s1canotMove")
+                    //{
+                    //    if (gm.em.mR02s1actived == 0)
+                    //    {
+                    //        gm.dm.curName = "mR02s1canotMove";
+                    //        gm.dm.StartDialog();
+                    //    }
+                    //}
                 }
             }
         }

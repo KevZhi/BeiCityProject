@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SQLiteEventManager : MonoBehaviour {
 
     private GameManager gm;
-    private SQLiteHelper sql;
+    public SQLiteHelper eventSQL;
 
     private void Awake()
     {
@@ -16,46 +16,31 @@ public class SQLiteEventManager : MonoBehaviour {
 
     public void CheckPlayerState(string eventName)
     {
-        sql = new SQLiteHelper("data source=" + Application.streamingAssetsPath + "/sqlite4unity.db");
-        SqliteDataReader reader = sql.ReadFullTable("event");
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        SqliteDataReader reader = eventSQL.ReadFullTable("EventList");
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
             {
-                if (reader.GetString(reader.GetOrdinal("PlayerState")) == "Passive")
+                if (reader.GetString(reader.GetOrdinal("PlayerState")) != "no")
                 {
-                    gm.ps.PassiveEXP++;
-                    //Debug.Log(reader.GetString(reader.GetOrdinal("PlayerState")));
-                }
-                if (reader.GetString(reader.GetOrdinal("PlayerState")) == "Sham")
-                {
-                    gm.ps.ShamEXP++;
-                }
-                if (reader.GetString(reader.GetOrdinal("PlayerState")) == "Rebel")
-                {
-                    gm.ps.RebelEXP++;
-                }
-                if (reader.GetString(reader.GetOrdinal("PlayerState")) == "Selfish")
-                {
-                    gm.ps.SelfishEXP++;
-                }
-                if (reader.GetString(reader.GetOrdinal("PlayerState")) == "Evil")
-                {
-                    gm.ps.EvilEXP++;
+                    string stateName = reader.GetString(reader.GetOrdinal("PlayerState"));
+                    eventSQL.UpdateEventState("PlayerState", "value", "value+1", "name", "=", "'" + stateName + "EXP" + "'");
+                    CheckLVUP(stateName);
                 }
             }
         }
-        sql.CloseConnection();
+        eventSQL.CloseConnection();
     }
 
     /// <summary>
-    /// 会改变当前事件名curName
+    /// 使用这个后，会改变当前事件名curName
     /// </summary>
-    /// <param name="eventName">为改变的curName</param>
+    /// <param name="eventName">未改变的curName</param>
     public void CheckNextEvent(string eventName)
     {
-        sql = new SQLiteHelper("data source=" + Application.streamingAssetsPath + "/sqlite4unity.db");
-        SqliteDataReader reader = sql.ReadFullTable("event");
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        SqliteDataReader reader = eventSQL.ReadFullTable("EventList");
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
@@ -67,40 +52,105 @@ public class SQLiteEventManager : MonoBehaviour {
                 }
             }
         }
-        sql.CloseConnection();
+        eventSQL.CloseConnection();
     }
 
     public void CheckSetEventFinsh(string eventName)
     {
-        sql = new SQLiteHelper("data source=" + Application.streamingAssetsPath + "/sqlite4unity.db");
-        SqliteDataReader reader = sql.ReadFullTable("event");
-        while (reader.Read())
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        SqliteDataReader readList = eventSQL.ReadFullTable("EventList");     
+        while (readList.Read())
         {
-            if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
+            if (readList.GetString(readList.GetOrdinal("EventName")) == eventName)
             {
-                if (gm.em.HasEvent(reader.GetString(reader.GetOrdinal("SetEventFinish"))))
+                if (readList.GetString(readList.GetOrdinal("SetEventFinish")) != "no"  )
                 {
-                    gm.em.SetEventState(reader.GetString(reader.GetOrdinal("SetEventFinish")), 2);
+                    string setEventName = readList.GetString(readList.GetOrdinal("SetEventFinish"));
+                    eventSQL.UpdateEventState("EventData", "EventState", "'finish'", "EventName", "=", "'" + setEventName + "'");
+                    //print(setEventName);
                 }
             }
         }
-        sql.CloseConnection();
+        eventSQL.CloseConnection();
     }
 
     public void CheckSetEventStart(string eventName)
     {
-        sql = new SQLiteHelper("data source=" + Application.streamingAssetsPath + "/sqlite4unity.db");
-        SqliteDataReader reader = sql.ReadFullTable("event");
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        SqliteDataReader reader = eventSQL.ReadFullTable("EventList");
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
             {
-                if (gm.em.HasEvent(reader.GetString(reader.GetOrdinal("SetEventStart"))))
+                if (reader.GetString(reader.GetOrdinal("SetEventStart")) != "no")
                 {
-                    gm.em.SetEventState(reader.GetString(reader.GetOrdinal("SetEventStart")), 1);
+                    string setEventName = reader.GetString(reader.GetOrdinal("SetEventStart"));
+                    eventSQL.UpdateEventState("EventData", "EventState", "'start'", "EventName", "=", "'" + setEventName + "'");
+                    //print(setEventName);
                 }
             }
         }
-        sql.CloseConnection();
+        eventSQL.CloseConnection();
     }
+    /// <summary>
+    /// 检验是否可以升级
+    /// </summary>
+    /// <param name="stateName"></param>
+    private void CheckLVUP( string stateName)
+    {
+        SqliteDataReader reader = eventSQL.ReadFullTable("PlayerState");
+        while (reader.Read())
+        {
+            if (reader.GetString(reader.GetOrdinal("name")) == (stateName + "EXP") )
+            {
+                if (reader.GetInt32(reader.GetOrdinal("value")) == 2)
+                {
+                    eventSQL.UpdateEventState("PlayerState", "value", "value+1", "name", "=", "'" + stateName + "LV" + "'");
+                    gm.ps.LVup = true;
+                }
+            }
+        }
+    }
+
+    public void ShowPlayerState()
+    {
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        SqliteDataReader reader = eventSQL.ReadFullTable("PlayerState");
+        while (reader.Read())
+        {
+            if (reader.GetString(reader.GetOrdinal("name")) == "ShamLV")
+            {
+                gm.ps.ShamText.text = reader.GetInt32(reader.GetOrdinal("value")).ToString();
+                //print("ShamLV");
+            }
+            if (reader.GetString(reader.GetOrdinal("name")) == "PassiveLV")
+            {
+                gm.ps.PassiveText.text = reader.GetInt32(reader.GetOrdinal("value")).ToString();
+                //print("PassiveLV");
+            }
+            if (reader.GetString(reader.GetOrdinal("name")) == "RebelLV")
+            {
+                gm.ps.RebelText.text = reader.GetInt32(reader.GetOrdinal("value")).ToString();
+                //print("RebelLV");
+            }
+            if (reader.GetString(reader.GetOrdinal("name")) == "SelfishLV")
+            {
+                gm.ps.SelfishText.text = reader.GetInt32(reader.GetOrdinal("value")).ToString();
+            }
+            if (reader.GetString(reader.GetOrdinal("name")) == "EvilLV")
+            {
+                gm.ps.EvilText.text = reader.GetInt32(reader.GetOrdinal("value")).ToString();
+            }
+        }
+        eventSQL.CloseConnection();
+    }
+
+    public void SetAllDefalut()
+    {
+        eventSQL = new SQLiteHelper("data source=" + Application.persistentDataPath + "/location.db");
+        eventSQL.UpdateEventState("PlayerState", "value", "0", "value", "!=", "0");
+        eventSQL.UpdateEventState("EventData", "EventState", "'ready'", "EventState", "!=", "'ready'");
+        eventSQL.CloseConnection();
+    }
+
 }

@@ -53,14 +53,14 @@ public class SQLiteDemo : MonoBehaviour {
         }
 
         //读取数据表中Age>=25的所有记录的ID和Name
-        reader = sql.ReadTable("table1", new string[] { "ID", "Name" }, new string[] { "Age" }, new string[] { ">=" }, new string[] { "'25'" });
-        while (reader.Read())
-        {
-            //读取ID
-            Debug.Log("age>25" + reader.GetInt32(reader.GetOrdinal("ID")));
-            //读取Name
-            Debug.Log("age>25" + reader.GetString(reader.GetOrdinal("Name")));
-        }
+        //reader = sql.ReadTable("table1", new string[] { "ID", "Name" }, new string[] { "Age" }, new string[] { ">=" }, new string[] { "'25'" });
+        //while (reader.Read())
+        //{
+        //    //读取ID
+        //    Debug.Log("age>25" + reader.GetInt32(reader.GetOrdinal("ID")));
+        //    //读取Name
+        //    Debug.Log("age>25" + reader.GetString(reader.GetOrdinal("Name")));
+        //}
 
         //自定义SQL,删除数据表中所有Name="王五"的记录
         //sql.ExecuteQuery("DELETE FROM table1 WHERE NAME='王五'");

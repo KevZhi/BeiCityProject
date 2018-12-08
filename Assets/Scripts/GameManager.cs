@@ -9,18 +9,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+    public string sceneName;
+
     private PlayerDataStructure playerData;
     private EventDataStructure eventData;
-
-    public SQLiteEventManager SQLem;
 
     public GameObject wantToSave;
     public GameObject wantToLoad;
     public GameObject saveComplete;
     public GameObject wantToLeave;
 
-    private string nowSceneName;
-    private string tempText;
+    //private string nowSceneName;
+    //private string tempText;
 
     private bool isExist;
 
@@ -53,81 +53,43 @@ public class GameManager : MonoBehaviour {
     public GameObject ChatOrNot;
     public GameObject SitOrNot;
 
-    public GameObject objRoot;
-    public GameObject roleRoot;
-    public GameObject posRoot;
     public GameObject sceneMask;
-    public PlayerState ps;
-    public EventDataManager em;
-    public DialogManager dm;
-    public InteractionManager im;
 
-    //private float timer = 0;
+    public GameObject objRoot;
+
+    public PlayerState ps;
+    public DialogManager dm;
+    public DialogController dc;
+    public InteractionManager im;
+    public SceneObjManager sm;
+    public SQLiteEventManager SQLem;
 
     private void Awake()
     {
 
         objRoot = GameObject.Find("objRoot");
-        //sceneMask = objRoot.transform.Find("sceneMask").gameObject;
-        roleRoot = objRoot.transform.Find("roleRoot").gameObject;
-        posRoot = objRoot.transform.Find("posRoot").gameObject;
 
         ps = this.GetComponent<PlayerState>();
-        em = this.GetComponent<EventDataManager>();
+
         dm = this.GetComponent<DialogManager>();
         im = this.GetComponent<InteractionManager>();
 
         SQLem = this.GetComponent<SQLiteEventManager>();
+        dc = this.GetComponent<DialogController>();
+        sm = this.GetComponent<SceneObjManager>();
     }
 
     private void Update()
     {
-        NowScene();
-        tempText = "地点：" + nowSceneName
-            + "\n存档时间：" + System.DateTime.Now;
+        sceneName = SceneManager.GetActiveScene().name;
+        //NowScene();
+        //tempText = "地点：" + nowSceneName
+        //    + "\n存档时间：" + System.DateTime.Now;
     }
 
 
     public void SavePlayerData()
     {
-        playerData = new PlayerDataStructure(
-            SceneManager.GetActiveScene().name, 
-            ps.SkillPoint,
-            tempText,
-            ps.ShamLV,
-            ps.ShamEXP,
-            ps.PassiveLV,
-            ps.PassiveEXP,
-            ps.RebelLV,
-            ps.RebelEXP,
-            ps.SelfishLV,
-            ps.SelfishEXP,
-            ps.EvilLV,
-            ps.EvilEXP
-            );
-
-        eventData = new EventDataStructure(
-        em.event001,
-        em.event002,
-        em.event003,
-
-        em.desk01observed,
-        em.desk02observed,
-        em.desk03observed,
-
-        em.mR02s0actived,
-        em.mR02s1actived,
-        em.wR03s1actived,
-        em.sR02s1actived,
-        em.wR03s2actived,
-        em.sR05s1actived,
-        em.wR02s1actived,
-        em.sR07s1actived,
-
-        em.event002canSubmit,
-
-        em.sR07Helped);
-
         File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));
         File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + "event.json", JsonUtility.ToJson(eventData));
 
@@ -137,45 +99,13 @@ public class GameManager : MonoBehaviour {
 
     public void LoadPlayerData()
     {
+        SQLem.SetAllDefalut();
         isExist = File.Exists(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json");
 
         if (isExist)
         {
             playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json"));
             eventData = JsonUtility.FromJson<EventDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + "event.json"));
-
-            ps.SkillPoint = playerData.SkillPoint;
-            ps.ShamLV = playerData.ShamLV;
-            ps.ShamEXP = playerData.ShamEXP;
-            ps.PassiveLV = playerData.PassiveLV;
-            ps.PassiveEXP = playerData.PassiveEXP;
-            ps.RebelLV = playerData.RebelLV;
-            ps.RebelEXP = playerData.RebelEXP;
-            ps.SelfishLV = playerData.SelfishLV;
-            ps.SelfishEXP = playerData.SelfishEXP;
-            ps.EvilLV = playerData.EvilLV;
-            ps.EvilEXP = playerData.EvilEXP;
-
-            em.event001 = eventData.event001;
-            em.event002 = eventData.event002;
-            em.event003 = eventData.event003;
-
-            em.desk01observed = eventData.desk01observed;
-            em.desk02observed = eventData.desk02observed;
-            em.desk03observed = eventData.desk03observed;
-
-            em.mR02s0actived = eventData.mR02s0actived;
-            em.mR02s1actived = eventData.mR02s1actived;
-            em.wR03s1actived = eventData.wR03s1actived;
-            em.sR02s1actived = eventData.sR02s1actived;
-            em.wR03s2actived = eventData.wR03s2actived;
-            em.sR05s1actived = eventData.sR05s1actived;
-            em.wR02s1actived = eventData.wR02s1actived;
-            em.sR07s1actived = eventData.sR07s1actived;
-
-            em.event002canSubmit = eventData.event002canSubmit;
-
-            em.sR07Helped = eventData.sR07Helped;
 
             Globe.nextSceneName = playerData.CurScene;
             SceneManager.LoadScene("loading");
@@ -260,6 +190,7 @@ public class GameManager : MonoBehaviour {
 
     public void CallStatePanel()
     {
+        SQLem.ShowPlayerState();
         menuUI.SetActive(false);
         statePanel.SetActive(true);
     }
@@ -303,8 +234,8 @@ public class GameManager : MonoBehaviour {
 
         sceneMask.SetActive(true);
 
-        roleRoot.SetActive(false);
-        posRoot.SetActive(false);
+        //roleRoot.SetActive(false);
+        //posRoot.SetActive(false);
 
         targetPanel.SetActive(false);
     }
@@ -322,8 +253,8 @@ public class GameManager : MonoBehaviour {
 
         sceneMask.SetActive(false);
 
-        roleRoot.SetActive(true);
-        posRoot.SetActive(true);
+        //roleRoot.SetActive(true);
+        //posRoot.SetActive(true);
 
         targetPanel.SetActive(true);
     }
@@ -348,10 +279,9 @@ public class GameManager : MonoBehaviour {
 
     public void NewGame()
     {
-
+        SQLem.SetAllDefalut();
         Globe.nextSceneName = "floor2";
         SceneManager.LoadScene("loading");
-
     }
 
     public void LeaveGame()
@@ -387,31 +317,31 @@ public class GameManager : MonoBehaviour {
         log.SetActive(false);
     }
 
-    public void NowScene()
-    {
-        if (SceneManager.GetActiveScene().name =="class15")
-        {
-            nowSceneName = "十五班教室";
-        }
-        if (SceneManager.GetActiveScene().name == "floor2")
-        {
-            nowSceneName = "二楼走廊";
-        }
-        if (SceneManager.GetActiveScene().name == "supportClass15")
-        {
-            nowSceneName = "教辅室";
-        }
-        if (SceneManager.GetActiveScene().name == "gate")
-        {
-            nowSceneName = "校门";
-        }
-        if (SceneManager.GetActiveScene().name == "dongming")
-        {
-            nowSceneName = "冬明";
-        }
-        if (SceneManager.GetActiveScene().name == "street")
-        {
-            nowSceneName = "街道";
-        }
-    }
+    //public void NowScene()
+    //{
+    //    if (SceneManager.GetActiveScene().name =="class15")
+    //    {
+    //        nowSceneName = "十五班教室";
+    //    }
+    //    if (SceneManager.GetActiveScene().name == "floor2")
+    //    {
+    //        nowSceneName = "二楼走廊";
+    //    }
+    //    if (SceneManager.GetActiveScene().name == "supportClass15")
+    //    {
+    //        nowSceneName = "教辅室";
+    //    }
+    //    if (SceneManager.GetActiveScene().name == "gate")
+    //    {
+    //        nowSceneName = "校门";
+    //    }
+    //    if (SceneManager.GetActiveScene().name == "dongming")
+    //    {
+    //        nowSceneName = "冬明";
+    //    }
+    //    if (SceneManager.GetActiveScene().name == "street")
+    //    {
+    //        nowSceneName = "街道";
+    //    }
+    //}
 }
