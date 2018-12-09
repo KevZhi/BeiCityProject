@@ -1,12 +1,21 @@
 # BeiCityProject
-a simple galgame temp project by unity3d
 
-本工程所有图片，音频，引用文本均非本人版权所有，仅作演示用途，不属于本工程所必须的一部分，亦不遵循MIT协议，请下载者自酌。
-本工程所有剧本文本均为本人版权所有，仅作演示用途，不属于本工程所必须的一部分，遵循CC-BY-NC协议。
-剧情中所涉及的所有人名，地名，事件，纯属虚构，均与现实世界无关，剧中人物所表现的思想亦不能代表作者的思想。
+**Please head over [README-EN.md](https://github.com/confeather/BeiCityProject/blob/master/README-EN.md) to get English version of this document.**
 
-All pictures, audio and quoted text of this project are not my copyright. They are only for demonstration purposes. They are not a necessary part of this project. They do not follow the MIT license. They are within your own discretion.
+一个简单的基于 Unity3D 的 Galgame/TAVG（文字冒险游戏） 框架。现在可实现部分 Galgame/TAVG 中的基础功能，如对话、读存档、角色数值、等级状态、物件交互、场景等。其中事件、对话、角色状态等功能基于 SQLite 数据库实现，对话剧本使用xml格式。
 
-All scripts of this project are copyrighted by me. They are only for demonstration purposes. They are not a part of this project. They follow the CC-BY-NC license.
+本项目使用的Unity3D版本将为项目更新、维护时的最新版，请检查项目最后更新时间，以确定与您使用的Unity3D版本相匹配，否则可能会遇到兼容性问题。
 
-All the names, place names, events involved in the plot are purely fictional and have nothing to do with the real world. The ideas expressed by the characters in the play can not represent the author's thoughts.
+***
+
+本项目属于学生个人业余作品，欢迎进行交流。目前仍处于开发的初步阶段，许多功能尚未实现。提出反馈和建议时请考虑目前的项目进度。因为个人时间与精力有限，不能保证对每一条反馈和建议进行及时的回应。本项目仍有部分代码未进行注释，我正在逐步完善。如果您能帮助完善此项目，我将不胜感激！
+
+如果您对代码不感兴趣，可以直接前往[下载页面](https://github.com/confeather/BeiCityProject/releases)，下载可直接运行的程序(Windows/macOS皆有）
+
+### 版权说明
+
+您可以按照MIT协议的规定使用本项目中的程序框架，但请注意，本项目仅程序框架部分遵循MIT协议。做音乐是不可能做音乐的，这辈子也不会搞音乐，画又不会画，只能靠搬运来勉强支撑演示这样子。**资源文件**均来自于互联网，并非本人版权所有。此部分**资源文件**不属于本工程所必须的一部分，仅作**演示用途**，亦不遵循MIT协议，本人已最大程度上对图片进行了模糊处理，请下载者自行根据情况替换为自己的资源文件。
+
+但是如果你是相关专业的学生，本人**不希望**直接将本项目改名用来交作业，课程作业请自行完成。
+
+本工程所有剧本文本均为本人版权所有，仅作演示用途，不属于本工程所必须的一部分，遵循CC-BY-NC协议。剧情中所涉及的所有人名，地名，事件，纯属虚构，均与现实世界无关，剧中人物所表现的思想亦不能代表作者的思想。
