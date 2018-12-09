@@ -8,11 +8,11 @@ public class AudioManager : MonoBehaviour {
     public string audioName;
     private AudioClip clip;
 
-    public GameManager gm;
+    //private GameManager gm;
 
     private void Awake()
     {
-        gm = this.GetComponent<GameManager>();
+        //gm = this.GetComponent<GameManager>();
     }
 
     // Use this for initialization
@@ -53,7 +53,6 @@ public class AudioManager : MonoBehaviour {
         this.GetComponent<AudioSource>().clip = clip;
         this.GetComponent<AudioSource>().loop = true;
         this.GetComponent<AudioSource>().Play();
-
     }
 
     public void LoadAudioOnce()
@@ -70,5 +69,4 @@ public class AudioManager : MonoBehaviour {
         this.GetComponent<AudioSource>().loop = false;
         this.GetComponent<AudioSource>().Stop();
     }
-
 }

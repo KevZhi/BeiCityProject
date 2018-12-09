@@ -13,9 +13,6 @@ public class DialogManager : MonoBehaviour {
 
     public string curName;
 
-    private LyricsStructure lyrics;
-    private NoticeStructure notice;
-
     public GameObject portraitImage;
     public Image leftPos1;
     public Image leftPos2;
@@ -54,8 +51,6 @@ public class DialogManager : MonoBehaviour {
     void Start()
     {
         allPortrait = portraitImage.transform;
-        lyrics = JsonUtility.FromJson<LyricsStructure>(Resources.Load("DataBase/lyrics").ToString());
-        notice = JsonUtility.FromJson<NoticeStructure>(Resources.Load("DataBase/notice").ToString());
     }
 
     void Update()
@@ -72,14 +67,14 @@ public class DialogManager : MonoBehaviour {
             {
                 timer += Time.deltaTime;
                 gm.ps.warning.SetActive(true);
-                if (curName == "desk03")
-                {
-                    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
-                }
-                if (curName == "desk04")
-                {
-                    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
-                }
+                //if (curName == "desk03")
+                //{
+                //    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
+                //}
+                //if (curName == "desk04")
+                //{
+                //    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
+                //}
             }
         }
     }
@@ -107,11 +102,6 @@ public class DialogManager : MonoBehaviour {
         dialogue_index = 0;
         dialogue_count = 0;
 
-        gm.menuUI.SetActive(false);
-        gm.targetPanel.SetActive(false);
-        dialogImage.SetActive(true);
-        portraitImage.SetActive(true);
-        
         XmlDocument xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();
         string data = Resources.Load("Text/" + curName).ToString();
@@ -132,36 +122,22 @@ public class DialogManager : MonoBehaviour {
 
         gm.dc.next = true;
 
-        gm.objRoot.SetActive(false);
-        gm.sceneMask.SetActive(true);
-       
         gm.im.active = false;
         //print("start");
         //print(curName);
         gm.sm.destroyed = true;
         gm.sm.checkInDialogStart = true;
+
+        SetDialogUI(true);
      
     }
 
     public void QuitDialog()
     {
-       
-        dialogImage.SetActive(false);
-        gm.menuUI.SetActive(true);
-        gm.sceneMask.SetActive(false);
-        gm.targetPanel.SetActive(true);
-        gm.noticePanel.SetActive(false);
-
-        gm.objRoot.SetActive(true);
-        ResetRolePortrait();
-
         gm.dc.next = false;//姑且放在这吧，我要被搞死了
 
         gm.sm.destroyed = true;
         gm.sm.checkInDialogFinish = true;
-        //print("finish");
-        //print(curName);
-
     }
 
     public void LoadRolePortrait(string rolePosition)
@@ -196,16 +172,38 @@ public class DialogManager : MonoBehaviour {
         }
 
     }
-
+    /// <summary>
+    /// 使角色图片全部关闭
+    /// </summary>
     public void ResetRolePortrait()
     {
-        portraitImage.SetActive(false);
+  
         int ChildCount = allPortrait.childCount;
         for (int i = 0; i < ChildCount; i++)
         {
             allPortrait.GetChild(i).gameObject.SetActive(false);
         }
     }
+    
+    /// <summary>
+    /// 对话/非对话状态切换时的UI控制
+    /// </summary>
+    /// <param name="isopen">对话状态</param>
+    public void SetDialogUI(bool isopen)
+    {
+        dialogImage.SetActive(isopen);
+        gm.sceneMask.SetActive(isopen);
+        portraitImage.SetActive(isopen);
+
+        if (gm.sceneName != "1.welcome" && gm.sceneName != "loading")
+        {
+            gm.menuUI.SetActive(!isopen);
+            gm.targetPanel.SetActive(!isopen);
+            gm.objRoot.SetActive(!isopen);
+        }
+    }
+
+
     //选项
     public void Answer()
     {
@@ -483,18 +481,6 @@ public class DialogManager : MonoBehaviour {
         if (stateDetail == "-black")
         {
             gm.black.SetActive(false);
-        }
-
-        //文章
-        if (stateDetail == "+lyrics1")
-        {
-            gm.noticePanel.SetActive(true);
-            gm.noticePanel.GetComponentInChildren<Text>().text = lyrics.Lyrics1;
-        }
-        if (stateDetail == "+notice1")
-        {
-            gm.noticePanel.SetActive(true);
-            gm.noticePanel.GetComponentInChildren<Text>().text = notice.Notice1;
         }
 
         //音频

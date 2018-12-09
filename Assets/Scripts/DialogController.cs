@@ -32,10 +32,8 @@ public class DialogController : MonoBehaviour {
 
         if (!isloading)
         {
-
             if (next)
             {
-
                 if (Input.GetMouseButtonDown(0))
                 {
                     gm.dm.dialogue_index++;
@@ -57,10 +55,13 @@ public class DialogController : MonoBehaviour {
                     gm.im.active = true;
                 }
             }
-
         }
 
 
-       
+        if (gm.dm.curName == null )
+        {
+            gm.dm.ResetRolePortrait();
+            gm.dm.SetDialogUI(false);
+        }
     }
 }

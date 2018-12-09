@@ -32,7 +32,7 @@ public class CommonMenu : MonoBehaviour {
         gm.black.SetActive(true);
         gm.begin.SetActive(true);
 
-        LoadSQL();
+       
     }
 
     private void Update()
@@ -42,6 +42,7 @@ public class CommonMenu : MonoBehaviour {
         {
             if (SceneManager.GetActiveScene().name == "1.welcome")
             {
+                LoadSQL();
                 check = true;
                 this.transform.Find("titleMenu").gameObject.SetActive(true);
                 gm.menuUI.SetActive(false);
@@ -70,11 +71,11 @@ public class CommonMenu : MonoBehaviour {
     }
     public void LoadSQL()
     {
+
         string appDBPath = Application.persistentDataPath + "/location.db";
 
         WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
 
         File.WriteAllBytes(appDBPath, loadDB.bytes);
-
     }
 }

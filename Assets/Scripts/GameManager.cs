@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
-using System.Xml;
 using UnityEngine.SceneManagement;
+using Mono.Data.Sqlite;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,13 +14,12 @@ public class GameManager : MonoBehaviour {
     private PlayerDataStructure playerData;
     private EventDataStructure eventData;
 
+    public GameObject commonMenu;
+
     public GameObject wantToSave;
     public GameObject wantToLoad;
     public GameObject saveComplete;
     public GameObject wantToLeave;
-
-    //private string nowSceneName;
-    //private string tempText;
 
     private bool isExist;
 
@@ -55,26 +54,22 @@ public class GameManager : MonoBehaviour {
 
     public GameObject sceneMask;
 
+    [Header("=====公共调用组件=====")]
     public GameObject objRoot;
-
     public PlayerState ps;
     public DialogManager dm;
     public DialogController dc;
     public InteractionManager im;
     public SceneObjManager sm;
-    public SQLiteEventManager SQLem;
 
     private void Awake()
     {
-
+        commonMenu = GameObject.Find("CommonMenu");
         objRoot = GameObject.Find("objRoot");
 
         ps = this.GetComponent<PlayerState>();
-
         dm = this.GetComponent<DialogManager>();
         im = this.GetComponent<InteractionManager>();
-
-        SQLem = this.GetComponent<SQLiteEventManager>();
         dc = this.GetComponent<DialogController>();
         sm = this.GetComponent<SceneObjManager>();
     }
@@ -82,31 +77,36 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        //NowScene();
-        //tempText = "地点：" + nowSceneName
-        //    + "\n存档时间：" + System.DateTime.Now;
     }
 
 
     public void SavePlayerData()
     {
-        File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));
-        File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + "event.json", JsonUtility.ToJson(eventData));
+        string saveDataPath = Application.persistentDataPath +"/" + EventSystem.current.currentSelectedGameObject.name + ".db";
 
-        saveComplete.SetActive(true);
-        saveComplete.GetComponentInChildren<Text>().text = "存档完成";
+        WWW loadDB = new WWW(Application.persistentDataPath + "/location.db");
+
+        File.WriteAllBytes(saveDataPath, loadDB.bytes);
+
+        playerData = new PlayerDataStructure(sceneName);
+
+        File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));
+        
+        //saveComplete.SetActive(true);
+        //saveComplete.GetComponentInChildren<Text>().text = "存档完成";
     }
 
     public void LoadPlayerData()
     {
-        SQLem.SetAllDefalut();
-        isExist = File.Exists(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json");
+
+        isExist = File.Exists(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db");
 
         if (isExist)
         {
-            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json"));
-            eventData = JsonUtility.FromJson<EventDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + "event.json"));
+            LoadEventData();
+            LoadPlayerState();
 
+            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json"));
             Globe.nextSceneName = playerData.CurScene;
             SceneManager.LoadScene("loading");
 
@@ -115,6 +115,104 @@ public class GameManager : MonoBehaviour {
             loadInTitlePanel.SetActive(false);
             CloseMenu();
         }
+    }
+
+    public void LoadEventData()
+    {
+        string connSaver = "data source= " + Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db"; //Path to database.
+        SqliteConnection dbconnSaver = new SqliteConnection(connSaver);
+        dbconnSaver.Open(); //Open connection to the database.
+
+        string connLocal = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        SqliteConnection dbconnLocal = new SqliteConnection(connLocal);
+        dbconnLocal.Open(); //Open connection to the database.
+
+        SqliteCommand dbcmdSaver = dbconnSaver.CreateCommand();
+        string sqlQuerySaver = "SELECT * " + "FROM EventData";
+        dbcmdSaver.CommandText = sqlQuerySaver;
+        SqliteDataReader readerSaver = dbcmdSaver.ExecuteReader();
+
+        while (readerSaver.Read())
+        {
+
+            SqliteCommand dbcmdLocal = dbconnLocal.CreateCommand();
+            string sqlQueryLocal = "UPDATE " + "EventData" + " SET " + "EventState" + "=" + "'"+ readerSaver.GetString(readerSaver.GetOrdinal("EventState")) + "'"+ " WHERE " + "EventName" + "=" + "'" + readerSaver.GetString(readerSaver.GetOrdinal("EventName")) + "'";
+            dbcmdLocal.CommandText = sqlQueryLocal;
+            SqliteDataReader readerLocal = dbcmdLocal.ExecuteReader();
+
+            readerLocal.Close();
+            readerLocal = null;
+
+            dbcmdLocal.Cancel();
+            dbcmdLocal.Dispose();
+            dbcmdLocal = null;
+       
+        }
+
+        dbconnLocal.Close();
+        dbconnLocal.Dispose();
+        dbconnLocal = null;
+
+        readerSaver.Close();
+        readerSaver = null;
+
+        dbcmdSaver.Cancel();
+        dbcmdSaver.Dispose();
+        dbcmdSaver = null;
+
+        dbconnSaver.Close();
+        dbconnSaver.Dispose();
+        dbconnSaver = null;
+
+    }
+
+    public void LoadPlayerState()
+    {
+        string connSaver = "data source= " + Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db"; //Path to database.
+        SqliteConnection dbconnSaver = new SqliteConnection(connSaver);
+        dbconnSaver.Open(); //Open connection to the database.
+
+        string connLocal = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        SqliteConnection dbconnLocal = new SqliteConnection(connLocal);
+        dbconnLocal.Open(); //Open connection to the database.
+
+        SqliteCommand dbcmdSaver = dbconnSaver.CreateCommand();
+        string sqlQuerySaver = "SELECT * " + "FROM PlayerState";
+        dbcmdSaver.CommandText = sqlQuerySaver;
+        SqliteDataReader readerSaver = dbcmdSaver.ExecuteReader();
+
+        while (readerSaver.Read())
+        {
+
+            SqliteCommand dbcmdLocal = dbconnLocal.CreateCommand();
+            string sqlQueryLocal = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + readerSaver.GetInt32(readerSaver.GetOrdinal("value")) + " WHERE " + "name" + "=" + "'" + readerSaver.GetString(readerSaver.GetOrdinal("name")) + "'";
+            dbcmdLocal.CommandText = sqlQueryLocal;
+            SqliteDataReader readerLocal = dbcmdLocal.ExecuteReader();
+
+            readerLocal.Close();
+            readerLocal = null;
+
+            dbcmdLocal.Cancel();
+            dbcmdLocal.Dispose();
+            dbcmdLocal = null;
+
+        }
+
+        dbconnLocal.Close();
+        dbconnLocal.Dispose();
+        dbconnLocal = null;
+
+        readerSaver.Close();
+        readerSaver = null;
+
+        dbcmdSaver.Cancel();
+        dbcmdSaver.Dispose();
+        dbcmdSaver = null;
+
+        dbconnSaver.Close();
+        dbconnSaver.Dispose();
+        dbconnSaver = null;
+
     }
 
     public void WantToSave()
@@ -190,7 +288,7 @@ public class GameManager : MonoBehaviour {
 
     public void CallStatePanel()
     {
-        SQLem.ShowPlayerState();
+        //SQLem.ShowPlayerState();
         menuUI.SetActive(false);
         statePanel.SetActive(true);
     }
@@ -279,7 +377,6 @@ public class GameManager : MonoBehaviour {
 
     public void NewGame()
     {
-        SQLem.SetAllDefalut();
         Globe.nextSceneName = "floor2";
         SceneManager.LoadScene("loading");
     }
@@ -317,31 +414,4 @@ public class GameManager : MonoBehaviour {
         log.SetActive(false);
     }
 
-    //public void NowScene()
-    //{
-    //    if (SceneManager.GetActiveScene().name =="class15")
-    //    {
-    //        nowSceneName = "十五班教室";
-    //    }
-    //    if (SceneManager.GetActiveScene().name == "floor2")
-    //    {
-    //        nowSceneName = "二楼走廊";
-    //    }
-    //    if (SceneManager.GetActiveScene().name == "supportClass15")
-    //    {
-    //        nowSceneName = "教辅室";
-    //    }
-    //    if (SceneManager.GetActiveScene().name == "gate")
-    //    {
-    //        nowSceneName = "校门";
-    //    }
-    //    if (SceneManager.GetActiveScene().name == "dongming")
-    //    {
-    //        nowSceneName = "冬明";
-    //    }
-    //    if (SceneManager.GetActiveScene().name == "street")
-    //    {
-    //        nowSceneName = "街道";
-    //    }
-    //}
 }
