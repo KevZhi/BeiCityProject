@@ -60,21 +60,11 @@ public class DialogManager : MonoBehaviour {
             if (timer>=1f)
             {
                 timer = 0;
-                gm.ps.warning.SetActive(false);
                 startTimer = false;
             }
             else
             {
                 timer += Time.deltaTime;
-                gm.ps.warning.SetActive(true);
-                //if (curName == "desk03")
-                //{
-                //    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
-                //}
-                //if (curName == "desk04")
-                //{
-                //    gm.ps.warning.GetComponentInChildren<Text>().text = "邪恶的等级不足";
-                //}
             }
         }
     }
@@ -94,14 +84,13 @@ public class DialogManager : MonoBehaviour {
 
         LoadRolePortrait(rolePos);
         CheckState(state);
-
     }
 
     public void StartDialog()
     {
         dialogue_index = 0;
         dialogue_count = 0;
-
+        gm.dc.next = true;
         XmlDocument xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();
         string data = Resources.Load("Text/" + curName).ToString();
@@ -119,25 +108,27 @@ public class DialogManager : MonoBehaviour {
         dialogue_count = dialogues_list.Count;
 
         Dialogues_handle(0);
-
-        gm.dc.next = true;
+        gm.objRoot.SetActive(false);
+        gm.mm.ShowOrHideGameMenuBtn(false);
 
         gm.im.active = false;
-        //print("start");
-        //print(curName);
+
         gm.sm.destroyed = true;
         gm.sm.checkInDialogStart = true;
 
         SetDialogUI(true);
-     
+
     }
 
     public void QuitDialog()
     {
         gm.dc.next = false;//姑且放在这吧，我要被搞死了
-
+        gm.mm.ShowOrHideGameMenuBtn(true);
         gm.sm.destroyed = true;
         gm.sm.checkInDialogFinish = true;
+        ResetRolePortrait();
+        SetDialogUI(false);
+        gm.objRoot.SetActive(true);
     }
 
     public void LoadRolePortrait(string rolePosition)
@@ -192,34 +183,16 @@ public class DialogManager : MonoBehaviour {
     public void SetDialogUI(bool isopen)
     {
         dialogImage.SetActive(isopen);
-        gm.sceneMask.SetActive(isopen);
+        gm.mm.maskWhite.SetActive(isopen);
         portraitImage.SetActive(isopen);
-
-        if (gm.sceneName != "1.welcome" && gm.sceneName != "loading")
-        {
-            gm.menuUI.SetActive(!isopen);
-            gm.targetPanel.SetActive(!isopen);
-            gm.objRoot.SetActive(!isopen);
-        }
+        //gm.objRoot.SetActive(!isopen);
     }
 
 
     //选项
-    public void Answer()
+    public void ChooseDecision(string choose)
     {
-        curName = curName + "Answer";
-        print(Resources.Load("Text/" + curName));
-        if (Resources.Load("Text/" + curName))
-        {
-            StartDialog();
-        }
-        gm.AnswerOrNot.SetActive(false);
-    }
-
-    public void NotAnswer()
-    {
-     
-        curName = curName + "NotAnswer";
+        curName = curName + choose;
         if (Resources.Load("Text/" + curName))
         {
             StartDialog();
@@ -228,160 +201,6 @@ public class DialogManager : MonoBehaviour {
         {
             QuitDialog();
         }
-        gm.AnswerOrNot.SetActive(false);
-    }
-
-    public void Help()
-    {
-      
-        curName = curName + "Help";
-      
-        if (Resources.Load("Text/" + curName))
-        {
-            StartDialog();
-        }
-        gm.HelpOrNot.SetActive(false);
-    }
-
-    public void NotHelp()
-    {
-      
-        curName = curName + "NotHelp";
-        //print(Resources.Load("Text/" + curName));
-        if (Resources.Load("Text/" + curName))
-        {
-            StartDialog();
-        }
-        else
-        {
-            QuitDialog();
-        }
-        gm.HelpOrNot.SetActive(false);
-    }
-
-    public void Observe()
-    {
-  
-        if (curName == "desk01")
-        {
-
-            dialogue_index = 0;
-            dialogue_count = 0;
-
-            curName = "desk01nothing";
-            StartDialog();
-            //if (gm.em.desk01observed==0)
-            //{
-            //    gm.em.desk01observed = 1;
-            //    gm.ps.EvilEXP++;
-            //}
-
-        }
-        if (curName == "desk02")
-        {
-
-            dialogue_index = 0;
-            dialogue_count = 0;
-
-            curName = "desk02lyrics1";
-            StartDialog();
-            //if (gm.em.desk02observed == 0)
-            //{
-            //    gm.em.desk02observed = 1;
-            //    gm.ps.EvilEXP++;
-            //}
-        }
-        if (curName == "desk03")
-        {
-            if (gm.ps.EvilLV < 2)
-            {
-                startTimer = true;
-                dialogue_index = 0;
-                dialogue_count = 0;
-                QuitDialog();
-            }
-            else
-            {
-                //调查
-            }
-        }
-        if (curName == "desk04")
-        {
-            if (gm.ps.EvilLV < 2)
-            {
-                startTimer = true;
-                dialogue_index = 0;
-                dialogue_count = 0;
-                QuitDialog();
-            }
-            else
-            {
-                //调查
-            }
-        }
-
-        gm.ObserveOrNot.SetActive(false);
-    }
-
-    public void NotObserve()
-    {
-   
-        curName = curName + "NotObserve";
-        
-        if (Resources.Load("Text/" + curName))
-        {
-            StartDialog();
-        }
-        else
-        {
-            QuitDialog();
-        }
-        gm.ObserveOrNot.SetActive(false);
-    }
-
-    public void Chat()
-    {
-
-        dialogue_index = 0;
-        dialogue_count = 0;
-        curName = curName + "Chat";
-        StartDialog();
-        gm.ChatOrNot.SetActive(false);
-    }
-
-    public void NotChat()
-    {
-
-        curName = curName + "NotChat";
-        //print(Resources.Load("Text/" + curName));
-        if (Resources.Load("Text/" + curName))
-        {
-            StartDialog();
-        }
-        else
-        {
-            QuitDialog();
-        }
-        gm.ChatOrNot.SetActive(false);
-    }
-
-    public void Sit()
-    {
-  
-        //if (gm.em.event002==1)
-        //{
-        //    dialogue_index = 0;
-        //    dialogue_count = 0;
-        //    curName = "event002";
-        //    StartDialog();
-        //}
-        gm.SitOrNot.SetActive(false);
-    }
-
-    public void NotSit()
-    {
-        QuitDialog();
-        gm.SitOrNot.SetActive(false);
     }
 
     public void CheckState(string stateDetail)
@@ -476,11 +295,11 @@ public class DialogManager : MonoBehaviour {
         }
         if (stateDetail == "+black")
         {
-            gm.black.SetActive(true);
+            //gm.black.SetActive(true);
         }
         if (stateDetail == "-black")
         {
-            gm.black.SetActive(false);
+            //gm.black.SetActive(false);
         }
 
         //音频
@@ -499,32 +318,27 @@ public class DialogManager : MonoBehaviour {
         if (stateDetail == "AnswerOrNot")
         {
             gm.dc.next = false;
-            gm.AnswerOrNot.SetActive(true);
+            gm.mm.AnswerOrNot.SetActive(true);
         }
         if (stateDetail == "HelpOrNot")
         {
             gm.dc.next = false;
-            gm.HelpOrNot.SetActive(true);
+            gm.mm.HelpOrNot.SetActive(true);
         }
         if (stateDetail == "ObserveOrNot")
         {
             gm.dc.next = false;
-            gm.ObserveOrNot.SetActive(true);
+            gm.mm.ObserveOrNot.SetActive(true);
         }
         if (stateDetail == "ChatOrNot")
         {
             gm.dc.next = false;
-            gm.ChatOrNot.SetActive(true);
+            gm.mm.ChatOrNot.SetActive(true);
         }
         if (stateDetail == "SitOrNot")
         {
             gm.dc.next = false;
-            //if (gm.em.event002 == 1)
-            //{
-            //    startDialog = false;
-            //    gm.SitOrNot.SetActive(true);
-            //}
-
+            gm.mm.SitOrNot.SetActive(true);
         }
 
         //移动

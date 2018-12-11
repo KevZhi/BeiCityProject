@@ -38,11 +38,12 @@ public class SceneObjManager : MonoBehaviour {
     private void Awake()
     {
         gm = this.GetComponent<GameManager>();
+        objParent = gm.objRoot.transform;
     }
 
     // Use this for initialization
     void Start () {
-        objParent = gm.objRoot.transform;
+
 	}
 
     private SqliteConnection dbconn;
@@ -69,7 +70,7 @@ public class SceneObjManager : MonoBehaviour {
             }
         }
 
-        if (!created && SceneManager.GetActiveScene().name != "loading" && gm.sceneName != "1.welcome")
+        if (!created && SceneManager.GetActiveScene().name != "loading" && SceneManager.GetActiveScene().name != "1.welcome")
         {
 
             created = true;
@@ -82,7 +83,6 @@ public class SceneObjManager : MonoBehaviour {
 
     public void SceneObjControl()
     {
-
         string conn = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
         dbconn = new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
@@ -93,7 +93,7 @@ public class SceneObjManager : MonoBehaviour {
         SqliteDataReader reader = dbcmd.ExecuteReader();
         while (reader.Read())
         {
-            if (reader.GetString(reader.GetOrdinal("Scene")) == gm.sceneName)
+            if (reader.GetString(reader.GetOrdinal("Scene")) == SceneManager.GetActiveScene().name)
             {
 
                 string ReadyEventName = reader.GetString(reader.GetOrdinal("NeedEventReady"));
@@ -188,6 +188,7 @@ public class SceneObjManager : MonoBehaviour {
         SqliteDataReader reader = dbcmd.ExecuteReader();
 
         string str = reader["EventState"].ToString();
+        //print(str);
         bool istrue = (str == NeedCheckEventState);
         if (NeedCheckEventName!="no")
         {
@@ -202,9 +203,9 @@ public class SceneObjManager : MonoBehaviour {
         return istrue;
     }
 
-
     public void CheckEventCanAutoHappend()
     {
+        //print("CheckEventCanAutoHappend");
         SqliteCommand dbcmd = dbconn.CreateCommand();
         string sqlQuery = "SELECT * " + "FROM AutoEventList";
         dbcmd.CommandText = sqlQuery;
@@ -212,11 +213,11 @@ public class SceneObjManager : MonoBehaviour {
 
         while (reader.Read())
         {
-
             string StartEvent = reader.GetString(reader.GetOrdinal("EventName"));
             string NeedScene = reader.GetString(reader.GetOrdinal("NeedScene"));
             string NeedEventStart = reader.GetString(reader.GetOrdinal("NeedEventStart"));
-            if (gm.sceneName == NeedScene)
+            //print(gm.sceneName == NeedScene);
+            if (SceneManager.GetActiveScene().name == NeedScene)
             {
                 bool isready = IsTrue(StartEvent, "ready");
                 bool isstart = IsTrue(NeedEventStart, "start");
@@ -239,11 +240,12 @@ public class SceneObjManager : MonoBehaviour {
 
     public void CheckPlayerState(string eventName)
     {
+        //print("CheckPlayerState");
         SqliteCommand dbcmd = dbconn.CreateCommand();
         string sqlQuery = "SELECT * " + "FROM EventList";
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
-        
+
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
@@ -252,23 +254,43 @@ public class SceneObjManager : MonoBehaviour {
                 {
                     string stateName = reader.GetString(reader.GetOrdinal("PlayerState"));
 
-                    SqliteCommand dbcmd1 = dbconn.CreateCommand();
-                    string sqlQuery1 = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + "value+1" + " WHERE " + "name" + "=" + "'" + stateName + "EXP" + "'";
-                    dbcmd1.CommandText = sqlQuery1;
-                    SqliteDataReader reader1 = dbcmd1.ExecuteReader();
-                    //eventSQL.UpdateEventState("PlayerState", "value", "value+1", "name", "=", "'" + stateName + "EXP" + "'");
+                    SqliteCommand dbcmd2 = dbconn.CreateCommand();
+                    string sqlQuery2 = "SELECT EventState" + " FROM EventData" + " WHERE" + " EventName " + "=" + "'" + eventName + "'";
+                    dbcmd2.CommandText = sqlQuery2;
+                    SqliteDataReader reader2 = dbcmd2.ExecuteReader();
 
-                    reader1.Close();
-                    reader1 = null;
+                    print(eventName + "一次性经验上升 " + reader2.Read());
 
-                    dbcmd1.Cancel();
-                    dbcmd1.Dispose();
-                    dbcmd1 = null;
+                    if (reader2["EventState"].ToString() == "ready" || reader2["EventState"].ToString() == "")
+                    {
+                        print(reader2["EventState"].ToString());
+                        SqliteCommand dbcmd1 = dbconn.CreateCommand();
+                        string sqlQuery1 = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + "value+1" + " WHERE " + "name" + "=" + "'" + stateName + "EXP" + "'";
+                        dbcmd1.CommandText = sqlQuery1;
+                        SqliteDataReader reader1 = dbcmd1.ExecuteReader();
+
+                        print(stateName + "EXP++!!");
+
+                        reader1.Close();
+                        reader1 = null;
+
+                        dbcmd1.Cancel();
+                        dbcmd1.Dispose();
+                        dbcmd1 = null;
+                    }
+
+                    reader2.Close();
+                    reader2 = null;
+
+                    dbcmd2.Cancel();
+                    dbcmd2.Dispose();
+                    dbcmd2 = null;
 
                     CheckLVUP(stateName);
                 }
             }
         }
+
         reader.Close();
         reader = null;
 
@@ -278,44 +300,60 @@ public class SceneObjManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 检验是否可以升级
+    /// 检验是否可以升级，经验上限待调
     /// </summary>
     /// <param name="stateName"></param>
     private void CheckLVUP(string stateName)
     {
+   
         SqliteCommand dbcmd = dbconn.CreateCommand();
-        string sqlQuery = "SELECT * " + "FROM PlayerState";
+        string sqlQuery = "SELECT * " + "FROM PlayerState" + " WHERE " + "name" + "=" + "'" + stateName + "LV" + "'";
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
-        //SqliteDataReader reader = eventSQL.ReadFullTable("PlayerState");
-        while (reader.Read())
+
+        SqliteCommand dbcmd2 = dbconn.CreateCommand();
+        string sqlQuery2 = "SELECT * " + "FROM PlayerState" + " WHERE " + "name" + "=" + "'" + stateName + "EXP" + "'";
+        dbcmd2.CommandText = sqlQuery2;
+        SqliteDataReader reader2 = dbcmd2.ExecuteReader();
+
+        print(reader["name"].ToString() + " = " + reader["value"].ToString());
+        string lv = reader["value"].ToString();
+
+        print(reader2["name"].ToString() + " = " + reader2["value"].ToString());
+        string exp = reader2["value"].ToString();
+
+        if ((lv=="0"&&exp=="2")||(lv=="1"&&exp=="4") || (lv == "2" && exp == "8"))
         {
-            if (reader.GetString(reader.GetOrdinal("name")) == (stateName + "EXP"))
-            {
-                if (reader.GetInt32(reader.GetOrdinal("value")) == 2)
-                {
-                    SqliteCommand dbcmd1 = dbconn.CreateCommand();
-                    string sqlQuery1 = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + "value+1" + " WHERE " + "name" + "=" + "'" + stateName + "LV" + "'";
-                    dbcmd1.CommandText = sqlQuery1;
-                    SqliteDataReader reader1 = dbcmd1.ExecuteReader();
+            SqliteCommand dbcmd1 = dbconn.CreateCommand();
+            string sqlQuery1 = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + "value+1" + " WHERE " + "name" + "=" + "'" + stateName + "LV" + "'";
+            dbcmd1.CommandText = sqlQuery1;
+            SqliteDataReader reader1 = dbcmd1.ExecuteReader();
+            print(stateName +  " LV up!");
+            reader1.Close();
+            reader1 = null;
 
-                    reader1.Close();
-                    reader1 = null;
+            dbcmd1.Cancel();
+            dbcmd1.Dispose();
+            dbcmd1 = null;
 
-                    dbcmd1.Cancel();
-                    dbcmd1.Dispose();
-                    dbcmd1 = null;
-                    //eventSQL.UpdateEventState("PlayerState", "value", "value+1", "name", "=", "'" + stateName + "LV" + "'");
-                    gm.ps.LVup = true;
-                }
-            }
+            gm.mm.levelUp = true;
         }
+
+
+        reader2.Close();
+        reader2 = null;
+
+        dbcmd2.Cancel();
+        dbcmd2.Dispose();
+        dbcmd2 = null;
+
         reader.Close();
         reader = null;
 
         dbcmd.Cancel();
         dbcmd.Dispose();
         dbcmd = null;
+
     }
 
     /// <summary>
@@ -328,7 +366,6 @@ public class SceneObjManager : MonoBehaviour {
         string sqlQuery = "SELECT * " + "FROM EventList";
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
-        //SqliteDataReader reader = eventSQL.ReadFullTable("EventList");
         while (reader.Read())
         {
 
@@ -368,7 +405,7 @@ public class SceneObjManager : MonoBehaviour {
         string sqlQuery = "SELECT * " + "FROM EventList";
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
-        //SqliteDataReader readList = eventSQL.ReadFullTable("EventList");
+
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
@@ -388,9 +425,24 @@ public class SceneObjManager : MonoBehaviour {
                     dbcmd1.Cancel();
                     dbcmd1.Dispose();
                     dbcmd1 = null;
-                 
-                    //eventSQL.UpdateEventState("EventData", "EventState", "'finish'", "EventName", "=", "'" + setEventName + "'");
-                    //print(setEventName);
+
+                    if (reader.GetString(reader.GetOrdinal("SetEventFinish2")) != "no")
+                    {
+                        string setEventName2 = reader.GetString(reader.GetOrdinal("SetEventFinish2"));
+
+                        SqliteCommand dbcmd2 = dbconn.CreateCommand();
+                        string sqlQuery2 = "UPDATE " + "EventData" + " SET " + "EventState" + "=" + "'finish'" + " WHERE " + "EventName" + "=" + "'" + setEventName2 + "'";
+                        dbcmd2.CommandText = sqlQuery2;
+                        SqliteDataReader reader2 = dbcmd2.ExecuteReader();
+
+                        reader2.Close();
+                        reader2 = null;
+
+                        dbcmd2.Cancel();
+                        dbcmd2.Dispose();
+                        dbcmd2 = null;
+                    }
+
                 }
             }
         }
@@ -409,7 +461,6 @@ public class SceneObjManager : MonoBehaviour {
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
 
-        //SqliteDataReader reader = eventSQL.ReadFullTable("EventList");
         while (reader.Read())
         {
             if (reader.GetString(reader.GetOrdinal("EventName")) == eventName)
@@ -431,8 +482,6 @@ public class SceneObjManager : MonoBehaviour {
                     dbcmd1.Dispose();
                     dbcmd1 = null;
 
-                    //eventSQL.UpdateEventState("EventData", "EventState", "'start'", "EventName", "=", "'" + setEventName + "'");
-                    //print(setEventName);
                 }
             }
         }

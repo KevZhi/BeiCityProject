@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SaveDataTest : MonoBehaviour {
 
-    //private PlayerDataStructure playerData;
+    private PlayerDataStructure playerData;
     private bool isExist;
     // Use this for initialization
     void Start () {
@@ -18,9 +18,9 @@ public class SaveDataTest : MonoBehaviour {
         isExist = File.Exists(Application.persistentDataPath + "/" + this.name + ".json");
         if (isExist == true)
         {
-            //playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + this.name + ".json"));
+            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + this.name + ".json"));
             //print(Application.persistentDataPath + "/" + this.name + ".json");
-            //this.GetComponentInChildren<Text>().text = playerData.SavedText;
+            this.GetComponentInChildren<Text>().text = playerData.SavedText;
         }
         else
         {

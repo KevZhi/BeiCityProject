@@ -27,7 +27,7 @@ public class InteractionManager : MonoBehaviour {
         if (hit.collider != null)
         {
             //事件触发
-            if (Input.GetMouseButtonUp(0) && active == true)
+            if (Input.GetMouseButtonDown(0) && active == true)
             {
                 if (hit.collider.tag == "Normal" && hit.collider.GetComponent<EventCasterManager>().active == true)
                 {

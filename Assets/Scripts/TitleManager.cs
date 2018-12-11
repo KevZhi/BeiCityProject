@@ -1,37 +1,68 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class TitleManager : MonoBehaviour {
 
-    public GameObject startUI;
-    public GameObject loadUI;
-    public GameObject optionUI;
-    public GameObject savePanel;
+    public bool check;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private GameManager gm;
+
+
+    private void Awake()
+    {
+        gm = GameObject.Find("Player").GetComponent<GameManager>();
+
+    }
+
+    // Use this for initialization
+    void Start () {
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
 
-    public void CallSavePanel()
-    {
-        startUI.SetActive(false);
-        loadUI.SetActive(false);
-        optionUI.SetActive(false);
-        savePanel.SetActive(true);
+        if (!check)
+        {
+            if (gm.sceneName == "1.welcome")
+            {
+                LoadSQL();
+                check = true;
+
+                gm.mm.ShowOrHideTitleMenu(true);
+                gm.mm.ShowOrHideTitleMenuChild(true);
+                gm.mm.ShowOrHideGameMenu(false);
+                gm.mm.ShowOrHideGameMenuBtn(false);
+                gm.mm.maskUI.SetActive(false);
+
+                gm.dm.curName = null;
+            }
+
+        }
+        else
+        {
+            if (gm.sceneName != "1.welcome")
+            {
+                check = false;
+                gm.mm.ShowOrHideTitleMenu(false);
+                gm.mm.ShowOrHideTitleMenuChild(false);
+                gm.mm.ShowOrHideGameMenuBtn(true);
+                gm.mm.ShowOrHideGameMenu(false);
+       
+            }
+        }
     }
 
-    public void CancelSavePanel()
+    public void LoadSQL()
     {
-        startUI.SetActive(true);
-        loadUI.SetActive(true);
-        optionUI.SetActive(true);
-        savePanel.SetActive(false);
+
+        string appDBPath = Application.persistentDataPath + "/location.db";
+
+        WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
+
+        File.WriteAllBytes(appDBPath, loadDB.bytes);
     }
+
 }

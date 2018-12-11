@@ -50,7 +50,7 @@ public class DialogController : MonoBehaviour {
             }
             else
             {
-                if (Input.GetMouseButtonUp(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     gm.im.active = true;
                 }
@@ -58,10 +58,10 @@ public class DialogController : MonoBehaviour {
         }
 
 
-        if (gm.dm.curName == null )
-        {
-            gm.dm.ResetRolePortrait();
-            gm.dm.SetDialogUI(false);
-        }
+        //if (gm.dm.curName == null )
+        //{
+        //    gm.dm.ResetRolePortrait();
+        //    gm.dm.SetDialogUI(false);
+        //}
     }
 }

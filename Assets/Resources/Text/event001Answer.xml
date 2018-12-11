@@ -16,7 +16,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>让出身子，将堆在脚边的书包展示给他看。</detail>
+    <detail>将堆在地上的书包展示。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -30,7 +30,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>眼前的男子向后伸手，摸了摸自己背着的鼓鼓的书包。</detail>
+    <detail>眼前的男子向后伸手，摸了摸自己背后同样鼓鼓的书包。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -72,7 +72,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>并不是“同类人”啊。</detail>
+    <detail>并不是“同类人”。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>

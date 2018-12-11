@@ -2,9 +2,9 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail>荀元的座位，然而他却不知道去哪了。</detail>
+    <detail>十五班中自己的座位。</detail>
     <position></position>
     <portrait></portrait>
-    <state></state>
+    <state>SitOrNot</state>
   </dialogue>
 </dialogues>

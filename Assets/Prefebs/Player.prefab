@@ -21,12 +21,13 @@ GameObject:
   - component: {fileID: 4595641185787314}
   - component: {fileID: 82886248217996776}
   - component: {fileID: 114321774460047678}
-  - component: {fileID: 114316224786995784}
   - component: {fileID: 114801995735154332}
-  - component: {fileID: 114518205677301782}
-  - component: {fileID: 114483803331918790}
+  - component: {fileID: 114316224786995784}
   - component: {fileID: 114493493565703490}
+  - component: {fileID: 114027555936020624}
   - component: {fileID: 114005761251610568}
+  - component: {fileID: 114569716397153838}
+  - component: {fileID: 114027869043388162}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -53,7 +54,7 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106836950582692}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 8fb6cbdb465f77742ad97edaf647a3d8,
     type: 2}
@@ -149,13 +150,64 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106836950582692}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d828a6ad7e0ccdf41af849f906c3af44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioName: 
-  gm: {fileID: 0}
+--- !u!114 &114027555936020624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106836950582692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2a541dddb000f42920c981befa1280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  next: 0
+  isloading: 0
+--- !u!114 &114027869043388162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106836950582692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5fc647d0063adb46984865e7823c3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleMenu: {fileID: 0}
+  gameMenuBtn: {fileID: 0}
+  gameMenu: {fileID: 0}
+  maskWhite: {fileID: 0}
+  maskUI: {fileID: 0}
+  maskBlack: {fileID: 0}
+  wantToDo: {fileID: 0}
+  savePanel: {fileID: 0}
+  loadPanel: {fileID: 0}
+  statePanel: {fileID: 0}
+  optionPanel: {fileID: 0}
+  targetPanel: {fileID: 0}
+  target: {fileID: 0}
+  logPanel: {fileID: 0}
+  buffPanel: {fileID: 0}
+  ShamLVText: {fileID: 0}
+  PassiveLVText: {fileID: 0}
+  RebelLVText: {fileID: 0}
+  SelfishLVText: {fileID: 0}
+  EvilLVText: {fileID: 0}
+  warning: {fileID: 0}
+  AnswerOrNot: {fileID: 0}
+  HelpOrNot: {fileID: 0}
+  ObserveOrNot: {fileID: 0}
+  ChatOrNot: {fileID: 0}
+  SitOrNot: {fileID: 0}
+  beginning: {fileID: 0}
+  levelUp: 0
 --- !u!114 &114316224786995784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,35 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee647f02156b96748ad16deab767bda5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114483803331918790
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1106836950582692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d355a35c760c8044aaca97cd2f952b66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  event001: 0
-  event002: 0
-  event003: 0
-  desk01observed: 0
-  desk02observed: 0
-  desk03observed: 0
-  mR02s0actived: 0
-  mR02s1actived: 0
-  wR03s1actived: 0
-  sR02s1actived: 0
-  wR03s2actived: 0
-  sR05s1actived: 0
-  wR02s1actived: 0
-  sR07s1actived: 0
-  event002canSubmit: 0
-  sR07Helped: 0
-  created: 0
-  destroyed: 0
 --- !u!114 &114493493565703490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,7 +243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06fef923c85663640b2194ed5ab8dc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDialog: 0
   curName: 
   portraitImage: {fileID: 0}
   leftPos1: {fileID: 0}
@@ -233,7 +255,9 @@ MonoBehaviour:
   dialogImage: {fileID: 0}
   roleName: {fileID: 0}
   detail: {fileID: 0}
---- !u!114 &114518205677301782
+  dialogue_index: 0
+  dialogue_count: 0
+--- !u!114 &114569716397153838
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,26 +265,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106836950582692}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c63db0beb41a6584fbe0b860a0da3626, type: 3}
+  m_Script: {fileID: 11500000, guid: 161bac9ace8e00642beeafaf02aaf938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SkillPoint: 99
-  ShamLV: 0
-  ShamEXP: 0
-  PassiveLV: 0
-  PassiveEXP: 0
-  RebelLV: 0
-  RebelEXP: 0
-  SelfishLV: 0
-  SelfishEXP: 0
-  EvilLV: 0
-  EvilEXP: 0
-  ShamText: {fileID: 0}
-  PassiveText: {fileID: 0}
-  RebelText: {fileID: 0}
-  SelfishText: {fileID: 0}
-  EvilText: {fileID: 0}
-  warning: {fileID: 0}
+  created: 0
+  destroyed: 0
+  checkInDialogStart: 0
+  checkInDialogFinish: 0
+  role1Pos: {x: -6, y: 4, z: 0}
+  role2Pos: {x: -4, y: 4, z: 0}
+  notice1Pos: {x: -6, y: 0, z: 0}
+  notice2Pos: {x: -4, y: 0, z: 0}
+  thing1Pos: {x: -6, y: -2, z: 0}
+  thing2Pos: {x: -4, y: -2, z: 0}
+  thing3Pos: {x: -2, y: -2, z: 0}
+  position1Pos: {x: 7, y: 5.3, z: 0}
+  position2Pos: {x: 7, y: 4, z: 0}
+  position3Pos: {x: 7, y: 2.7, z: 0}
 --- !u!114 &114801995735154332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -272,40 +293,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3338128bfc9da409ebfad3044a704f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wantToSave: {fileID: 0}
-  wantToLoad: {fileID: 0}
-  saveComplete: {fileID: 0}
-  wantToLeave: {fileID: 0}
-  menuUI: {fileID: 0}
-  savePanel: {fileID: 0}
-  loadPanel: {fileID: 0}
-  statePanel: {fileID: 0}
-  optionPanel: {fileID: 0}
-  targetPanel: {fileID: 0}
-  titleMenu: {fileID: 0}
-  loadInTitlePanel: {fileID: 0}
-  buffPanel: {fileID: 0}
-  noticePanel: {fileID: 0}
-  showMenuBtn: {fileID: 0}
-  saveBtn: {fileID: 0}
-  loadBtn: {fileID: 0}
-  stateBtn: {fileID: 0}
-  optionBtn: {fileID: 0}
-  titleBtn: {fileID: 0}
-  closeMenuBtn: {fileID: 0}
-  black: {fileID: 0}
-  begin: {fileID: 0}
-  log: {fileID: 0}
-  AnswerOrNot: {fileID: 0}
-  HelpOrNot: {fileID: 0}
-  ObserveOrNot: {fileID: 0}
-  ChatOrNot: {fileID: 0}
-  SitOrNot: {fileID: 0}
+  sceneName: 
+  savedText: 
   objRoot: {fileID: 0}
-  roleRoot: {fileID: 0}
-  posRoot: {fileID: 0}
-  sceneMask: {fileID: 0}
-  ps: {fileID: 0}
-  em: {fileID: 0}
+  commonMenu: {fileID: 0}
   dm: {fileID: 0}
+  dc: {fileID: 0}
   im: {fileID: 0}
+  sm: {fileID: 0}
+  mm: {fileID: 0}
