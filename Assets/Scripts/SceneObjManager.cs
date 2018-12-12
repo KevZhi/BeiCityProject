@@ -81,7 +81,7 @@ public class SceneObjManager : MonoBehaviour {
         {
             if (SceneManager.GetActiveScene().name != "loading")
             {
-                print("creat!");
+                //print("creat!");
 
                 created = true;
                 destroyed = false;
@@ -268,7 +268,7 @@ public class SceneObjManager : MonoBehaviour {
             if (reader2["EventState"].ToString() == "start")
             {
                 gm.mm.targetText.text = Text;
-                print("target : " + Text);
+                //print("target : " + Text);
             }
 
             reader2.Close();
