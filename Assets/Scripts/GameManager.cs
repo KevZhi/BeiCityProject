@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
     public InteractionManager im;
     public SceneObjManager sm;
     public MenuManager mm;
+    public AudioManager am;
 
 
     private void Awake()
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour {
         dc = this.GetComponent<DialogController>();
         sm = this.GetComponent<SceneObjManager>();
         mm = this.GetComponent<MenuManager>();
+        am = this.GetComponent<AudioManager>();
   
     }
 
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        savedText = System.DateTime.Now +  "\n" +  mm.target.text;
+        savedText = System.DateTime.Now +  "\n" +  mm.targetText.text;
     }
 
 

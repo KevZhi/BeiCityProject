@@ -51,14 +51,14 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>突然后颈感到一只冰冷的手搭了上来，我顿时惊醒。</detail>
+    <detail>被后颈突然袭来的冰冷感觉惊醒。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
   </dialogue>
   <dialogue>
     <role>常华兵</role>
-    <detail>怎么？身体不舒服么？</detail>
+    <detail>生病了？</detail>
     <position></position>
     <portrait></portrait>
     <state>+center</state>
@@ -72,7 +72,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>看着常华兵皮笑肉不笑的样子令我不寒而栗。</detail>
+    <detail>常华兵一本正经的老脸令我不寒而栗。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -142,14 +142,14 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>我被德育处主任赶出了座位。</detail>
+    <detail>被德育处主任赶出了座位。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
   </dialogue>
     <dialogue>
     <role></role>
-    <detail>谢才哲端端正正地捧着书，瞪大了眼睛看着。</detail>
+    <detail>谢才哲端端正正地捧着书，瞪大了眼睛。</detail>
     <position></position>
     <portrait></portrait>
     <state>-center</state>

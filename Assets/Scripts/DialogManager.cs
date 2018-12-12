@@ -117,18 +117,19 @@ public class DialogManager : MonoBehaviour {
         gm.sm.checkInDialogStart = true;
 
         SetDialogUI(true);
-
+        //gm.dc.next = true;
     }
 
     public void QuitDialog()
     {
-        gm.dc.next = false;//姑且放在这吧，我要被搞死了
+       /* gm.dc.next = false;*///姑且放在这吧，我要被搞死了
         gm.mm.ShowOrHideGameMenuBtn(true);
         gm.sm.destroyed = true;
         gm.sm.checkInDialogFinish = true;
         ResetRolePortrait();
         SetDialogUI(false);
         gm.objRoot.SetActive(true);
+        gm.dc.next = false;
     }
 
     public void LoadRolePortrait(string rolePosition)

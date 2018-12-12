@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour {
     public GameObject statePanel;
     public GameObject optionPanel;
     public GameObject targetPanel;
-    public Text target;
+    public Text targetText;
     public GameObject logPanel;
 
     public GameObject buffPanel;
@@ -50,7 +50,9 @@ public class MenuManager : MonoBehaviour {
     private float timer;
 
     public bool levelUp;
-    
+
+    public bool canotDo;
+
     private void Awake()
     {
         gm = this.GetComponent<GameManager>();
@@ -74,6 +76,21 @@ public class MenuManager : MonoBehaviour {
                 warning.GetComponentInChildren<Text>().text = "等级提升了";
             }
         }
+        if (canotDo)
+        {
+            if (timer >= 1f)
+            {
+                canotDo = false;
+                timer = 0;
+                warning.SetActive(false);
+            }
+            else
+            {
+                timer += Time.deltaTime;
+                warning.SetActive(true);
+                warning.GetComponentInChildren<Text>().text = "所需等级不足";
+            }
+        }
     }
 
     public void ShowOrHideTitleMenu(bool isShow)
@@ -93,6 +110,7 @@ public class MenuManager : MonoBehaviour {
     public void ShowOrHideGameMenuBtn(bool isShow)
     {
         gameMenuBtn.SetActive(isShow);
+        targetPanel.SetActive(isShow);
     }
 
     public void ShowOrHideGameMenu(bool isShow)

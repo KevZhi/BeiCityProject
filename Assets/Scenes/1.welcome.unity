@@ -5555,7 +5555,7 @@ GameObject:
   - component: {fileID: 746665396}
   - component: {fileID: 1615063280}
   m_Layer: 5
-  m_Name: Text
+  m_Name: targetText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9981,6 +9981,26 @@ Prefab:
       propertyPath: beginning
       value: 
       objectReference: {fileID: 1159857037}
+    - target: {fileID: 114027869043388162, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: targetText
+      value: 
+      objectReference: {fileID: 1615063280}
+    - target: {fileID: 82886248217996776, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114005761251610568, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114569716397153838, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eebaa2a8dd22634197efeb9c9591f6c, type: 2}
   m_IsPrefabAsset: 0

@@ -205,7 +205,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>车筝带着我们走进了教室。</detail>
+    <detail>跟随车筝进入教室。</detail>
     <position></position>
     <portrait></portrait>
     <state>GoToClass15</state>
@@ -324,7 +324,7 @@
   </dialogue>
   <dialogue>
     <role>易秋</role>
-    <detail>希望各位多多关照，就不耽误各位宝贵的学习时间了。</detail>
+    <detail>很高兴认识新同学，就不耽误各位宝贵的学习时间了。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>

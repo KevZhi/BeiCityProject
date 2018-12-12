@@ -37,7 +37,14 @@
   </dialogue>
   <dialogue>
     <role>高玉</role>
-    <detail>你！</detail>
+    <detail>。。。。。。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role>易秋</role>
+    <detail>。。。。。。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -47,25 +54,32 @@
     <detail>呵！</detail>
     <position></position>
     <portrait></portrait>
-    <state>-center</state>
+    <state></state>
   </dialogue>
   <dialogue>
-    <role></role>
-    <detail>荀元默默竖起了大拇指。</detail>
+    <role>高玉</role>
+    <detail>体面话说完了？那你自己看着办吧。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>谢才哲默默鼓起了掌。</detail>
+    <detail>荀元默默竖起了大拇指。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>-center</state>
+  </dialogue>
+  <dialogue>
+    <role></role>
+    <detail>谢才哲无声作鼓掌状。</detail>
     <position>right1</position>
     <portrait>sR02</portrait>
     <state>+right1</state>
   </dialogue>
   <dialogue>
     <role>谢才哲</role>
-    <detail>牛逼啊。</detail>
+    <detail>大哥牛逼。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -82,6 +96,6 @@
     <detail>反正就这样挺到放学吧。</detail>
     <position></position>
     <portrait></portrait>
-    <state>finish</state>
+    <state></state>
   </dialogue>
 </dialogues>

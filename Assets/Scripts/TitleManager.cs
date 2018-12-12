@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour {
 
@@ -26,7 +27,7 @@ public class TitleManager : MonoBehaviour {
 
         if (!check)
         {
-            if (gm.sceneName == "1.welcome")
+            if (SceneManager.GetActiveScene().name == "1.welcome")
             {
                 LoadSQL();
                 check = true;
@@ -38,19 +39,22 @@ public class TitleManager : MonoBehaviour {
                 gm.mm.maskUI.SetActive(false);
 
                 gm.dm.curName = null;
+
+                //gm.sm.checkInDialogFinish = true;
             }
 
         }
         else
         {
-            if (gm.sceneName != "1.welcome")
+            if (SceneManager.GetActiveScene().name != "1.welcome")
             {
                 check = false;
                 gm.mm.ShowOrHideTitleMenu(false);
                 gm.mm.ShowOrHideTitleMenuChild(false);
                 gm.mm.ShowOrHideGameMenuBtn(true);
                 gm.mm.ShowOrHideGameMenu(false);
-       
+
+                //gm.sm.checkInDialogFinish = true;
             }
         }
     }
