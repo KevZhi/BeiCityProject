@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour {
     {
         string saveDataPath = Application.persistentDataPath +"/" + EventSystem.current.currentSelectedGameObject.name + ".db";
 
-        WWW loadDB = new WWW(Application.persistentDataPath + "/location.db");
+        WWW loadDB = new WWW("file://" + Application.persistentDataPath + "/location.db");
 
         File.WriteAllBytes(saveDataPath, loadDB.bytes);
 

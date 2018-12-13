@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mono.Data.Sqlite;
-using System;
+using System.IO;
 
 public class SceneObjManager : MonoBehaviour {
 
@@ -83,10 +83,16 @@ public class SceneObjManager : MonoBehaviour {
             {
                 //print("creat!");
 
-                created = true;
-                destroyed = false;
+                if (File.Exists(Application.persistentDataPath + "/location.db"))
+                {
 
-                SceneObjControl();
+                    created = true;
+                    destroyed = false;
+
+                    SceneObjControl();
+                }
+
+
 
                 //if (SceneManager.GetActiveScene().name == "1.welcome")
                 //{

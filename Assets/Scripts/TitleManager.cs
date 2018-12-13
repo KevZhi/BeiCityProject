@@ -14,7 +14,7 @@ public class TitleManager : MonoBehaviour {
     private void Awake()
     {
         gm = GameObject.Find("Player").GetComponent<GameManager>();
-
+        //LoadSQL();
     }
 
     // Use this for initialization
@@ -61,7 +61,7 @@ public class TitleManager : MonoBehaviour {
 
     public void LoadSQL()
     {
-
+        print("copy");
         string appDBPath = Application.persistentDataPath + "/location.db";
 
         WWW loadDB = new WWW("file://" + Application.streamingAssetsPath + "/sqlite4unity.db");
@@ -72,8 +72,11 @@ public class TitleManager : MonoBehaviour {
     //{
     //    //用www先从unity中下载数据库
     //    //Application.streamingAssetsPath
+
+    //    print("copy");
+
     //    string appDBPath = Application.persistentDataPath + "/location.db";
-    //    WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
+    //    WWW loadDB = new WWW("file://" + Application.streamingAssetsPath + "/sqlite4unity.db");
     //    yield return loadDB;
     //    //拷贝数据库
     //    File.WriteAllBytes(appDBPath, loadDB.bytes);
