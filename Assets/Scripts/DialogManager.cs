@@ -16,11 +16,11 @@ public class DialogManager : MonoBehaviour {
     public GameObject portraitImage;
     public Image leftPos1;
     public Image leftPos2;
-    public Image leftPos3;
+    //public Image leftPos3;
     public Image centerPos;
     public Image rightPos1;
     public Image rightPos2;
-    public Image rightPos3;
+    //public Image rightPos3;
 
     public GameObject dialogImage;
     public GameObject roleName;
@@ -142,10 +142,10 @@ public class DialogManager : MonoBehaviour {
         {
             leftPos2.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
         }
-        if (rolePosition == leftPos3.name)
-        {
-            leftPos3.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
-        }
+        //if (rolePosition == leftPos3.name)
+        //{
+        //    leftPos3.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
+        //}
         if (rolePosition == centerPos.name)
         {
             centerPos.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
@@ -158,10 +158,10 @@ public class DialogManager : MonoBehaviour {
         {
             rightPos2.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
         }
-        if (rolePosition == rightPos3.name)
-        {
-            rightPos3.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
-        }
+        //if (rolePosition == rightPos3.name)
+        //{
+        //    rightPos3.sprite = Resources.Load("Pictures\\" + portrait, typeof(Sprite)) as Sprite;
+        //}
 
     }
     /// <summary>
@@ -223,14 +223,14 @@ public class DialogManager : MonoBehaviour {
         {
             leftPos2.gameObject.SetActive(false);
         }
-        if (stateDetail == "+left3")
-        {
-            leftPos3.gameObject.SetActive(true);
-        }
-        if (stateDetail == "-left3")
-        {
-            leftPos3.gameObject.SetActive(false);
-        }
+        //if (stateDetail == "+left3")
+        //{
+        //    leftPos3.gameObject.SetActive(true);
+        //}
+        //if (stateDetail == "-left3")
+        //{
+        //    leftPos3.gameObject.SetActive(false);
+        //}
         if (stateDetail == "+right1")
         {
             rightPos1.gameObject.SetActive(true);
@@ -247,14 +247,14 @@ public class DialogManager : MonoBehaviour {
         {
             rightPos2.gameObject.SetActive(false);
         }
-        if (stateDetail == "+right3")
-        {
-            rightPos3.gameObject.SetActive(true);
-        }
-        if (stateDetail == "-right3")
-        {
-            rightPos3.gameObject.SetActive(false);
-        }
+        //if (stateDetail == "+right3")
+        //{
+        //    rightPos3.gameObject.SetActive(true);
+        //}
+        //if (stateDetail == "-right3")
+        //{
+        //    rightPos3.gameObject.SetActive(false);
+        //}
         if (stateDetail == "+center")
         {
             centerPos.gameObject.SetActive(true);
@@ -279,21 +279,21 @@ public class DialogManager : MonoBehaviour {
             rightPos1.gameObject.SetActive(false);
             centerPos.gameObject.SetActive(true);
         }
-        if (stateDetail == "-center+right3")
-        {
-            rightPos3.gameObject.SetActive(true);
-            centerPos.gameObject.SetActive(false);
-        }
-        if (stateDetail == "+center-right3")
-        {
-            rightPos3.gameObject.SetActive(false);
-            centerPos.gameObject.SetActive(true);
-        }
-        if (stateDetail == "-left1-right3")
-        {
-            rightPos3.gameObject.SetActive(false);
-            leftPos1.gameObject.SetActive(false);
-        }
+        //if (stateDetail == "-center+right3")
+        //{
+        //    rightPos3.gameObject.SetActive(true);
+        //    centerPos.gameObject.SetActive(false);
+        //}
+        //if (stateDetail == "+center-right3")
+        //{
+        //    rightPos3.gameObject.SetActive(false);
+        //    centerPos.gameObject.SetActive(true);
+        //}
+        //if (stateDetail == "-left1-right3")
+        //{
+        //    rightPos3.gameObject.SetActive(false);
+        //    leftPos1.gameObject.SetActive(false);
+        //}
         if (stateDetail == "+black")
         {
             //gm.black.SetActive(true);

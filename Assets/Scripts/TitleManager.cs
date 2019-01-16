@@ -13,7 +13,7 @@ public class TitleManager : MonoBehaviour {
 
     private void Awake()
     {
-        gm = GameObject.Find("Player").GetComponent<GameManager>();
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         //LoadSQL();
     }
 

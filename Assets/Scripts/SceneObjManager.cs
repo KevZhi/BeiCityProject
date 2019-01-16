@@ -43,13 +43,6 @@ public class SceneObjManager : MonoBehaviour {
         objParent = gm.objRoot.transform;
     }
 
-    // Use this for initialization
-    void Start () {
-
-	}
-
-    private SqliteConnection dbconn;
-    // Update is called once per frame
     void Update () {
         
 
@@ -104,7 +97,8 @@ public class SceneObjManager : MonoBehaviour {
            
         }
     }
- 
+
+    private SqliteConnection dbconn;
 
     public void SceneObjControl()
     {
@@ -188,7 +182,7 @@ public class SceneObjManager : MonoBehaviour {
         }
 
         CheckTargetText();
-        CheckAudioList();
+        //CheckAudioList();
         CheckEventCanAutoHappend();
 
 

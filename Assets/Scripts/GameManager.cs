@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
     public MenuManager mm;
     public AudioManager am;
 
+    public TestSceneChange testScene;
 
     private void Awake()
     {
@@ -39,7 +40,8 @@ public class GameManager : MonoBehaviour {
         sm = this.GetComponent<SceneObjManager>();
         mm = this.GetComponent<MenuManager>();
         am = this.GetComponent<AudioManager>();
-  
+
+        testScene = this.GetComponent<TestSceneChange>();
     }
 
     private void Start()
