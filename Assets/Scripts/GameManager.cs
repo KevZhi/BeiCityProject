@@ -28,10 +28,12 @@ public class GameManager : MonoBehaviour {
     public AudioManager am;
 
     public TestSceneChange testScene;
+    public EventDataController edc;
+    public SceneObjectController soc;
 
     private void Awake()
     {
-        objRoot = GameObject.Find("objRoot");
+        //objRoot = GameObject.Find("objRoot");
         //commonMenu = GameObject.Find("CommonMenu");
 
         dm = this.GetComponent<DialogManager>();
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour {
         am = this.GetComponent<AudioManager>();
 
         testScene = this.GetComponent<TestSceneChange>();
+        edc = this.GetComponent<EventDataController>();
+        soc = this.GetComponent<SceneObjectController>();
     }
 
     private void Start()
@@ -54,7 +58,6 @@ public class GameManager : MonoBehaviour {
         sceneName = SceneManager.GetActiveScene().name;
         savedText = System.DateTime.Now +  "\n" +  mm.targetText.text;
     }
-
 
     public void SavePlayerData()
     {

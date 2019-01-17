@@ -6,7 +6,10 @@ public class DialogController : MonoBehaviour {
 
     private GameManager gm;
     public bool next;
+
     public bool isloading;
+
+    //public bool quitDialog;
 
     private void Awake()
     {
@@ -34,7 +37,7 @@ public class DialogController : MonoBehaviour {
         {
             if (next)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.LeftControl))
                 {
                     gm.dm.dialogue_index++;
                     if (gm.dm.dialogue_index < gm.dm.dialogue_count)
@@ -43,25 +46,18 @@ public class DialogController : MonoBehaviour {
                     }
                     else
                     {
+                        gm.edc.active = true;
+                        //quitDialog = true;
                         gm.dm.QuitDialog();
-
+                        gm.dm.TryToLoadNextEvent(gm.dm.curName);
                     }
-                }
-            }
-            else
-            {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    gm.im.active = true;
                 }
             }
         }
 
-
-        //if (gm.dm.curName == null )
-        //{
-        //    gm.dm.ResetRolePortrait();
-        //    gm.dm.SetDialogUI(false);
-        //}
+        if (gm.testScene.hasChange)
+        {
+            gm.dm.TryToAutoHappendEvent();
+        }
     }
 }

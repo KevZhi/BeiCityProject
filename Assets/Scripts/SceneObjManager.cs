@@ -82,7 +82,7 @@ public class SceneObjManager : MonoBehaviour {
                     created = true;
                     destroyed = false;
 
-                    SceneObjControl();
+                    //SceneObjControl();
                 }
 
 
@@ -191,7 +191,6 @@ public class SceneObjManager : MonoBehaviour {
         dbconn = null;
 
     }
-
 
     public void DestroyAll()
     {

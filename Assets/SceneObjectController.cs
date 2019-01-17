@@ -7,31 +7,44 @@ using Mono.Data.Sqlite;
 
 public class SceneObjectController : MonoBehaviour {
 
+    public GameManager gm;
+
     public GameObject upperPanel;
     public GameObject middlePanel;
     public GameObject lowerPanel;
+    public GameObject positionPanel;
 
     public float panelWith;
     public float panelHeight;
 
+    public float positionWith;
+    public float positionHeight;
+
     public GridLayoutGroup up;
     public GridLayoutGroup mp;
     public GridLayoutGroup lp;
+    public GridLayoutGroup pp;
 
-    public bool creat;
+    public bool active;
     // Use this for initialization
     void Start () {
+        gm = this.GetComponent<GameManager>();
         up = upperPanel.GetComponent<GridLayoutGroup>();
         mp = middlePanel.GetComponent<GridLayoutGroup>();
         lp = lowerPanel.GetComponent<GridLayoutGroup>();
+        pp = positionPanel.GetComponent<GridLayoutGroup>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (creat)
+
+        if (gm.testScene.hasChange || active)
         {
-            creat = false;
-            CreateObj("obj");
+            active = false;
+
+            DestroyAll();
+            LoadSceneObj();
+            //print("create!");
         }
 	}
 
@@ -39,6 +52,9 @@ public class SceneObjectController : MonoBehaviour {
     {
         panelWith = Mathf.Abs(2 * upperPanel.GetComponent<RectTransform>().rect.x);
         panelHeight = Mathf.Abs(2 * upperPanel.GetComponent<RectTransform>().rect.y);
+
+        positionWith = Mathf.Abs(2 * positionPanel.GetComponent<RectTransform>().rect.x);
+        positionHeight = Mathf.Abs(2 * positionPanel.GetComponent<RectTransform>().rect.y);
 
         up.padding.left = (int)(panelWith * 0.05f / 2);
         up.padding.right = (int)(panelWith * 0.05f / 2);
@@ -54,17 +70,203 @@ public class SceneObjectController : MonoBehaviour {
         lp.padding.right = (int)(panelWith * 0.05f / 2);
         lp.spacing = new Vector2(panelWith * 0.05f / 2, panelWith * 0.05f / 2);
         lp.cellSize = new Vector2(panelHeight * 0.8f, panelHeight * 0.8f);
+
+        pp.padding.top = (int)(positionHeight * 0.05f / 2);
+        pp.padding.bottom = (int)(positionHeight * 0.05f / 2);
+        pp.spacing = new Vector2(positionHeight * 0.01f, positionHeight * 0.01f);
+        pp.cellSize = new Vector2(positionWith * 0.8f, positionHeight * 0.15f);
     }
 
-    public GameObject CreateObj(string objName)
+    public void LoadSceneObj()
     {
-        GameObject prefeb = Resources.Load(objName) as GameObject;
+        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        SqliteConnection dbconn = new SqliteConnection(conn);
+        dbconn.Open();
+
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT * FROM SceneObjList WHERE scene = " + "'" + gm.testScene.curScene + "'";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+        while (reader.Read())
+        {
+            
+            string ReadyEventName = reader.GetString(reader.GetOrdinal("NeedEventReady"));
+            string FinishEventName = reader.GetString(reader.GetOrdinal("NeedEventFinish"));
+            string FinishEventName2 = reader.GetString(reader.GetOrdinal("NeedEvent2Finish"));
+            string StartEventName = reader.GetString(reader.GetOrdinal("NeedEventStart"));
+            string StartEventName2 = reader.GetString(reader.GetOrdinal("NeedEvent2Start"));
+
+            bool isready,isfinish,isfinish2,isstart,isstart2; 
+
+            if (ReadyEventName =="no")
+            {
+                isready = true;
+            }
+            else
+            {
+                isready = IsTrue(dbconn, ReadyEventName, "ready");
+            }
+
+            if (FinishEventName == "no")
+            {
+                isfinish = true;
+            }
+            else
+            {
+                isfinish = IsTrue(dbconn, FinishEventName, "finish");
+            }
+
+            if (FinishEventName2 == "no")
+            {
+                isfinish2 = true;
+            }
+            else
+            {
+                isfinish2 = IsTrue(dbconn, FinishEventName2, "finish");
+            }
+
+            if (StartEventName == "no")
+            {
+                isstart = true;
+            }
+            else
+            {
+                isstart = IsTrue(dbconn, StartEventName, "start");
+            }
+
+            if (StartEventName2 == "no")
+            {
+                isstart2 = true;
+            }
+            else
+            {
+                isstart2 = IsTrue(dbconn, StartEventName2, "start");
+            }
+
+            if (isready && isfinish && isfinish2 && isstart && isstart2)
+            {
+                CreateObj(reader.GetString(reader.GetOrdinal("icon")), reader.GetString(reader.GetOrdinal("type")), reader.GetString(reader.GetOrdinal("name")));
+            }
+        }
+        reader.Close();
+        reader = null;
+
+        dbcmd.Cancel();
+        dbcmd.Dispose();
+        dbcmd = null;
+
+        dbconn.Close();
+        dbconn.Dispose();
+        dbconn = null;
+
+    }
+
+    public bool IsTrue(SqliteConnection dbconn, string NeedCheckEventName, string NeedCheckEventState)
+    {
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT EventState FROM EventData WHERE EventName = " + "'" + NeedCheckEventName + "'";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+
+        string str = reader["EventState"].ToString();
+        //print(str);
+        bool istrue = (str == NeedCheckEventState);
+        //if (NeedCheckEventName != "no")
+        //{
+        //    //print(NeedCheckEventName + "'s " + NeedCheckEventState + " state is " + istrue);
+        //}
+        reader.Close();
+        reader = null;
+
+        dbcmd.Cancel();
+        dbcmd.Dispose();
+        dbcmd = null;
+
+        return istrue;
+    }
+
+    public GameObject CreateObj(string iconName,string type,string name)
+    {
+        //print("create!");
+        GameObject prefeb = Resources.Load("Obj") as GameObject;
         GameObject obj = GameObject.Instantiate(prefeb);
+        obj.name = name;
+        Image icon = obj.GetComponent<Image>();
+        icon.sprite = Resources.Load("Icon\\" + iconName, typeof(Sprite)) as Sprite;
+        Button button = obj.GetComponent<Button>();
+        if (type == "1")
+        {
+            obj.transform.SetParent(upperPanel.transform, false);
+            button.onClick.AddListener(delegate () {
+                LoadObjDetail(name);
+            });
+        }
+        if (type == "2")
+        {
+            obj.transform.SetParent(middlePanel.transform, false);
+            button.onClick.AddListener(delegate () {
+                LoadObjDetail(name);
+            });
+        }
+        if (type == "3")
+        {
+            obj.transform.SetParent(lowerPanel.transform, false);
+            button.onClick.AddListener(delegate () {
+                LoadObjDetail(name);
+            });
+        }
+        if (type == "4")
+        {
+            obj.transform.SetParent(positionPanel.transform, false);
 
-        obj.name = objName;
-
-        obj.transform.SetParent(upperPanel.transform, false);
+            button.onClick.AddListener(delegate () {
+                LoadScene(name);
+            });
+        }
+       
 
         return obj;
     }
+
+    public void LoadScene(string scene)
+    {
+        Globe.nextSceneName = scene;
+        SceneManager.LoadScene("loading");
+    }
+
+    public void LoadObjDetail(string obj)
+    {
+        gm.dm.curName = obj;
+        gm.dm.StartDialog();
+    }
+
+    public void DestroyAll()
+    {
+        //print("destroy!");
+        int upperChildCount = upperPanel.transform.childCount;
+        for (int i = 0; i < upperChildCount; i++)
+        {
+            Destroy(upperPanel.transform.GetChild(i).gameObject);
+        }
+
+        int middleChildCount = middlePanel.transform.childCount;
+        for (int i = 0; i < middleChildCount; i++)
+        {
+            Destroy(middlePanel.transform.GetChild(i).gameObject);
+        }
+
+        int lowerChildCount = lowerPanel.transform.childCount;
+        for (int i = 0; i < lowerChildCount; i++)
+        {
+            Destroy(lowerPanel.transform.GetChild(i).gameObject);
+        }
+
+        int positionChildCount = positionPanel.transform.childCount;
+        for (int i = 0; i < positionChildCount; i++)
+        {
+            Destroy(positionPanel.transform.GetChild(i).gameObject);
+        }
+
+    }
+
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
+using Mono.Data.Sqlite;
 using System;
 using System.Xml;
 using UnityEngine.SceneManagement;
@@ -30,8 +30,8 @@ public class DialogManager : MonoBehaviour {
     public int dialogue_index;//对话索引
     public int dialogue_count;//对话数量
 
-    private bool startTimer = false;
-    private float timer;
+    //private bool startTimer = false;
+    //private float timer;
 
     private Transform allPortrait;
 
@@ -42,6 +42,8 @@ public class DialogManager : MonoBehaviour {
     private string portrait;
     private string rolePos;
     private string state;
+
+    public bool nextEvent;
 
     private void Awake()
     {
@@ -55,18 +57,18 @@ public class DialogManager : MonoBehaviour {
 
     void Update()
     {
-        if (startTimer)
-        {
-            if (timer>=1f)
-            {
-                timer = 0;
-                startTimer = false;
-            }
-            else
-            {
-                timer += Time.deltaTime;
-            }
-        }
+        //if (startTimer)
+        //{
+        //    if (timer>=1f)
+        //    {
+        //        timer = 0;
+        //        startTimer = false;
+        //    }
+        //    else
+        //    {
+        //        timer += Time.deltaTime;
+        //    }
+        //}
     }
 
     public void Dialogues_handle(int dialogue_index)
@@ -90,7 +92,9 @@ public class DialogManager : MonoBehaviour {
     {
         dialogue_index = 0;
         dialogue_count = 0;
+
         gm.dc.next = true;
+
         XmlDocument xmlDocument = new XmlDocument();
         dialogues_list = new List<string>();
         string data = Resources.Load("Text/" + curName).ToString();
@@ -124,12 +128,13 @@ public class DialogManager : MonoBehaviour {
     {
        /* gm.dc.next = false;*///姑且放在这吧，我要被搞死了
         gm.mm.ShowOrHideGameMenuBtn(true);
-        gm.sm.destroyed = true;
-        gm.sm.checkInDialogFinish = true;
+
         ResetRolePortrait();
         SetDialogUI(false);
         gm.objRoot.SetActive(true);
+
         gm.dc.next = false;
+   
     }
 
     public void LoadRolePortrait(string rolePosition)
@@ -188,7 +193,6 @@ public class DialogManager : MonoBehaviour {
         portraitImage.SetActive(isopen);
         //gm.objRoot.SetActive(!isopen);
     }
-
 
     //选项
     public void ChooseDecision(string choose)
@@ -364,4 +368,110 @@ public class DialogManager : MonoBehaviour {
             gm.im.canMove = true;
         }
     }
+
+    public void TryToAutoHappendEvent()
+    {
+        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        SqliteConnection dbconn = new SqliteConnection(conn);
+        dbconn.Open();
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT * FROM AutoEventList WHERE scene = " + "'" + gm.sceneName + "'";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string StartEvent = reader.GetString(reader.GetOrdinal("name"));
+            string NeedEventStart = reader.GetString(reader.GetOrdinal("NeedEventStart"));
+
+            bool isready = IsTrue(dbconn,StartEvent, "ready");
+
+            if (isready)
+            {
+                if (NeedEventStart == "no")
+                {
+                    //print(StartEvent + " auto start!");
+                    curName = StartEvent;
+                    StartDialog();
+                }
+                else
+                {
+                    bool isstart = IsTrue(dbconn, NeedEventStart, "start");
+                    if (isstart)
+                    {
+                        //print(StartEvent + " auto start!");
+                        curName = StartEvent;
+                        StartDialog();
+                    }
+                }
+            }
+            
+        }
+
+        reader.Close();
+        reader = null;
+
+        dbcmd.Cancel();
+        dbcmd.Dispose();
+        dbcmd = null;
+
+        dbconn.Close();
+        dbconn.Dispose();
+        dbconn = null;
+
+    }
+    public bool IsTrue(SqliteConnection dbconn, string NeedCheckEventName, string NeedCheckEventState)
+    {
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT EventState FROM EventData WHERE EventName = " + "'" + NeedCheckEventName + "'";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+
+        string str = reader["EventState"].ToString();
+        bool istrue = (str == NeedCheckEventState);
+
+        reader.Close();
+        reader = null;
+
+        dbcmd.Cancel();
+        dbcmd.Dispose();
+        dbcmd = null;
+
+        return istrue;
+    }
+
+    public void TryToLoadNextEvent(string eventName)
+    {
+        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        SqliteConnection dbconn = new SqliteConnection(conn);
+        dbconn.Open();
+
+        SqliteCommand dbcmd = dbconn.CreateCommand();
+        string sqlQuery = "SELECT NextEvent FROM EventList WHERE name = " + "'" + eventName + "'";
+        dbcmd.CommandText = sqlQuery;
+        SqliteDataReader reader = dbcmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            string str = reader["NextEvent"].ToString();
+            if (str != "no")
+            {
+                curName = str;
+                StartDialog();
+            }
+        }
+
+        reader.Close();
+        reader = null;
+
+        dbcmd.Cancel();
+        dbcmd.Dispose();
+        dbcmd = null;
+
+        dbconn.Close();
+        dbconn.Dispose();
+        dbconn = null;
+
+    }
+
 }

@@ -15,6 +15,11 @@ public class TitleManager : MonoBehaviour {
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         //LoadSQL();
+        if (File.Exists(Application.persistentDataPath + "/location.db"))
+        {
+            File.Delete(Application.persistentDataPath + "/location.db");
+        }
+
     }
 
     // Use this for initialization
@@ -61,10 +66,11 @@ public class TitleManager : MonoBehaviour {
 
     public void LoadSQL()
     {
-        print("copy");
+        //print("copy");
         string appDBPath = Application.persistentDataPath + "/location.db";
 
-        WWW loadDB = new WWW("file://" + Application.streamingAssetsPath + "/sqlite4unity.db");
+        //WWW loadDB = new WWW("file://" + Application.streamingAssetsPath + "/sqlite4unity.db");
+        WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
 
         File.WriteAllBytes(appDBPath, loadDB.bytes);
     }

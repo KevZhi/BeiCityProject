@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 
@@ -18,16 +19,19 @@ public class TestSceneChange : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         curScene = SceneManager.GetActiveScene().name;
-        if (lastScene != curScene)
+        if (File.Exists(Application.persistentDataPath + "/location.db"))
         {
-            lastScene = curScene;
-            hasChange = true;
-            //print("sceneChange!");
-        }
-        else
-        {
-            hasChange = false;
-            //print("sceneNotChange");
+            if (lastScene != curScene)
+            {
+                lastScene = curScene;
+                hasChange = true;
+                //print("sceneChange!");
+            }
+            else
+            {
+                hasChange = false;
+                //print("sceneNotChange");
+            }
         }
     }
 }
