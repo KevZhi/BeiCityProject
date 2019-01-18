@@ -45,6 +45,7 @@ public class TitleManager : MonoBehaviour {
 
                 gm.dm.curName = null;
 
+                gm.objRoot.SetActive(false);
                 //gm.sm.checkInDialogFinish = true;
             }
 
@@ -74,6 +75,7 @@ public class TitleManager : MonoBehaviour {
 
         File.WriteAllBytes(appDBPath, loadDB.bytes);
     }
+
     //public IEnumerator LoadSQL()
     //{
     //    //用www先从unity中下载数据库

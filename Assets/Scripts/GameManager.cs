@@ -22,30 +22,33 @@ public class GameManager : MonoBehaviour {
 
     public DialogManager dm;
     public DialogController dc;
-    public InteractionManager im;
+
     public SceneObjManager sm;
     public MenuManager mm;
-    public AudioManager am;
+    //public AudioManager am;
 
     public TestSceneChange testScene;
     public EventDataController edc;
     public SceneObjectController soc;
+    public TestSceneChange tsc;
+    public PlayerStateController psc;
+    public BackgroundMusicController bgmc;
 
     private void Awake()
     {
-        //objRoot = GameObject.Find("objRoot");
-        //commonMenu = GameObject.Find("CommonMenu");
-
         dm = this.GetComponent<DialogManager>();
-        im = this.GetComponent<InteractionManager>();
+
         dc = this.GetComponent<DialogController>();
         sm = this.GetComponent<SceneObjManager>();
         mm = this.GetComponent<MenuManager>();
-        am = this.GetComponent<AudioManager>();
+        //am = this.GetComponent<AudioManager>();
 
         testScene = this.GetComponent<TestSceneChange>();
         edc = this.GetComponent<EventDataController>();
         soc = this.GetComponent<SceneObjectController>();
+        tsc = this.GetComponent<TestSceneChange>();
+        psc = this.GetComponent<PlayerStateController>();
+        bgmc = this.GetComponent<BackgroundMusicController>();
     }
 
     private void Start()

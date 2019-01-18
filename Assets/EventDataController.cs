@@ -20,6 +20,8 @@ public class EventDataController : MonoBehaviour {
             TryToChangeEventData(gm.dm.curName);
             //print("eventdata");
             gm.soc.active = true;
+            gm.dc.quitDialog = true;
+            gm.bgmc.active = true;
         }
 	}
 

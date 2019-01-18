@@ -298,7 +298,7 @@ public class SceneObjManager : MonoBehaviour {
 
             string NeedScene = reader.GetString(reader.GetOrdinal("NeedScene"));
             string NeedEventStartName = reader.GetString(reader.GetOrdinal("NeedEventStart"));
-            string AudioName = reader.GetString(reader.GetOrdinal("AudioName"));
+            //string AudioName = reader.GetString(reader.GetOrdinal("AudioName"));
 
             if (SceneManager.GetActiveScene().name == NeedScene)
             {
@@ -310,12 +310,12 @@ public class SceneObjManager : MonoBehaviour {
 
                 if (reader2["EventState"].ToString() == "start" || reader2["EventState"].ToString() == "")
                 {
-                    if (gm.am.bgm.clip == null || gm.am.bgm.clip.name != AudioName)
-                    {
-                        print("play audio " + AudioName);
-                        gm.am.audioName = AudioName;
-                        gm.am.LoadAudio();
-                    }
+                    //if (gm.am.bgm.clip == null || gm.am.bgm.clip.name != AudioName)
+                    //{
+                    //    print("play audio " + AudioName);
+                    //    gm.am.audioName = AudioName;
+                    //    gm.am.LoadAudio();
+                    //}
                 }
 
                 reader2.Close();
@@ -335,7 +335,6 @@ public class SceneObjManager : MonoBehaviour {
         dbcmd.Dispose();
         dbcmd = null;
     }
-
 
     public void CheckEventCanAutoHappend()
     {

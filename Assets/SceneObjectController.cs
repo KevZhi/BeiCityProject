@@ -74,7 +74,7 @@ public class SceneObjectController : MonoBehaviour {
         pp.padding.top = (int)(positionHeight * 0.05f / 2);
         pp.padding.bottom = (int)(positionHeight * 0.05f / 2);
         pp.spacing = new Vector2(positionHeight * 0.01f, positionHeight * 0.01f);
-        pp.cellSize = new Vector2(positionWith * 0.8f, positionHeight * 0.15f);
+        pp.cellSize = new Vector2(positionWith * 0.9f, positionHeight * 0.15f);
     }
 
     public void LoadSceneObj()

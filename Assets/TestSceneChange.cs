@@ -10,13 +10,12 @@ public class TestSceneChange : MonoBehaviour {
     public string curScene;
     public string lastScene;
     public bool hasChange;
-    // Use this for initialization
+
     void Start () {
         //curScene = "1.welcome";
         //lastScene = "1.welcome";
     }
-	
-	// Update is called once per frame
+
 	void Update () {
         curScene = SceneManager.GetActiveScene().name;
         if (File.Exists(Application.persistentDataPath + "/location.db"))
