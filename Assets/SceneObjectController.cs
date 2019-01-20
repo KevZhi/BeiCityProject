@@ -38,7 +38,7 @@ public class SceneObjectController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (gm.testScene.hasChange || active)
+        if (active)
         {
             active = false;
 
@@ -79,7 +79,7 @@ public class SceneObjectController : MonoBehaviour {
 
     public void LoadSceneObj()
     {
-        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        string conn = "data source= " + Application.streamingAssetsPath + "/sqlite4unity.db";
         SqliteConnection dbconn = new SqliteConnection(conn);
         dbconn.Open();
 
@@ -104,7 +104,7 @@ public class SceneObjectController : MonoBehaviour {
             }
             else
             {
-                isready = IsTrue(dbconn, ReadyEventName, "ready");
+                isready = IsTrue(ReadyEventName, "ready");
             }
 
             if (FinishEventName == "no")
@@ -113,7 +113,7 @@ public class SceneObjectController : MonoBehaviour {
             }
             else
             {
-                isfinish = IsTrue(dbconn, FinishEventName, "finish");
+                isfinish = IsTrue(FinishEventName, "finish");
             }
 
             if (FinishEventName2 == "no")
@@ -122,7 +122,7 @@ public class SceneObjectController : MonoBehaviour {
             }
             else
             {
-                isfinish2 = IsTrue(dbconn, FinishEventName2, "finish");
+                isfinish2 = IsTrue(FinishEventName2, "finish");
             }
 
             if (StartEventName == "no")
@@ -131,7 +131,7 @@ public class SceneObjectController : MonoBehaviour {
             }
             else
             {
-                isstart = IsTrue(dbconn, StartEventName, "start");
+                isstart = IsTrue(StartEventName, "start");
             }
 
             if (StartEventName2 == "no")
@@ -140,7 +140,7 @@ public class SceneObjectController : MonoBehaviour {
             }
             else
             {
-                isstart2 = IsTrue(dbconn, StartEventName2, "start");
+                isstart2 = IsTrue(StartEventName2, "start");
             }
 
             if (isready && isfinish && isfinish2 && isstart && isstart2)
@@ -161,8 +161,12 @@ public class SceneObjectController : MonoBehaviour {
 
     }
 
-    public bool IsTrue(SqliteConnection dbconn, string NeedCheckEventName, string NeedCheckEventState)
+    public bool IsTrue(string NeedCheckEventName, string NeedCheckEventState)
     {
+        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        SqliteConnection dbconn = new SqliteConnection(conn);
+        dbconn.Open();
+
         SqliteCommand dbcmd = dbconn.CreateCommand();
         string sqlQuery = "SELECT EventState FROM EventData WHERE EventName = " + "'" + NeedCheckEventName + "'";
         dbcmd.CommandText = sqlQuery;
@@ -181,6 +185,10 @@ public class SceneObjectController : MonoBehaviour {
         dbcmd.Cancel();
         dbcmd.Dispose();
         dbcmd = null;
+
+        dbconn.Close();
+        dbconn.Dispose();
+        dbconn = null;
 
         return istrue;
     }
@@ -237,7 +245,8 @@ public class SceneObjectController : MonoBehaviour {
     public void LoadObjDetail(string obj)
     {
         gm.dm.curName = obj;
-        gm.dm.StartDialog();
+        gm.dc.activeStart = true;
+
     }
 
     public void DestroyAll()

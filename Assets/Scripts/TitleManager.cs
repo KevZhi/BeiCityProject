@@ -71,7 +71,7 @@ public class TitleManager : MonoBehaviour {
         string appDBPath = Application.persistentDataPath + "/location.db";
 
         //WWW loadDB = new WWW("file://" + Application.streamingAssetsPath + "/sqlite4unity.db");
-        WWW loadDB = new WWW(Application.streamingAssetsPath + "/sqlite4unity.db");
+        WWW loadDB = new WWW(Application.streamingAssetsPath + "/original.db");
 
         File.WriteAllBytes(appDBPath, loadDB.bytes);
     }

@@ -2902,7 +2902,7 @@ GameObject:
   - component: {fileID: 461861999}
   - component: {fileID: 461861998}
   m_Layer: 5
-  m_Name: optionPanel
+  m_Name: settingPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3405,7 +3405,6 @@ GameObject:
   - component: {fileID: 476956051}
   - component: {fileID: 748628418}
   - component: {fileID: 748628417}
-  - component: {fileID: 476956055}
   - component: {fileID: 1855249844}
   - component: {fileID: 476956057}
   - component: {fileID: 476956052}
@@ -3432,9 +3431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e123a83b3ee7f53478db6a743aef26c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
   curScene: 
   lastScene: 
-  hasChange: 0
 --- !u!114 &476956052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3448,6 +3447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
   background: {fileID: 0}
+  active: 0
 --- !u!114 &476956053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3486,33 +3486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
   active: 0
---- !u!114 &476956055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114569716397153838, guid: 2eebaa2a8dd22634197efeb9c9591f6c,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 476956050}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 161bac9ace8e00642beeafaf02aaf938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  created: 0
-  destroyed: 0
-  checkInDialogStart: 0
-  checkInDialogFinish: 0
-  inTitle: 0
-  role1Pos: {x: -6, y: 4, z: 0}
-  role2Pos: {x: -4, y: 4, z: 0}
-  notice1Pos: {x: -6, y: 0, z: 0}
-  notice2Pos: {x: -4, y: 0, z: 0}
-  thing1Pos: {x: -6, y: -2, z: 0}
-  thing2Pos: {x: -4, y: -2, z: 0}
-  thing3Pos: {x: -2, y: -2, z: 0}
-  position1Pos: {x: 7, y: 5.3, z: 0}
-  position2Pos: {x: 7, y: 4, z: 0}
-  position3Pos: {x: 7, y: 2.7, z: 0}
 --- !u!114 &476956056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3543,6 +3516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   next: 0
   isloading: 0
+  activeAtuo: 0
   quitDialog: 0
 --- !u!114 &476956058
 MonoBehaviour:
@@ -3596,6 +3570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gm: {fileID: 0}
+  target: {fileID: 1615063280}
+  active: 0
 --- !u!1 &497967227
 GameObject:
   m_ObjectHideFlags: 0
@@ -5918,7 +5894,6 @@ MonoBehaviour:
   objRoot: {fileID: 220905259}
   dm: {fileID: 0}
   dc: {fileID: 0}
-  sm: {fileID: 0}
   mm: {fileID: 0}
   testScene: {fileID: 0}
   edc: {fileID: 0}
@@ -5926,6 +5901,8 @@ MonoBehaviour:
   tsc: {fileID: 0}
   psc: {fileID: 0}
   bgmc: {fileID: 0}
+  tc: {fileID: 0}
+  bgc: {fileID: 0}
 --- !u!1 &755119895
 GameObject:
   m_ObjectHideFlags: 0
@@ -12367,7 +12344,7 @@ Prefab:
     - target: {fileID: 82953194792170036, guid: 7ba65815a1848ba4fad783d2ed7375cf,
         type: 2}
       propertyPath: m_Volume
-      value: 0.168
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 82953194792170036, guid: 7ba65815a1848ba4fad783d2ed7375cf,
         type: 2}

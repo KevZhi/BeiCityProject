@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 using Mono.Data.Sqlite;
 using UnityEngine.UI;
 
-public class BackGroundController : MonoBehaviour {
+public class BackgroundController : MonoBehaviour {
 
     public GameManager gm;
     public Image background;
+
+    public bool active;
 
     void Start () {
         background = GameObject.Find("BG").GetComponent<Image>();
@@ -16,8 +18,9 @@ public class BackGroundController : MonoBehaviour {
     }
 
 	void Update () {
-        if(gm.testScene.hasChange)
+        if(active)
         {
+            active = false;
             //print("sceneChange!");
             ChangeBG();
         }
@@ -25,7 +28,7 @@ public class BackGroundController : MonoBehaviour {
 
     public void ChangeBG()
     {
-        string conn = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        string conn = "data source= " + Application.streamingAssetsPath + "/sqlite4unity.db";
         SqliteConnection dbconn = new SqliteConnection(conn);
         dbconn.Open();
 

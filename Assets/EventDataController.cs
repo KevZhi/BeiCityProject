@@ -20,15 +20,16 @@ public class EventDataController : MonoBehaviour {
             TryToChangeEventData(gm.dm.curName);
             //print("eventdata");
             gm.soc.active = true;
-            gm.dc.quitDialog = true;
+            gm.dc.activeNext = true;
             gm.bgmc.active = true;
+            gm.tc.active = true;
         }
 	}
 
     public void TryToChangeEventData(string eventName)
     {
 
-        string conn = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        string conn = "data source= " + Application.streamingAssetsPath + "/sqlite4unity.db";
         SqliteConnection dbconn = new SqliteConnection(conn);
         dbconn.Open();
 
@@ -43,61 +44,90 @@ public class EventDataController : MonoBehaviour {
             if (reader.GetString(reader.GetOrdinal("SetEventStart")) != "no")
             {
                 string setEventName = reader.GetString(reader.GetOrdinal("SetEventStart"));
-                SqliteCommand dbcmd1 = dbconn.CreateCommand();
-                string sqlQuery1 = "UPDATE EventData SET EventState = 'start' WHERE EventName = " + "'" + setEventName + "'";
-                dbcmd1.CommandText = sqlQuery1;
-                SqliteDataReader reader1 = dbcmd1.ExecuteReader();
 
-                reader1.Close();
-                reader1 = null;
+                string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+                SqliteConnection dbconn2 = new SqliteConnection(conn2);
+                dbconn2.Open();
 
-                dbcmd1.Cancel();
-                dbcmd1.Dispose();
-                dbcmd1 = null;
+                SqliteCommand dbcmd2 = dbconn2.CreateCommand();
+                string sqlQuery2 = "UPDATE EventData SET EventState = 'start' WHERE EventName = " + "'" + setEventName + "'";
+                dbcmd2.CommandText = sqlQuery2;
+                SqliteDataReader reader2 = dbcmd2.ExecuteReader();
+
+                reader2.Close();
+                reader2 = null;
+
+                dbcmd2.Cancel();
+                dbcmd2.Dispose();
+                dbcmd2 = null;
+
+                dbconn2.Close();
+                dbconn2.Dispose();
+                dbconn2 = null;
 
             }
 
             if (reader.GetString(reader.GetOrdinal("SetEventStart2")) != "no")
             {
                 string setEventName = reader.GetString(reader.GetOrdinal("SetEventStart2"));
-                SqliteCommand dbcmd1 = dbconn.CreateCommand();
-                string sqlQuery1 = "UPDATE EventData SET EventState = 'start' WHERE EventName = " + "'" + setEventName + "'";
-                dbcmd1.CommandText = sqlQuery1;
-                SqliteDataReader reader1 = dbcmd1.ExecuteReader();
 
-                reader1.Close();
-                reader1 = null;
+                string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+                SqliteConnection dbconn2 = new SqliteConnection(conn2);
+                dbconn2.Open();
 
-                dbcmd1.Cancel();
-                dbcmd1.Dispose();
-                dbcmd1 = null;
+                SqliteCommand dbcmd2 = dbconn2.CreateCommand();
+                string sqlQuery2 = "UPDATE EventData SET EventState = 'start' WHERE EventName = " + "'" + setEventName + "'";
+                dbcmd2.CommandText = sqlQuery2;
+                SqliteDataReader reader2 = dbcmd2.ExecuteReader();
 
+                reader2.Close();
+                reader2 = null;
+
+                dbcmd2.Cancel();
+                dbcmd2.Dispose();
+                dbcmd2 = null;
+
+                dbconn2.Close();
+                dbconn2.Dispose();
+                dbconn2 = null;
             }
 
             if (reader.GetString(reader.GetOrdinal("SetEventFinish")) != "no")
             {
                 string setEventName = reader.GetString(reader.GetOrdinal("SetEventFinish"));
 
-                SqliteCommand dbcmd1 = dbconn.CreateCommand();
-                string sqlQuery1 = "UPDATE EventData SET EventState = 'finish' WHERE EventName = " + "'" + setEventName + "'";
-                dbcmd1.CommandText = sqlQuery1;
-                SqliteDataReader reader1 = dbcmd1.ExecuteReader();
+                string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+                SqliteConnection dbconn2 = new SqliteConnection(conn2);
+                dbconn2.Open();
+
+                SqliteCommand dbcmd2= dbconn2.CreateCommand();
+                string sqlQuery2 = "UPDATE EventData SET EventState = 'finish' WHERE EventName = " + "'" + setEventName + "'";
+                dbcmd2.CommandText = sqlQuery2;
+                SqliteDataReader reader2 = dbcmd2.ExecuteReader();
 
                 //print("set " + setEventName + " finish");
 
-                reader1.Close();
-                reader1 = null;
+                reader2.Close();
+                reader2 = null;
 
-                dbcmd1.Cancel();
-                dbcmd1.Dispose();
-                dbcmd1 = null;
+                dbcmd2.Cancel();
+                dbcmd2.Dispose();
+                dbcmd2 = null;
+
+                dbconn2.Close();
+                dbconn2.Dispose();
+                dbconn2 = null;
             }
 
             if (reader.GetString(reader.GetOrdinal("SetEventFinish2")) != "no")
             {
                 string setEventName2 = reader.GetString(reader.GetOrdinal("SetEventFinish2"));
 
-                SqliteCommand dbcmd2 = dbconn.CreateCommand();
+                string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+                SqliteConnection dbconn2 = new SqliteConnection(conn2);
+                dbconn2.Open();
+
+                SqliteCommand dbcmd2 = dbconn2.CreateCommand();
                 string sqlQuery2 = "UPDATE EventData SET EventState = 'finish' WHERE EventName = " + "'" + setEventName2 + "'";
                 dbcmd2.CommandText = sqlQuery2;
                 SqliteDataReader reader2 = dbcmd2.ExecuteReader();
@@ -108,6 +138,10 @@ public class EventDataController : MonoBehaviour {
                 dbcmd2.Cancel();
                 dbcmd2.Dispose();
                 dbcmd2 = null;
+
+                dbconn2.Close();
+                dbconn2.Dispose();
+                dbconn2 = null;
             }
 
         }

@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class TestSceneChange : MonoBehaviour {
 
+    public GameManager gm;
+
     public string curScene;
     public string lastScene;
-    public bool hasChange;
+    //public bool hasChange;
 
     void Start () {
+        gm = this.GetComponent<GameManager>();
         //curScene = "1.welcome";
         //lastScene = "1.welcome";
     }
@@ -23,12 +26,19 @@ public class TestSceneChange : MonoBehaviour {
             if (lastScene != curScene)
             {
                 lastScene = curScene;
-                hasChange = true;
+
+                gm.bgc.active = true;
+                gm.bgmc.active = true;
+                gm.soc.active = true;
+                gm.dc.activeAtuo = true;
+                gm.tc.active = true;
+                //hasChange = true;
                 //print("sceneChange!");
             }
             else
             {
-                hasChange = false;
+                
+                //hasChange = false;
                 //print("sceneNotChange");
             }
         }

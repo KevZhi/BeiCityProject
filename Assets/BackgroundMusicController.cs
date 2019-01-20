@@ -21,7 +21,7 @@ public class BackgroundMusicController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (gm.testScene.hasChange || active)
+        if (active)
         {
             //print("audio");
             active = false;
@@ -44,7 +44,7 @@ public class BackgroundMusicController : MonoBehaviour {
 
     public void TryToChangeBGM()
     {
-        string conn = "data source= " + Application.persistentDataPath + "/location.db";
+        string conn = "data source= " + Application.streamingAssetsPath + "/sqlite4unity.db";
         SqliteConnection dbconn = new SqliteConnection(conn);
         dbconn.Open();
 
@@ -58,7 +58,11 @@ public class BackgroundMusicController : MonoBehaviour {
             string NeedEvent = reader.GetString(reader.GetOrdinal("NeedEventFinish"));
             string AudioName = reader.GetString(reader.GetOrdinal("AudioName"));
 
-            SqliteCommand dbcmd2 = dbconn.CreateCommand();
+            string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+            SqliteConnection dbconn2 = new SqliteConnection(conn2);
+            dbconn2.Open();
+
+            SqliteCommand dbcmd2 = dbconn2.CreateCommand();
             string sqlQuery2 = "SELECT EventState FROM EventData WHERE EventName = " + "'" + NeedEvent + "'";
             dbcmd2.CommandText = sqlQuery2;
             SqliteDataReader reader2 = dbcmd2.ExecuteReader();
@@ -89,6 +93,10 @@ public class BackgroundMusicController : MonoBehaviour {
             dbcmd2.Dispose();
             dbcmd2 = null;
 
+            dbconn2.Close();
+            dbconn2.Dispose();
+            dbconn2 = null;
+
         }
 
         reader.Close();
@@ -101,8 +109,5 @@ public class BackgroundMusicController : MonoBehaviour {
         dbconn.Close();
         dbconn.Dispose();
         dbconn = null;
-
     }
-
-
 }

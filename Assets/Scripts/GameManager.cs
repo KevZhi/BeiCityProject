@@ -23,9 +23,7 @@ public class GameManager : MonoBehaviour {
     public DialogManager dm;
     public DialogController dc;
 
-    public SceneObjManager sm;
     public MenuManager mm;
-    //public AudioManager am;
 
     public TestSceneChange testScene;
     public EventDataController edc;
@@ -33,15 +31,15 @@ public class GameManager : MonoBehaviour {
     public TestSceneChange tsc;
     public PlayerStateController psc;
     public BackgroundMusicController bgmc;
+    public TargetController tc;
+    public BackgroundController bgc;
 
     private void Awake()
     {
         dm = this.GetComponent<DialogManager>();
 
         dc = this.GetComponent<DialogController>();
-        sm = this.GetComponent<SceneObjManager>();
         mm = this.GetComponent<MenuManager>();
-        //am = this.GetComponent<AudioManager>();
 
         testScene = this.GetComponent<TestSceneChange>();
         edc = this.GetComponent<EventDataController>();
@@ -49,11 +47,8 @@ public class GameManager : MonoBehaviour {
         tsc = this.GetComponent<TestSceneChange>();
         psc = this.GetComponent<PlayerStateController>();
         bgmc = this.GetComponent<BackgroundMusicController>();
-    }
-
-    private void Start()
-    {
-
+        tc = this.GetComponent<TargetController>();
+        bgc = this.GetComponent<BackgroundController>();
     }
 
     private void Update()
