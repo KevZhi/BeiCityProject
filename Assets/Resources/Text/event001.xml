@@ -22,20 +22,6 @@
     <state></state>
   </dialogue>
   <dialogue>
-    <role></role>
-    <detail>而我依然像电线杆一样，一动不动地杵在三年十五班的门口。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>百无聊赖地观察着眼前陌生或熟悉的人们。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
     <role>易秋</role>
     <detail>。。。。。。</detail>
     <position>left1</position>
@@ -43,32 +29,11 @@
     <state>+left1</state>
   </dialogue>
   <dialogue>
-    <role></role>
-    <detail>但“某些人”就没有这种兴致了。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>完全不在乎我这个“淘汰者”的存在。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role>易秋</role>
-    <detail>。。。。。。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state>-left1</state>
-  </dialogue>
-  <dialogue>
     <role>易秋</role>
     <detail>呵，催命铃声，名不虚传。</detail>
     <position></position>
     <portrait></portrait>
-    <state></state>
+    <state>-left1</state>
   </dialogue>
 <dialogue>
     <role>易秋</role>

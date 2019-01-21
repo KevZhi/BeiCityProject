@@ -38,16 +38,17 @@ public class DialogController : MonoBehaviour {
             {
                 if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.LeftControl))
                 {
-                    gm.dm.dialogue_index++;
-                    if (gm.dm.dialogue_index < gm.dm.dialogue_count)
+                    gm.dm.dialoguesIndex++;
+                    if (gm.dm.dialoguesIndex < gm.dm.dialoguesCount)
                     {
-                        gm.dm.Dialogues_handle(gm.dm.dialogue_index);//那就载入下一条对话
+                        gm.dm.DialoguesHandle(gm.dm.dialoguesIndex);//那就载入下一条对话
                     }
                     else
                     {
                         istalking = false;
                         gm.edc.active = true;//改变事件列表状态
-                        gm.dm.QuitDialog();
+                        //gm.dm.ResetRolePortrait();
+                        //gm.dm.QuitDialog();
                     }
                 }
             }
@@ -181,8 +182,12 @@ public class DialogController : MonoBehaviour {
             }
             else
             {
-
+                gm.dm.QuitDialog();
             }
+        }
+        else
+        {
+            gm.dm.QuitDialog();
         }
 
         reader.Close();

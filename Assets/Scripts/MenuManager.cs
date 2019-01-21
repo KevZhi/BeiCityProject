@@ -24,7 +24,7 @@ public class MenuManager : MonoBehaviour {
     public GameObject statePanel;
     public GameObject optionPanel;
     public GameObject targetPanel;
-    public Text targetText;
+    //public Text targetText;
     public GameObject logPanel;
 
     public GameObject buffPanel;
@@ -44,9 +44,8 @@ public class MenuManager : MonoBehaviour {
     public GameObject ChatOrNot;
     public GameObject SitOrNot;
 
-    //public GameObject sceneMask;
-
     public GameObject beginning;
+
     private float timer;
 
     public bool levelUp;

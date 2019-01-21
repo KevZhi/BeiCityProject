@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        savedText = System.DateTime.Now +  "\n" +  mm.targetText.text;
+        savedText = System.DateTime.Now +  "\n" +  tc.target.text;
     }
 
     public void SavePlayerData()

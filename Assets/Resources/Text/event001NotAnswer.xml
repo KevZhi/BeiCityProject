@@ -29,13 +29,6 @@
     <state></state>
   </dialogue>
   <dialogue>
-    <role></role>
-    <detail>看来终于有“同类人”过来陪我杵着了。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
     <role>陌生人</role>
     <detail>老师并没来啊。。。。。。。</detail>
     <position></position>
@@ -73,13 +66,6 @@
   <dialogue>
     <role>易秋</role>
     <detail>嘘。。。。。。。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>果然并不是“同类人”啊。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
