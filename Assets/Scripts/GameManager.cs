@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public BackgroundMusicController bgmc;
     public TargetController tc;
     public BackgroundController bgc;
+    public EffectController ec;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour {
         bgmc = this.GetComponent<BackgroundMusicController>();
         tc = this.GetComponent<TargetController>();
         bgc = this.GetComponent<BackgroundController>();
+        ec = this.GetComponent<EffectController>();
     }
 
     private void Update()

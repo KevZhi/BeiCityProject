@@ -37,13 +37,6 @@ public class MenuManager : MonoBehaviour {
     public Text EvilLVText;
 
     public GameObject warning;
-
-    public GameObject AnswerOrNot;
-    public GameObject HelpOrNot;
-    public GameObject ObserveOrNot;
-    public GameObject ChatOrNot;
-    public GameObject SitOrNot;
-
     public GameObject beginning;
 
     private float timer;
@@ -90,6 +83,10 @@ public class MenuManager : MonoBehaviour {
                 warning.GetComponentInChildren<Text>().text = "所需等级不足";
             }
         }
+
+
+
+
     }
 
     public void ShowOrHideTitleMenu(bool isShow)
