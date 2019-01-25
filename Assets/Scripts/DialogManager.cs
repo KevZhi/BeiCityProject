@@ -204,10 +204,15 @@ public class DialogManager : MonoBehaviour {
             if (effect == "timegone")
             {
                 gm.ec.goreset = true;
-                gm.ec.goactive = true;
-                gm.ec.fadeoutreset = true;
-                gm.ec.fadeout = true;
-            }         
+            }
+            if (effect == "fallsleep")
+            {
+                gm.ec.fallsleepreset = true;
+            }
+            if (effect == "wakeup")
+            {
+                gm.ec.wakeupreset = true;
+            }
         }
 
         reader.Close();
