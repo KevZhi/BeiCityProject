@@ -53,23 +53,16 @@ public class DialogController : MonoBehaviour {
                 }
             }
         }
-
-        if (activeStart)
-        {
-            activeStart = false;
-            TryToLoadEvent(gm.dm.curName);
-        }    
-
         if (activeAtuo)
         {
             activeAtuo = false;
             TryToAutoHappendEvent();
         }
 
-        if (activeNext)
+        if (activeStart)
         {
-            activeNext = false;
-            TryToLoadNextEvent(gm.dm.curName);
+            activeStart = false;
+            TryToLoadEvent(gm.dm.curName);
         }
 
         if (canStart)
@@ -79,6 +72,15 @@ public class DialogController : MonoBehaviour {
 
             gm.dm.StartDialog();
         }
+
+
+        if (activeNext)
+        {
+            activeNext = false;
+            TryToLoadNextEvent(gm.dm.curName);
+        }
+
+  
     }
 
 
@@ -214,47 +216,59 @@ public class DialogController : MonoBehaviour {
         string sqlQuery = "SELECT * FROM EventList WHERE name = " + "'" + eventName + "'";
         dbcmd.CommandText = sqlQuery;
         SqliteDataReader reader = dbcmd.ExecuteReader();
-
-        string stateName = reader["NeedPlayerState"].ToString();
-        string needLV = reader["NeedLV"].ToString();
-        if (stateName != "no" && stateName != "")
+        //print(reader.HasRows);
+        if (reader.HasRows)
         {
-            string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
-            SqliteConnection dbconn2 = new SqliteConnection(conn2);
-            dbconn2.Open();
-
-            SqliteCommand dbcmd2 = dbconn2.CreateCommand();
-            string sqlQuery2 = "SELECT value FROM PlayerState WHERE name = " + "'" + stateName + "LV" + "'";
-            dbcmd2.CommandText = sqlQuery2;
-            SqliteDataReader reader2 = dbcmd2.ExecuteReader();
-
-            string player = reader2["value"].ToString();
-            //print(player);
-
-            canStart = (Convert.ToInt32(player) >= Convert.ToInt32(needLV));
-
-            if (canStart == false)
+            //print(reader.HasRows);
+            string stateName = reader["NeedPlayerState"].ToString();
+            string needLV = reader["NeedLV"].ToString();
+            if (stateName != "no" && stateName != "")
             {
-                //print(eventName + " 需要的" + stateName + "等级 = " + needLV + " 现在的等级 = " + player);
-                gm.mm.canotDo = true;
+                string conn2 = "data source= " + Application.persistentDataPath + "/location.db";
+                SqliteConnection dbconn2 = new SqliteConnection(conn2);
+                dbconn2.Open();
+
+                SqliteCommand dbcmd2 = dbconn2.CreateCommand();
+                string sqlQuery2 = "SELECT value FROM PlayerState WHERE name = " + "'" + stateName + "LV" + "'";
+                dbcmd2.CommandText = sqlQuery2;
+                SqliteDataReader reader2 = dbcmd2.ExecuteReader();
+
+                string player = reader2["value"].ToString();
+                //print(player);
+
+                canStart = (Convert.ToInt32(player) >= Convert.ToInt32(needLV));
+
+                if (canStart == false)
+                {
+                    //print(eventName + " 需要的" + stateName + "等级 = " + needLV + " 现在的等级 = " + player);
+                    gm.mm.canotDo = true;
+                    gm.dm.QuitDialog();
+                }
+
+                reader2.Close();
+                reader2 = null;
+
+                dbcmd2.Cancel();
+                dbcmd2.Dispose();
+                dbcmd2 = null;
+
+                dbconn2.Close();
+                dbconn2.Dispose();
+                dbconn2 = null;
+
             }
-
-            reader2.Close();
-            reader2 = null;
-
-            dbcmd2.Cancel();
-            dbcmd2.Dispose();
-            dbcmd2 = null;
-
-            dbconn2.Close();
-            dbconn2.Dispose();
-            dbconn2 = null;
-
+            else
+            {
+                canStart = true;
+            }
         }
         else
         {
-            canStart = true;
+            //print(reader.HasRows);
+            gm.dm.QuitDialog();
         }
+
+       
 
         reader.Close();
         reader = null;
