@@ -3520,6 +3520,9 @@ MonoBehaviour:
   fallalpha: 0
   BGblack: {fileID: 1983983565}
   timersleep: 0
+  wakeupreset: 0
+  wakeup: 0
+  timerwake: 0
 --- !u!114 &476956056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11352,7 +11355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1431137139
 RectTransform:
   m_ObjectHideFlags: 0
