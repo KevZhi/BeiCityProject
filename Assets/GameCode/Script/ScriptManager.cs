@@ -5,38 +5,59 @@ using UnityEngine.UI;
 using System.IO;
 
 public class ScriptManager : MonoBehaviour {
-    public Text role;
-    public Text talk;
+    //public GameManager gm;
+    public Image dialogImage;
+    public Text roleText;
+    public Text talkText;
     public Image background;
     public Image left;
     public Image right;
+    private string picturePath = "Assets/Resources/Pictures/";
+
+    private void Awake()
+    {
+        EventCenter.AddListener(EventType.NextSentence, SetNextSentence);
+        EventCenter.AddListener(EventType.DialogFinish, SetDialogFinish);
+    }
+    private void OnDestroy()
+    {
+        EventCenter.RemoveListener(EventType.NextSentence, SetNextSentence);
+        EventCenter.RemoveListener(EventType.DialogFinish, SetDialogFinish);
+    }
 
     void Start()
     {
+        //gm = GetComponent<GameManager>();
         ScriptLoad.LoadScripts("test.txt");
         HandleData(ScriptLoad.LoadNext());
     }
 
-    void Update()
+    /// <summary>
+    /// 载入下一条对话
+    /// </summary>
+    private void SetNextSentence()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            HandleData(ScriptLoad.LoadNext());
-        }
+        HandleData(ScriptLoad.LoadNext());
+    }
+    /// <summary>
+    /// 对话结束
+    /// </summary>
+    private void SetDialogFinish()
+    {
+        TweenEffect.SetImageFadeOut(dialogImage);
+        TweenEffect.SetTextFadeOut(roleText);
+        TweenEffect.SetTextFadeOut(talkText);
     }
 
     public void SetText(Text text, string content)
     {
-        //print(content);
         text.text = content;
     }
 
-    private string picturePath = "Assets/Resources/Pictures/";
     public void SetImage(Image image, string picName)
     {
         image.sprite = LoadPicture(picturePath + picName);
     }
-
 
     public Sprite LoadPicture(string picPath)
     {
@@ -64,34 +85,55 @@ public class ScriptManager : MonoBehaviour {
         return sprite;
     }
 
-
     public void HandleData(ScriptData data)
     {
         if (data == null)
             return;
-        if (data.type == "0")
-        {
-            SetImage(background, data.picName);
-            print(data.picName);
-            HandleData(ScriptLoad.LoadNext());
-        }
-        else
-        {
 
-            if (data.pos.CompareTo("left") == 0)
-            {
-                left.gameObject.SetActive(true);
-                SetImage(left, data.picName);
-                //right.gameObject.SetActive(false);
-            }
-            else
-            {
-                //right.gameObject.SetActive(true);
-                SetImage(right, data.picName);
-                left.gameObject.SetActive(false);
-            }
-            SetText(role, data.name);
-            SetText(talk, data.talk);
+        switch (data.type)
+        {
+            case ScriptType.Dialogue:
+                SetText(roleText, data.role);
+                SetText(talkText, data.talk);
+                break;
+            case ScriptType.FadeInRole:
+                //gm.keyboardInput.action = true;
+                switch (data.pos)
+                {
+                    case RolePos.Left:
+                        SetImage(left, data.picName);
+                        EventCenter.Broadcast(EventType.NextSentence);
+                        TweenEffect.SetImageFadeIn(left);
+                        break;
+                    case RolePos.Right:
+                        SetImage(right, data.picName);
+                        EventCenter.Broadcast(EventType.NextSentence);
+                        TweenEffect.SetImageFadeIn(right);
+                        break;
+                    default:
+                        Debug.Log("error RolePos");
+                        break;
+                }
+                break;
+            case ScriptType.FadeOutRole:
+                switch (data.pos)
+                {
+                    case RolePos.Left:
+                        TweenEffect.SetImageFadeOut(left);
+                        EventCenter.Broadcast(EventType.NextSentence);
+                        break;
+                    case RolePos.Right:
+                        TweenEffect.SetImageFadeOut(right);
+                        EventCenter.Broadcast(EventType.NextSentence);
+                        break;
+                    default:
+                        Debug.Log("error RolePos");
+                        break;
+                }
+                break;
+            default:
+                Debug.Log("HandleData data.type");
+                break;
         }
     }
 }

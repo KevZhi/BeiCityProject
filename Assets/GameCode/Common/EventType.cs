@@ -1,5 +1,8 @@
 ﻿public enum EventType
 {
+    NextSentence,
+    DialogStart,
+    DialogFinish,
     ShowMenu,
     HideMenu,
     ShowText,

@@ -7,8 +7,10 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using Mono.Data.Sqlite;
 
+[RequireComponent(typeof(ScriptManager))]
+[RequireComponent(typeof(ComputerInput))]
 public class GameManager : MonoBehaviour {
-
+    
     public string sceneName;
 
     private PlayerDataStructure playerData;
@@ -34,29 +36,33 @@ public class GameManager : MonoBehaviour {
     public TargetController tc;
     public BackgroundController bgc;
     public EffectController ec;
-
+    //new
+    //public ScriptManager scriptManager;
+    //public KeyboardInput keyboardInput;
     private void Awake()
     {
-        dm = this.GetComponent<DialogManager>();
+        //scriptManager = GetComponent<ScriptManager>();
+        //keyboardInput = GetComponent<KeyboardInput>();
+        //dm = this.GetComponent<DialogManager>();
 
-        dc = this.GetComponent<DialogController>();
-        mm = this.GetComponent<MenuManager>();
+        //dc = this.GetComponent<DialogController>();
+        //mm = this.GetComponent<MenuManager>();
 
-        testScene = this.GetComponent<TestSceneChange>();
-        edc = this.GetComponent<EventDataController>();
-        soc = this.GetComponent<SceneObjectController>();
-        tsc = this.GetComponent<TestSceneChange>();
-        psc = this.GetComponent<PlayerStateController>();
-        bgmc = this.GetComponent<BackgroundMusicController>();
-        tc = this.GetComponent<TargetController>();
-        bgc = this.GetComponent<BackgroundController>();
-        ec = this.GetComponent<EffectController>();
+        //testScene = this.GetComponent<TestSceneChange>();
+        //edc = this.GetComponent<EventDataController>();
+        //soc = this.GetComponent<SceneObjectController>();
+        //tsc = this.GetComponent<TestSceneChange>();
+        //psc = this.GetComponent<PlayerStateController>();
+        //bgmc = this.GetComponent<BackgroundMusicController>();
+        //tc = this.GetComponent<TargetController>();
+        //bgc = this.GetComponent<BackgroundController>();
+        //ec = this.GetComponent<EffectController>();
     }
 
     private void Update()
     {
         sceneName = SceneManager.GetActiveScene().name;
-        savedText = System.DateTime.Now +  "\n" +  tc.target.text;
+        //savedText = System.DateTime.Now +  "\n" +  tc.target.text;
     }
 
     public void SavePlayerData()
