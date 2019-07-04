@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail>十五班中自己的座位。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>SitOrNot</state>
+  </dialogue>
+</dialogues>

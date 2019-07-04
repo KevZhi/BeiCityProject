@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role></role>
+    <detail>精神病在楼下坐着发呆。</detail>
+    <position>center</position>
+    <portrait>sR08</portrait>
+    <state>+center</state>
+  </dialogue>
+  <dialogue>
+    <role>精神病</role>
+    <detail>冬明的商店里有好多人，好多吃的，好多钱。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+  <dialogue>
+    <role>精神病</role>
+    <detail>我如果开商店的话，一定会有好多钱！嘻嘻嘻，嘻嘻。。。。。。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state></state>
+  </dialogue>
+</dialogues>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dialogues>
+  <dialogue>
+    <role>乞丐</role>
+    <detail>小伙子，大妈跟你说点事。。。。。。</detail>
+    <position>center</position>
+    <portrait>sR07</portrait>
+    <state>+center</state>
+  </dialogue>
+  <dialogue>
+    <role>易秋</role>
+    <detail>。。。。。。</detail>
+    <position></position>
+    <portrait></portrait>
+    <state>HelpOrNot</state>
+  </dialogue>
+</dialogues>

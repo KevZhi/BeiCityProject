@@ -23,8 +23,7 @@ public class GlobalControl : MonoBehaviour {
     {
         InitBuffFactory();
 
-        //buffFact.CreateBuff("alone", gm.buffPanel.transform);
-        buffFact.CreateBuff("unfortunate", gm.buffPanel.transform);
+        buffFact.CreateBuff("unfortunate", gm.mm.buffPanel.transform);
     }
 
     private void InitBuffFactory()

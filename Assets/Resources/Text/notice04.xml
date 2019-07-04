@@ -2,13 +2,6 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>道边的路灯上贴有“记得牢”保健品的小广告。</detail>
     <position></position>
     <portrait></portrait>

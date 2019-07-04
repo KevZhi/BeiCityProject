@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <dialogues>
   <dialogue>
-    <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
     <role>钟瑾</role>
     <detail>嘿嘿，新班级感觉如何？</detail>
     <position>center</position>
@@ -140,6 +133,6 @@
     <detail>恭送领导。</detail>
     <position></position>
     <portrait></portrait>
-    <state>canMove</state>
+    <state></state>
   </dialogue>
 </dialogues>

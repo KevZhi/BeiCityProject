@@ -2,16 +2,9 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>谢才哲的座位，然而他却不知道去哪了。</detail>
     <position></position>
     <portrait></portrait>
-    <state>ObserveOrNot</state>
+    <state></state>
   </dialogue>
 </dialogues>

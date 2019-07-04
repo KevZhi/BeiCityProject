@@ -4,297 +4,213 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
-using System.Xml;
 using UnityEngine.SceneManagement;
+using Mono.Data.Sqlite;
 
+[RequireComponent(typeof(ScriptManager))]
+[RequireComponent(typeof(ComputerInput))]
 public class GameManager : MonoBehaviour {
+    
+    public string sceneName;
 
     private PlayerDataStructure playerData;
-    private EventDataStructure eventData;
-
-    public GameObject wantToSave;
-    public GameObject wantToLoad;
-    public GameObject saveComplete;
-
-    public GameObject objRoot;
-    public GameObject roleRoot;
-    public GameObject posRoot;
-    public GameObject sceneMask;
-
-    public GameObject panelMask;
-
-    private string nowSceneName;
-    private string tempText;
 
     private bool isExist;
 
-    public GameObject menuUI;
-    public GameObject savePanel;
-    public GameObject loadPanel;
-    public GameObject statePanel;
-    public GameObject optionPanel;
-    public GameObject targetPanel;
+    public string savedText;
 
-    public GameObject buffPanel;
-    public GameObject noticePanel;
+    [Header("=====公共调用组件=====")]
+    public GameObject objRoot;
 
-    public GameObject showMenuBtn;
-    public GameObject saveBtn;
-    public GameObject loadBtn;
-    public GameObject stateBtn;
-    public GameObject optionBtn;
-    public GameObject closeMenuBtn;
-
-    public GameObject black;
-    public GameObject AnswerOrNot;
-    public GameObject HelpOrNot;
-    public GameObject ObserveOrNot;
-    public GameObject ChatOrNot;
-    public GameObject SitOrNot;
-
-    public PlayerState ps;
-    public EventDataManager em;
     public DialogManager dm;
-    public InteractionManager im;
+    public DialogController dc;
 
-    //private float timer = 0;
+    public MenuManager mm;
 
+    public TestSceneChange testScene;
+    public EventDataController edc;
+    public SceneObjectController soc;
+    public TestSceneChange tsc;
+    public PlayerStateController psc;
+    public BackgroundMusicController bgmc;
+    public TargetController tc;
+    public BackgroundController bgc;
+    public EffectController ec;
+    //new
+    //public ScriptManager scriptManager;
+    //public KeyboardInput keyboardInput;
     private void Awake()
     {
+        //scriptManager = GetComponent<ScriptManager>();
+        //keyboardInput = GetComponent<KeyboardInput>();
+        //dm = this.GetComponent<DialogManager>();
 
-        objRoot = GameObject.Find("objRoot");
-        sceneMask = objRoot.transform.Find("sceneMask").gameObject;
-        roleRoot = objRoot.transform.Find("roleRoot").gameObject;
-        posRoot = objRoot.transform.Find("posRoot").gameObject;
-        //loadBtn = GameObject.Find("loadBtn");
+        //dc = this.GetComponent<DialogController>();
+        //mm = this.GetComponent<MenuManager>();
 
-        ps = this.GetComponent<PlayerState>();
-        em = this.GetComponent<EventDataManager>();
-        dm = this.GetComponent<DialogManager>();
-        im = this.GetComponent<InteractionManager>();
+        //testScene = this.GetComponent<TestSceneChange>();
+        //edc = this.GetComponent<EventDataController>();
+        //soc = this.GetComponent<SceneObjectController>();
+        //tsc = this.GetComponent<TestSceneChange>();
+        //psc = this.GetComponent<PlayerStateController>();
+        //bgmc = this.GetComponent<BackgroundMusicController>();
+        //tc = this.GetComponent<TargetController>();
+        //bgc = this.GetComponent<BackgroundController>();
+        //ec = this.GetComponent<EffectController>();
     }
 
     private void Update()
     {
-        NowScene();
-        tempText = "地点：" + nowSceneName
-            + "\n存档时间：" + System.DateTime.Now;
-
-        //objRoot = GameObject.Find("objRoot");
-        //sceneMask = objRoot.transform.Find("sceneMask").gameObject;
-        //roleRoot = objRoot.transform.Find("roleRoot").gameObject;
-        //posRoot = objRoot.transform.Find("posRoot").gameObject;
-    }
-
-    public void WantToSave()
-    {
-        wantToSave.SetActive(true);
-        wantToSave.GetComponentInChildren<Text>().text = "若存档位置已有记录\n旧的存档将会被覆盖";
-        menuUI.SetActive(false);
-        sceneMask.SetActive(true);
-    }
-
-    public void WantToLoad()
-    {
-        wantToLoad.SetActive(true);
-        wantToLoad.GetComponentInChildren<Text>().text = "若读取已有存档\n未保存的进度将会失去";
-        menuUI.SetActive(false);
-        sceneMask.SetActive(true);
+        sceneName = SceneManager.GetActiveScene().name;
+        //savedText = System.DateTime.Now +  "\n" +  tc.target.text;
     }
 
     public void SavePlayerData()
     {
-        playerData = new PlayerDataStructure(
-            SceneManager.GetActiveScene().name, 
-            ps.SkillPoint,
-            tempText,
-            ps.ShamLV,
-            ps.ShamEXP,
-            ps.PassiveLV,
-            ps.PassiveEXP,
-            ps.RebelLV,
-            ps.RebelEXP,
-            ps.SelfishLV,
-            ps.SelfishEXP,
-            ps.EvilLV,
-            ps.EvilEXP
-            );
+        string saveDataPath = Application.persistentDataPath +"/" + EventSystem.current.currentSelectedGameObject.name + ".db";
 
-        eventData = new EventDataStructure(
-            em.event001,
-            em.event002
-            //em.desk01,
-            //em.desk02
-            );
+        WWW loadDB = new WWW("file://" + Application.persistentDataPath + "/location.db");
 
-        File.WriteAllText(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));
-        File.WriteAllText(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + "event.json", JsonUtility.ToJson(eventData));
+        File.WriteAllBytes(saveDataPath, loadDB.bytes);
 
-        panelMask.SetActive(true);
-        saveComplete.SetActive(true);
-        saveComplete.GetComponentInChildren<Text>().text = "存档完成";
+        playerData = new PlayerDataStructure(sceneName,savedText);
+
+        File.WriteAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json", JsonUtility.ToJson(playerData));
+
     }
 
     public void LoadPlayerData()
     {
-        isExist = File.Exists(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + ".json");
+
+        isExist = File.Exists(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db");
 
         if (isExist)
         {
-            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + ".json"));
-            eventData = JsonUtility.FromJson<EventDataStructure>(File.ReadAllText(Application.dataPath + "\\" + EventSystem.current.currentSelectedGameObject.name + "event.json"));
+            LoadEventData();
+            LoadPlayerState();
 
-            ps.SkillPoint = playerData.SkillPoint;
-            ps.ShamLV = playerData.ShamLV;
-            ps.ShamEXP = playerData.ShamEXP;
-            ps.PassiveLV = playerData.PassiveLV;
-            ps.PassiveEXP = playerData.PassiveEXP;
-            ps.RebelLV = playerData.RebelLV;
-            ps.RebelEXP = playerData.RebelEXP;
-            ps.SelfishLV = playerData.SelfishLV;
-            ps.SelfishEXP = playerData.SelfishEXP;
-            ps.EvilLV = playerData.EvilLV;
-            ps.EvilEXP = playerData.EvilEXP;
+            mm.OpenOrCloseLoadPanel(false);
+            mm.OpenOrCloseGameMenu(false);
 
-            em.event001 = eventData.Event001;
-            em.event002 = eventData.Event002;
-
-            //em.desk01 = eventData.Desk01;
-            //em.desk02 = eventData.Desk02;
-
+            playerData = JsonUtility.FromJson<PlayerDataStructure>(File.ReadAllText(Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".json"));
             Globe.nextSceneName = playerData.CurScene;
             SceneManager.LoadScene("loading");
 
-            CancelLoadPanel();
-            CloseMenu();
         }
     }
 
-    public void CallSavePanel()
+    public void LoadEventData()
     {
-        menuUI.SetActive(false);
-        panelMask.SetActive(false);
-        saveComplete.SetActive(false);
-        wantToSave.SetActive(false);
-        wantToLoad.SetActive(false);
-        savePanel.SetActive(true);
-        loadPanel.SetActive(false);
-    }
+        string connSaver = "data source= " + Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db"; //Path to database.
+        SqliteConnection dbconnSaver = new SqliteConnection(connSaver);
+        dbconnSaver.Open(); //Open connection to the database.
 
-    public void CallLoadPanel()
-    {
-        menuUI.SetActive(false);
-        panelMask.SetActive(false);
-        saveComplete.SetActive(false);
-        wantToSave.SetActive(false);
-        wantToLoad.SetActive(false);
-        savePanel.SetActive(false);
-        loadPanel.SetActive(true);
-    }
+        string connLocal = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        SqliteConnection dbconnLocal = new SqliteConnection(connLocal);
+        dbconnLocal.Open(); //Open connection to the database.
 
-    public void CancelSavePanel()
-    {
-        menuUI.SetActive(true);
-       panelMask.SetActive(false);
-        saveComplete.SetActive(false);
-        wantToSave.SetActive(false);
-        wantToLoad.SetActive(false);
-        savePanel.SetActive(false);
-        loadPanel.SetActive(false);
-    }
+        SqliteCommand dbcmdSaver = dbconnSaver.CreateCommand();
+        string sqlQuerySaver = "SELECT * " + "FROM EventData";
+        dbcmdSaver.CommandText = sqlQuerySaver;
+        SqliteDataReader readerSaver = dbcmdSaver.ExecuteReader();
 
-    public void CancelLoadPanel()
-    {
-        menuUI.SetActive(true);
-        panelMask.SetActive(false);
-        saveComplete.SetActive(false);
-        wantToSave.SetActive(false);
-        wantToLoad.SetActive(false);
-        savePanel.SetActive(false);
-        loadPanel.SetActive(false);
-    }
-
-    public void CallStatePanel()
-    {
-        menuUI.SetActive(false);
-        statePanel.SetActive(true);
-    }
-
-    public void CancelStatePanel()
-    {
-        menuUI.SetActive(true);
-        statePanel.SetActive(false);
-    }
-
-    public void CallOptionPanel()
-    {
-        menuUI.SetActive(false);
-        optionPanel.SetActive(true);
-    }
-
-    public void CancelOptionPanel()
-    {
-        menuUI.SetActive(true);
-        optionPanel.SetActive(false);
-    }
-
-    public void ShowMenu()
-    {
-        showMenuBtn.SetActive(false);
-        closeMenuBtn.SetActive(true);
-
-        saveBtn.SetActive(true);
-        loadBtn.SetActive(true);
-        stateBtn.SetActive(true);
-        optionBtn.SetActive(true);
-
-        sceneMask.SetActive(true);
-
-        roleRoot.SetActive(false);
-        posRoot.SetActive(false);
-
-        targetPanel.SetActive(false);
-    }
-
-    public void CloseMenu()
-    {
-        showMenuBtn.SetActive(true);
-        closeMenuBtn.SetActive(false);
-
-        saveBtn.SetActive(false);
-        loadBtn.SetActive(false);
-        stateBtn.SetActive(false);
-        optionBtn.SetActive(false);
-
-        sceneMask.SetActive(false);
-
-        roleRoot.SetActive(true);
-        posRoot.SetActive(true);
-
-        targetPanel.SetActive(true);
-    }
-
-    public void NowScene()
-    {
-        if (SceneManager.GetActiveScene().name =="class15")
+        while (readerSaver.Read())
         {
-            nowSceneName = "十五班教室";
+
+            SqliteCommand dbcmdLocal = dbconnLocal.CreateCommand();
+            string sqlQueryLocal = "UPDATE " + "EventData" + " SET " + "EventState" + "=" + "'"+ readerSaver.GetString(readerSaver.GetOrdinal("EventState")) + "'"+ " WHERE " + "EventName" + "=" + "'" + readerSaver.GetString(readerSaver.GetOrdinal("EventName")) + "'";
+            dbcmdLocal.CommandText = sqlQueryLocal;
+            SqliteDataReader readerLocal = dbcmdLocal.ExecuteReader();
+
+            readerLocal.Close();
+            readerLocal = null;
+
+            dbcmdLocal.Cancel();
+            dbcmdLocal.Dispose();
+            dbcmdLocal = null;
+       
         }
-        if (SceneManager.GetActiveScene().name == "floor2")
-        {
-            nowSceneName = "二楼走廊";
-        }
-        if (SceneManager.GetActiveScene().name == "supportClass15")
-        {
-            nowSceneName = "教辅室";
-        }
-        if (SceneManager.GetActiveScene().name == "gate")
-        {
-            nowSceneName = "校门";
-        }
-        if (SceneManager.GetActiveScene().name == "dongming")
-        {
-            nowSceneName = "冬明";
-        }
+
+        dbconnLocal.Close();
+        dbconnLocal.Dispose();
+        dbconnLocal = null;
+
+        readerSaver.Close();
+        readerSaver = null;
+
+        dbcmdSaver.Cancel();
+        dbcmdSaver.Dispose();
+        dbcmdSaver = null;
+
+        dbconnSaver.Close();
+        dbconnSaver.Dispose();
+        dbconnSaver = null;
+
     }
+
+    public void LoadPlayerState()
+    {
+        string connSaver = "data source= " + Application.persistentDataPath + "/" + EventSystem.current.currentSelectedGameObject.name + ".db"; //Path to database.
+        SqliteConnection dbconnSaver = new SqliteConnection(connSaver);
+        dbconnSaver.Open(); //Open connection to the database.
+
+        string connLocal = "data source= " + Application.persistentDataPath + "/location.db"; //Path to database.
+        SqliteConnection dbconnLocal = new SqliteConnection(connLocal);
+        dbconnLocal.Open(); //Open connection to the database.
+
+        SqliteCommand dbcmdSaver = dbconnSaver.CreateCommand();
+        string sqlQuerySaver = "SELECT * " + "FROM PlayerState";
+        dbcmdSaver.CommandText = sqlQuerySaver;
+        SqliteDataReader readerSaver = dbcmdSaver.ExecuteReader();
+
+        while (readerSaver.Read())
+        {
+
+            SqliteCommand dbcmdLocal = dbconnLocal.CreateCommand();
+            string sqlQueryLocal = "UPDATE " + "PlayerState" + " SET " + "value" + "=" + readerSaver.GetInt32(readerSaver.GetOrdinal("value")) + " WHERE " + "name" + "=" + "'" + readerSaver.GetString(readerSaver.GetOrdinal("name")) + "'";
+            dbcmdLocal.CommandText = sqlQueryLocal;
+            SqliteDataReader readerLocal = dbcmdLocal.ExecuteReader();
+
+            readerLocal.Close();
+            readerLocal = null;
+
+            dbcmdLocal.Cancel();
+            dbcmdLocal.Dispose();
+            dbcmdLocal = null;
+
+        }
+
+        dbconnLocal.Close();
+        dbconnLocal.Dispose();
+        dbconnLocal = null;
+
+        readerSaver.Close();
+        readerSaver = null;
+
+        dbcmdSaver.Cancel();
+        dbcmdSaver.Dispose();
+        dbcmdSaver = null;
+
+        dbconnSaver.Close();
+        dbconnSaver.Dispose();
+        dbconnSaver = null;
+
+    }
+
+    public void NewGame()
+    {
+        Globe.nextSceneName = "floor2";
+        SceneManager.LoadScene("loading");
+    }
+
+    public void ContinueToTitle()
+    {
+        mm.beginning.SetActive(false);
+    }
+
+    public void LeaveGame()
+    {
+        Application.Quit();
+    }
+
 }

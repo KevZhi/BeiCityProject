@@ -16,21 +16,7 @@
   </dialogue>
   <dialogue>
     <role></role>
-    <detail>走廊里的人突然变得焦急起来，快步走进各自教室。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>而我依然像电线杆一样杵在三年十五班的门口。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>也像只电线杆上的鸟，百无聊赖地看着眼前陌生或熟悉的人们。</detail>
+    <detail>徘徊在走廊的学生顿时焦急起来，快步走进各自教室。</detail>
     <position></position>
     <portrait></portrait>
     <state></state>
@@ -43,32 +29,11 @@
     <state>+left1</state>
   </dialogue>
   <dialogue>
-    <role></role>
-    <detail>但“某些人”就不同了。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>似乎完全没有兴致向这边看来。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
-    <detail>整栋教学楼也这样渐渐冷清了。</detail>
-    <position></position>
-    <portrait></portrait>
-    <state>-left1</state>
-  </dialogue>
-  <dialogue>
     <role>易秋</role>
     <detail>呵，催命铃声，名不虚传。</detail>
     <position></position>
     <portrait></portrait>
-    <state></state>
+    <state>-left1</state>
   </dialogue>
 <dialogue>
     <role>易秋</role>
@@ -100,7 +65,7 @@
 </dialogue>
 <dialogue>
     <role>陌生人</role>
-    <detail>同学，车老师不在么？</detail>
+    <detail>同学，请问，车老师在么？</detail>
     <position></position>
     <portrait></portrait>
     <state>AnswerOrNot</state>

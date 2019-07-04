@@ -41,7 +41,6 @@ public class SettingPanel : MonoBehaviour {
     public void SetVolum(float volum)
     {
         audioMixer.SetFloat("volum", volum);
-        //Debug.Log(volum);
     }
 
     public void SetQuality(int qualityIndex)

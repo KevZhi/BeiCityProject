@@ -2,13 +2,6 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>墙上挂着被装裱起来的教辅室管理规定。</detail>
     <position></position>
     <portrait></portrait>

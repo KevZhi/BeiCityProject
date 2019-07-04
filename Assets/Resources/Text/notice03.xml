@@ -2,13 +2,6 @@
 <dialogues>
   <dialogue>
     <role></role>
-    <detail></detail>
-    <position></position>
-    <portrait></portrait>
-    <state></state>
-  </dialogue>
-  <dialogue>
-    <role></role>
     <detail>校门旁的墙壁上刻着龙飞凤舞的大字：“杯河市石棋中学”。</detail>
     <position></position>
     <portrait></portrait>
